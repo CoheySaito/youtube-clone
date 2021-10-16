@@ -1,12 +1,10 @@
-import { NextPage } from 'next'
+import { NextPage } from 'next';
 
+import React, { ReactNode } from 'react';
+import Test from './components/Test';
 
- const Home:NextPage =()=>{
-  return (<p>hello youtube clone</p>
-
-
-  )
-}
-
+const Home: NextPage = () => {
+  return <Test />;
+};
 
 export default Home;
