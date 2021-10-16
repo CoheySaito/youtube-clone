@@ -20,3 +20,5 @@ generates:
         uuid: string
         bigint: number
         _text: string[]
+
+
