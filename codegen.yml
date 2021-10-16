@@ -1,0 +1,19 @@
+overwrite: true
+schema: ${NEXT_PUBLIC_HASURA_URL}
+documents: "./src/**/*.graphql"
+generates:
+  ./src/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      skipTypename: false
+      withHooks: true
+      withHOC: false
+      withComponent: false
+      scalars:
+        timestamptz: string
+        uuid: string
+        bigint: number
+        _text: string[]
