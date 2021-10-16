@@ -1,9 +1,0 @@
-query GetVideos {
-  videos {
-    created_at
-    description
-    id
-    title
-    updated_at
-  }
-}
