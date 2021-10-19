@@ -3,12 +3,13 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { AppProps } from 'next/dist/shared/lib/router/router';
 import React from 'react';
 import { initializeApollo } from '../lib/apolloClinet';
+import customaizedTheme from '../styles/customaizedTheme';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const client = initializeApollo();
   return (
     <ApolloProvider {...{ client }}>
-      <ChakraProvider>
+      <ChakraProvider resetCSS={true} theme={customaizedTheme}>
         <Component {...pageProps} />
       </ChakraProvider>
     </ApolloProvider>
