@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -13,7 +13,13 @@ import {
   FormLabel,
   Input,
   Textarea,
+  Text,
+  AspectRatio,
+  Box,
+  SimpleGrid,
+  Image,
 } from '@chakra-ui/react';
+import createThumbnail from '../utils/createThumbnail';
 
 type UploadModalProps = {
   isOpen: boolean;
@@ -28,6 +34,41 @@ const UploadModal: React.VFC<UploadModalProps> = ({
   onClose,
   children,
 }) => {
+  //hiddenのinput要素をclickするため
+  const inputRef = useRef<HTMLInputElement>(null);
+  const clickHandler = () => {
+    inputRef.current?.click();
+  };
+
+  //ファイル選択で選択したファイルを格納
+  const [selectedFile, setSelectedFile] = useState<File>();
+
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files?.length) {
+      setSelectedFile(e.currentTarget.files[0]);
+    }
+  };
+
+  // これは、動画表示用のURLを格納します。
+  // URLは文字列なので、string型を指定しています。
+  const [videoURL, setVideoURL] = useState('');
+
+  // サムネイルの画像URLを格納する配列state
+  const [thumbnailURLs, setThumbnailURLs] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (selectedFile) {
+      // URL.createObjectURLは、ファイルを引数に受け取り、<video>タグで読み込み可能なローカルURLを生成します。
+      // URL.createObjectURLで生成されたURLを<video>のsrcにわたすことでファイルを動画で表示できます。
+      const videoURL = URL.createObjectURL(selectedFile);
+      setVideoURL(videoURL);
+      // サムネイルを作成、setThumbnailURLsにセット
+      createThumbnail(videoURL, setThumbnailURLs);
+    }
+  }, [selectedFile]);
+
+  console.log(`thumbnails:${thumbnailURLs}`);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="4xl">
       <ModalOverlay />
@@ -42,10 +83,47 @@ const UploadModal: React.VFC<UploadModalProps> = ({
             justifyItems="center"
             alignItems="center"
             my={6}
+            columnGap={6}
           >
-            <Button colorScheme="blue">ファイルを選択</Button>
+            {videoURL ? (
+              <Grid w="100%">
+                <AspectRatio ratio={16 / 9} maxW="100%" w="100%" mb={4}>
+                  <iframe title="test" src={videoURL} allowFullScreen />
+                </AspectRatio>
+                <Text as="h2" mb={2} fontSize="sm">
+                  サムネイル
+                </Text>
+                <SimpleGrid columns={3} spacing={3}>
+                  {thumbnailURLs?.map((url, i) => (
+                    <AspectRatio maxW="100%" ratio={4 / 3} key={i}>
+                      <Image
+                        src={url}
+                        objectFit="cover"
+                        alt={`サムネイル${i}`}
+                      />
+                    </AspectRatio>
+                  ))}
+                </SimpleGrid>
+              </Grid>
+            ) : (
+              // <input type="file" hidden />とすることで<input>タグを非表示に
+              // onChange={selectedFile}を追加
+              // <input>の値が変更される、つまりファイルが選択時にselectedFile関数を実行する
+              <>
+                <Input
+                  type="file"
+                  ref={inputRef}
+                  onChange={changeHandler}
+                  hidden
+                />
+                <Button colorScheme="blue" onClick={clickHandler}>
+                  ファイルを選択
+                </Button>
+              </>
+            )}
+
             <Grid as="form" rowGap={8} w="100%">
-              <FormControl>
+              <FormControl isRequired>
                 <FormLabel>タイトル</FormLabel>
                 <Input
                   placeholder="Title..."
