@@ -4,7 +4,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Button,
@@ -15,11 +14,10 @@ import {
   Textarea,
   Text,
   AspectRatio,
-  Box,
   SimpleGrid,
   Image,
 } from '@chakra-ui/react';
-import createThumbnail from '../utils/createThumbnail';
+import useCreateThumbnails from '../hooks/useCreateThumbnails';
 
 type UploadModalProps = {
   isOpen: boolean;
@@ -53,8 +51,8 @@ const UploadModal: React.VFC<UploadModalProps> = ({
   // URLは文字列なので、string型を指定しています。
   const [videoURL, setVideoURL] = useState('');
 
-  // サムネイルの画像URLを格納する配列state
-  const [thumbnailURLs, setThumbnailURLs] = useState<string[]>([]);
+  // サムネイルの画像URLを作成
+  const { createdURLs, createThumbnailsFC } = useCreateThumbnails();
 
   useEffect(() => {
     if (selectedFile) {
@@ -62,12 +60,10 @@ const UploadModal: React.VFC<UploadModalProps> = ({
       // URL.createObjectURLで生成されたURLを<video>のsrcにわたすことでファイルを動画で表示できます。
       const videoURL = URL.createObjectURL(selectedFile);
       setVideoURL(videoURL);
-      // サムネイルを作成、setThumbnailURLsにセット
-      createThumbnail(videoURL, setThumbnailURLs);
+      // サムネイルを作成
+      createThumbnailsFC(videoURL);
     }
   }, [selectedFile]);
-
-  console.log(`thumbnails:${thumbnailURLs}`);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="4xl">
@@ -94,7 +90,7 @@ const UploadModal: React.VFC<UploadModalProps> = ({
                   サムネイル
                 </Text>
                 <SimpleGrid columns={3} spacing={3}>
-                  {thumbnailURLs?.map((url, i) => (
+                  {createdURLs?.map((url, i) => (
                     <AspectRatio maxW="100%" ratio={4 / 3} key={i}>
                       <Image
                         src={url}

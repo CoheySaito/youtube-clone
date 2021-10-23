@@ -1,0 +1,22 @@
+query GetUsers {
+  users(order_by: { created_at: desc }) {
+    id
+    name
+    profile_photo_url
+    updated_at
+    created_at
+  }
+}
+
+query GetVideos {
+  videos(order_by: { created_at: desc }) {
+    created_at
+    description
+    duration
+    id
+    owner_id
+    title
+    updated_at
+    views
+  }
+}

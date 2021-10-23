@@ -13,7 +13,7 @@ import {
   Button,
   Link,
 } from '@chakra-ui/react';
-import { useGetVideosQuery } from '../generated/graphql';
+import { useGetUsersQuery, useGetVideosQuery } from '../generated/graphql';
 import NextLink from 'next/link';
 
 const Test: React.VFC = () => {
@@ -21,6 +21,13 @@ const Test: React.VFC = () => {
     fetchPolicy: 'cache-and-network',
   });
 
+  const {
+    data: usersDate,
+    loading: usersLoading,
+    error: usersError,
+  } = useGetUsersQuery({
+    fetchPolicy: 'cache-and-network',
+  });
   const LINKS = [
     {
       title: 'Watch',
@@ -44,11 +51,11 @@ const Test: React.VFC = () => {
     },
   ] as const;
 
-  if (error) {
+  if (error || usersError) {
     <Error statusCode={400}>{error.message}</Error>;
   }
 
-  if (loading) {
+  if (loading || usersLoading) {
     <Spinner
       thickness="4px"
       speed="0.65s"
@@ -101,8 +108,8 @@ const Test: React.VFC = () => {
                   get complete insights at real time.
                 </Text>
               </Box>
-
-              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+              {/* video */}
+              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mb={6}>
                 {data?.videos.map((video) => (
                   <Box key={video.id}>
                     <Text
@@ -115,6 +122,24 @@ const Test: React.VFC = () => {
                     </Text>
                     <Text fontSize={'xl'} color={'gray.400'}>
                       {video.description}
+                    </Text>
+                  </Box>
+                ))}
+              </SimpleGrid>
+              {/* users */}
+              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+                {usersDate?.users?.map((user) => (
+                  <Box key={user.id}>
+                    <Text
+                      fontFamily={'heading'}
+                      fontSize={'3xl'}
+                      color={'white'}
+                      mb={3}
+                    >
+                      {user.name}
+                    </Text>
+                    <Text fontSize={'xl'} color={'gray.400'}>
+                      {user.created_at}
                     </Text>
                   </Box>
                 ))}
