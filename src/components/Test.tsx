@@ -139,7 +139,7 @@ const Test: React.VFC = () => {
                       {user.name}
                     </Text>
                     <Text fontSize={'xl'} color={'gray.400'}>
-                      {user.created_at}
+                      {user.email}
                     </Text>
                   </Box>
                 ))}

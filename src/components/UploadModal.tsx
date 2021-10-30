@@ -16,8 +16,18 @@ import {
   AspectRatio,
   SimpleGrid,
   Image,
+  Spinner,
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  CloseButton,
 } from '@chakra-ui/react';
-import useCreateThumbnails from '../hooks/useCreateThumbnails';
+
+import { useRouter } from 'next/dist/client/router';
+import { v4 as uuidv4 } from 'uuid';
+import useVideoCrud from '../hooks/useVideoCrud';
+import uploadFirebaseStorage from '../utils/uploadFirebaseStorage';
+import VideoSelect from './VideoSelect';
 
 type UploadModalProps = {
   isOpen: boolean;
@@ -32,38 +42,77 @@ const UploadModal: React.VFC<UploadModalProps> = ({
   onClose,
   children,
 }) => {
-  //hiddenのinput要素をclickするため
-  const inputRef = useRef<HTMLInputElement>(null);
-  const clickHandler = () => {
-    inputRef.current?.click();
-  };
+  const router = useRouter();
 
   //ファイル選択で選択したファイルを格納
-  const [selectedFile, setSelectedFile] = useState<File>();
+  const [selectedVideoFile, setSelectedVideoFile] = useState<File>();
 
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.currentTarget.files?.length) {
-      setSelectedFile(e.currentTarget.files[0]);
+  //選んだサムネイルFile
+  const [thumbFile, setThumbFile] = useState<File>();
+
+  // ユーザー入力を受け取る`ref`変数
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descRef = useRef<HTMLTextAreaElement>(null);
+
+  // エラーを表示する用のステート
+  const [errorMessage, seterrorMessage] = useState<Error>();
+
+  //insert_videos_one createVideos
+  const { insert_videos_one } = useVideoCrud();
+  // Firebase Storageにファイルをアップロードする処理
+
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const handleSubmit = async () => {
+    //loading true
+    setUploadLoading(true);
+
+    if (!selectedVideoFile || !thumbFile) {
+      seterrorMessage(new Error('ファイルを選択してください。'));
+      return;
+    }
+    if (!titleRef?.current.value) {
+      seterrorMessage(new Error('titleを入力してください。'));
+      return;
+    }
+    try {
+      //Firebaseにvideoアップロード
+      const videoId = uuidv4();
+
+      const videoUploadTask = await uploadFirebaseStorage(
+        videoId,
+        selectedVideoFile,
+        'videos',
+      );
+
+      //Firebaseにthumbnailアップロード
+      const thumbnailId = uuidv4();
+
+      const thumbnailUploadTask = await uploadFirebaseStorage(
+        thumbnailId,
+        thumbFile,
+        'thumbnails',
+      );
+
+      //Hasuraにvideoデータをcreate
+      const res = await insert_videos_one({
+        variables: {
+          id: videoId,
+          title: titleRef.current.value,
+          description: descRef?.current?.value,
+          video_url: videoUploadTask.ref.fullPath,
+          thumbnail_url: thumbnailUploadTask.ref.fullPath,
+        },
+      });
+      if (res?.data?.insert_videos_one) {
+        router.push('/');
+      }
+    } catch (error) {
+      alert(error?.message);
+    } finally {
+      //loading true
+      setUploadLoading(false);
     }
   };
-
-  // これは、動画表示用のURLを格納します。
-  // URLは文字列なので、string型を指定しています。
-  const [videoURL, setVideoURL] = useState('');
-
-  // サムネイルの画像URLを作成
-  const { createdURLs, createThumbnailsFC } = useCreateThumbnails();
-
-  useEffect(() => {
-    if (selectedFile) {
-      // URL.createObjectURLは、ファイルを引数に受け取り、<video>タグで読み込み可能なローカルURLを生成します。
-      // URL.createObjectURLで生成されたURLを<video>のsrcにわたすことでファイルを動画で表示できます。
-      const videoURL = URL.createObjectURL(selectedFile);
-      setVideoURL(videoURL);
-      // サムネイルを作成
-      createThumbnailsFC(videoURL);
-    }
-  }, [selectedFile]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="4xl">
@@ -81,47 +130,19 @@ const UploadModal: React.VFC<UploadModalProps> = ({
             my={6}
             columnGap={6}
           >
-            {videoURL ? (
-              <Grid w="100%">
-                <AspectRatio ratio={16 / 9} maxW="100%" w="100%" mb={4}>
-                  <iframe title="test" src={videoURL} allowFullScreen />
-                </AspectRatio>
-                <Text as="h2" mb={2} fontSize="sm">
-                  サムネイル
-                </Text>
-                <SimpleGrid columns={3} spacing={3}>
-                  {createdURLs?.map((url, i) => (
-                    <AspectRatio maxW="100%" ratio={4 / 3} key={i}>
-                      <Image
-                        src={url}
-                        objectFit="cover"
-                        alt={`サムネイル${i}`}
-                      />
-                    </AspectRatio>
-                  ))}
-                </SimpleGrid>
-              </Grid>
-            ) : (
-              // <input type="file" hidden />とすることで<input>タグを非表示に
-              // onChange={selectedFile}を追加
-              // <input>の値が変更される、つまりファイルが選択時にselectedFile関数を実行する
-              <>
-                <Input
-                  type="file"
-                  ref={inputRef}
-                  onChange={changeHandler}
-                  hidden
-                />
-                <Button colorScheme="blue" onClick={clickHandler}>
-                  ファイルを選択
-                </Button>
-              </>
-            )}
+            <VideoSelect
+              {...{
+                selectedVideoFile,
+                setSelectedVideoFile,
+                setThumbFile,
+              }}
+            />
 
             <Grid as="form" rowGap={8} w="100%">
               <FormControl isRequired>
                 <FormLabel>タイトル</FormLabel>
                 <Input
+                  ref={titleRef}
                   placeholder="Title..."
                   _placeholder={{ color: 'gray.500' }}
                   type="text"
@@ -130,6 +151,7 @@ const UploadModal: React.VFC<UploadModalProps> = ({
               <FormControl>
                 <FormLabel>説明</FormLabel>
                 <Textarea
+                  ref={descRef}
                   placeholder="Discription..."
                   _placeholder={{ color: 'gray.500' }}
                   mt={1}
@@ -143,18 +165,26 @@ const UploadModal: React.VFC<UploadModalProps> = ({
               <Button
                 w="20%"
                 minW="160px"
-                type="submit"
-                _hover={{
-                  bg: 'blue.500',
-                  color: 'white',
-                  boxShadow: 'none',
-                }}
-                boxShadow="md"
+                type="button"
+                colorScheme="blue"
+                bg={!selectedVideoFile || !thumbFile ? 'white' : 'blue.500'}
                 fontSize="sm"
-                variant="ghost"
+                variant={!selectedVideoFile || !thumbFile ? 'ghost' : 'solid'}
+                onClick={handleSubmit}
+                disabled={!selectedVideoFile || !thumbFile}
+                isLoading={uploadLoading}
+                loadingText="Upload中..."
+                spinnerPlacement="end"
               >
                 動画をアップロード
               </Button>
+
+              {errorMessage && (
+                <Alert status="error">
+                  <AlertIcon />
+                  {errorMessage?.message}
+                </Alert>
+              )}
             </Grid>
           </Grid>
         </ModalBody>
