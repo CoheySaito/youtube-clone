@@ -16,7 +16,9 @@
     "@chakra-ui/react": "^1.6.9",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@types/uuid": "^8.3.1",
     "cross-fetch": "^3.1.4",
+    "firebase": "8.10.0",
     "framer-motion": "^4",
     "graphql": "^15.6.1",
     "next": "11.1.2",
@@ -24,7 +26,8 @@
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
     "sass": "^1.42.1",
-    "universal-cookie": "^4.0.4"
+    "universal-cookie": "^4.0.4",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.2.0",

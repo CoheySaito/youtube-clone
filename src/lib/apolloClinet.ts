@@ -6,7 +6,6 @@ import {
 } from '@apollo/client';
 import 'cross-fetch/polyfill';
 
-// Add an authorization header to every HTTP request by chaining together Apollo Links. In this example, we'll pull the login token from localStorage every time a request is sent:
 const httpLink = createHttpLink({
   uri: process.env.NEXT_PUBLIC_HASURA_URL,
   headers: { 'x-hasura-admin-secret': process.env.NEXT_PUBLIC_HASURA_KEY },

@@ -1,0 +1,39 @@
+query GetNews {
+  news(order_by: { created_at: desc }) {
+    content
+    created_at
+    id
+  }
+}
+
+query GetNewsById($id: uuid!) {
+  news_by_pk(id: $id) {
+    content
+    created_at
+    id
+  }
+}
+
+mutation CreateNews($content: String!) {
+  insert_news_one(object: { content: $content }) {
+    content
+    created_at
+    id
+  }
+}
+
+mutation UpdateNews($id: uuid!, $content: String!) {
+  update_news_by_pk(pk_columns: { id: $id }, _set: { content: $content }) {
+    content
+    created_at
+    id
+  }
+}
+
+mutation DeleteNews($id: uuid!) {
+  delete_news_by_pk(id: $id) {
+    content
+    created_at
+    id
+  }
+}
