@@ -1202,6 +1202,16 @@ export type DeleteNewsMutationVariables = Exact<{
 
 export type DeleteNewsMutation = { __typename?: 'mutation_root', delete_news_by_pk?: { __typename?: 'news', content: string, created_at: string, id: string } | null | undefined };
 
+export type CreateUserMutationVariables = Exact<{
+  id: Scalars['String'];
+  email: Scalars['String'];
+  name: Scalars['String'];
+  profile_photo_url?: Maybe<Scalars['String']>;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'mutation_root', insert_users_one?: { __typename?: 'users', created_at: string, email?: string | null | undefined, id: string, name: string, profile_photo_url?: string | null | undefined } | null | undefined };
+
 
 export const GetUsersDocument = gql`
     query GetUsers {
@@ -1557,3 +1567,45 @@ export function useDeleteNewsMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteNewsMutationHookResult = ReturnType<typeof useDeleteNewsMutation>;
 export type DeleteNewsMutationResult = Apollo.MutationResult<DeleteNewsMutation>;
 export type DeleteNewsMutationOptions = Apollo.BaseMutationOptions<DeleteNewsMutation, DeleteNewsMutationVariables>;
+export const CreateUserDocument = gql`
+    mutation CreateUser($id: String!, $email: String!, $name: String!, $profile_photo_url: String) {
+  insert_users_one(
+    object: {id: $id, name: $name, email: $email, profile_photo_url: $profile_photo_url}
+  ) {
+    created_at
+    email
+    id
+    name
+    profile_photo_url
+  }
+}
+    `;
+export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, CreateUserMutationVariables>;
+
+/**
+ * __useCreateUserMutation__
+ *
+ * To run a mutation, you first call `useCreateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createUserMutation, { data, loading, error }] = useCreateUserMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      email: // value for 'email'
+ *      name: // value for 'name'
+ *      profile_photo_url: // value for 'profile_photo_url'
+ *   },
+ * });
+ */
+export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
+      }
+export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
+export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
+export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;

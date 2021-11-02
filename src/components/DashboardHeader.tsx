@@ -12,13 +12,11 @@ import {
   Center,
   Avatar,
   Box,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
+  Popover,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverTrigger,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useColorModeValue } from '@chakra-ui/system';
@@ -26,6 +24,10 @@ import { useColorModeValue } from '@chakra-ui/system';
 import { AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';
 import { BsFillCameraVideoFill } from 'react-icons/bs';
 import UploadModal from './UploadModal';
+import firebase from '../utils/firebase/firebaseConfig';
+import { useLogout } from '../hooks/useLogout';
+
+import { useRouter } from 'next/router';
 
 // eslint-disable-next-line react/display-name
 const DashboardHeaderL: React.VFC = React.memo(() => {
@@ -33,6 +35,15 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
 
   // Modal
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const currentUser = firebase.auth().currentUser;
+
+  //Popover
+  const initialFocusRef = React.useRef();
+
+  const { logout } = useLogout();
+
+  const router = useRouter();
 
   return (
     <Grid
@@ -76,25 +87,60 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
           </InputRightElement>
         </InputGroup>
       </Center>
-      <Box>
-        <Button
-          variant="ghost"
-          leftIcon={<BsFillCameraVideoFill fontSize="18px" />}
-          size="md"
-          colorScheme="gray"
-          opacity="0.4"
-          onClick={onOpen}
+      {currentUser && (
+        <Box>
+          <Button
+            variant="ghost"
+            leftIcon={<BsFillCameraVideoFill fontSize="18px" />}
+            size="md"
+            colorScheme="gray"
+            opacity="0.4"
+            onClick={onOpen}
+          >
+            Upload
+          </Button>
+          <UploadModal {...{ isOpen, onOpen, onClose }} />
+        </Box>
+      )}
+      {currentUser ? (
+        <Popover
+          initialFocusRef={initialFocusRef}
+          placement="bottom"
+          closeOnBlur={false}
         >
-          Upload
-        </Button>
-        <UploadModal {...{ isOpen, onOpen, onClose }} />
-      </Box>
-      <Link as={NextLink} href={'/'} passHref>
-        <Button colorScheme="blue" variant="outline" display="none">
-          ログイン
-        </Button>
-      </Link>
-      <Avatar size="sm" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+          <PopoverTrigger>
+            <Avatar
+              size="sm"
+              name="Dan Abrahmov"
+              src="https://bit.ly/dan-abramov"
+              cursor="pointer"
+            />
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverCloseButton />
+            <PopoverBody display="flex" justifyContent="center" py={6}>
+              <Button
+                type="button"
+                colorScheme="red"
+                ref={initialFocusRef}
+                w="60%"
+                onClick={() => {
+                  logout();
+                  router.push('/trial');
+                }}
+              >
+                ログアウト
+              </Button>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+      ) : (
+        <Link as={NextLink} href="/login" passHref>
+          <Button colorScheme="blue" variant="outline">
+            ログイン
+          </Button>
+        </Link>
+      )}
     </Grid>
   );
 });

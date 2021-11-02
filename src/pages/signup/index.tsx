@@ -10,10 +10,57 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { NextPage } from 'next';
-import React from 'react';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 import NextLink from 'next/link';
+import { useFirebaseAuth } from '../../hooks/useFirebaseAuth';
+import useUserCrud from '../../hooks/useUserCrud';
+import { useRouter } from 'next/router';
+import { checkAuthToken } from '../../utils/checkAuthToken';
 
-const index: NextPage = () => {
+const SignUp: NextPage = () => {
+  const { email, password, emailChange, pwChange, createUserFn } =
+    useFirebaseAuth();
+
+  //name
+  const [name, setName] = useState('');
+
+  const nameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  }, []);
+
+  const { insert_users_one } = useUserCrud();
+
+  const router = useRouter();
+
+  const [submitLoading, setSubmitLoading] = useState(false);
+
+  const submitHandeler = async () => {
+    //loading
+    setSubmitLoading(true);
+
+    const user = await createUserFn();
+
+    if (!user?.uid) {
+      alert('ユーザーの登録に失敗しました。');
+    }
+
+    // アカウントにトークンが設定されるまで待機
+    await checkAuthToken(user.uid);
+
+    try {
+      await insert_users_one({
+        variables: {
+          id: user.uid,
+          name,
+          email,
+        },
+      });
+    } catch (error) {
+      alert(error?.messagge);
+    }
+    setSubmitLoading(false);
+    router.push('/trial');
+  };
   return (
     <Center bg="#fafafa">
       <Grid
@@ -38,12 +85,15 @@ const index: NextPage = () => {
         </Text>
 
         <Grid as="form" rowGap={6} mb="4">
-          <FormControl id="email" isRequired>
+          <FormControl id="text" isRequired>
             <FormLabel>お名前</FormLabel>
             <Input
-              placeholder="your-email@example.com"
+              placeholder="Alan Kay"
               _placeholder={{ color: 'gray.500' }}
               type="text"
+              value={name}
+              onChange={nameChange}
+              name="name"
             />
           </FormControl>
           <FormControl id="email" isRequired>
@@ -52,18 +102,20 @@ const index: NextPage = () => {
               placeholder="your-email@example.com"
               _placeholder={{ color: 'gray.500' }}
               type="email"
+              value={email}
+              onChange={emailChange}
             />
           </FormControl>
 
           <FormControl id="password" isRequired>
             <FormLabel>パスワード</FormLabel>
-            <Input type="password" />
+            <Input type="password" value={password} onChange={pwChange} />
           </FormControl>
 
           <Button
             w="20%"
             minW="96px"
-            type="submit"
+            type="button"
             bg={'blue.600'}
             color={'white'}
             _hover={{
@@ -71,6 +123,10 @@ const index: NextPage = () => {
             }}
             boxShadow="md"
             fontSize="sm"
+            onClick={submitHandeler}
+            isLoading={submitLoading}
+            loadingText="作成中..."
+            spinnerPlacement="end"
           >
             新規登録
           </Button>
@@ -90,4 +146,4 @@ const index: NextPage = () => {
     </Center>
   );
 };
-export default index;
+export default SignUp;
