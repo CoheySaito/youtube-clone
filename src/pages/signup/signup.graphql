@@ -1,0 +1,21 @@
+mutation CreateUser(
+  $id: String!
+  $email: String!
+  $name: String!
+  $profile_photo_url: String
+) {
+  insert_users_one(
+    object: {
+      id: $id
+      name: $name
+      email: $email
+      profile_photo_url: $profile_photo_url
+    }
+  ) {
+    created_at
+    email
+    id
+    name
+    profile_photo_url
+  }
+}

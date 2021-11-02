@@ -12,8 +12,11 @@ import {
 import { NextPage } from 'next';
 import React from 'react';
 import NextLink from 'next/link';
+import { useFirebaseAuth } from '../../hooks/useFirebaseAuth';
 
-const index: NextPage = () => {
+const Login: NextPage = () => {
+  const { email, password, emailChange, pwChange, loginFn } = useFirebaseAuth();
+
   return (
     <Center bg="#fafafa">
       <Grid
@@ -44,17 +47,19 @@ const index: NextPage = () => {
               placeholder="your-email@example.com"
               _placeholder={{ color: 'gray.500' }}
               type="email"
+              value={email}
+              onChange={emailChange}
             />
           </FormControl>
           <FormControl id="password" isRequired>
             <FormLabel>パスワード</FormLabel>
-            <Input type="password" />
+            <Input type="password" value={password} onChange={pwChange} />
           </FormControl>
 
           <Button
             w="20%"
             minW="96px"
-            type="submit"
+            type="button"
             bg={'blue.600'}
             color={'white'}
             _hover={{
@@ -62,6 +67,7 @@ const index: NextPage = () => {
             }}
             boxShadow="md"
             fontSize="sm"
+            onClick={() => loginFn()}
           >
             ログイン
           </Button>
@@ -91,4 +97,4 @@ const index: NextPage = () => {
     </Center>
   );
 };
-export default index;
+export default Login;

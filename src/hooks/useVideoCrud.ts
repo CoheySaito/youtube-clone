@@ -1,8 +1,7 @@
-import React from 'react';
 import {
   useCreateVideoMutation,
   useGetVideosQuery,
-} from '../generated/graphql';
+} from "../generated/graphql";
 
 const useVideoCrud = () => {
   // APIcall-GET
@@ -11,7 +10,7 @@ const useVideoCrud = () => {
     loading: allVideosLoading,
     error: allVideosError,
   } = useGetVideosQuery({
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: "cache-and-network",
   });
 
   // APIcall-CREATE

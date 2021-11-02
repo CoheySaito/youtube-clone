@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { formatDate } from '../utils/formatDate';
 
-import { Grid, AspectRatio, Box, Image, Text } from '@chakra-ui/react';
+import { Grid, AspectRatio, Box, Image, Text, Link } from '@chakra-ui/react';
 import { firebaseStorage } from '../utils/firebase/firebaseConfig';
+
+import NextLink from 'next/link';
+import { GrBluetooth } from 'react-icons/gr';
 
 type RelatedVideoItemProps = {
   video: {
@@ -47,22 +50,36 @@ const RelatedVideoItem: React.FC<RelatedVideoItemProps> = ({ video }) => {
       alignItems="center"
     >
       <AspectRatio maxW="100%" ratio={16 / 9}>
-        <Image src={fetchedThumbnailUrl} alt={video.title} objectFit="cover" />
+        <Link as={NextLink} href={`/watch/${video.id}`} passHref>
+          <Image
+            src={fetchedThumbnailUrl}
+            alt={video.title}
+            objectFit="cover"
+            cursor="pointer"
+            _hover={{ opacity: 0.8 }}
+          />
+        </Link>
       </AspectRatio>
       <Box textAlign="left" lineHeight="base">
-        <Text>{video.title}</Text>
+        <Link as={NextLink} href={`/watch/${video.id}`} passHref>
+          <Text
+            cursor="pointer"
+            _hover={{ color: 'blue.600' }}
+            transition="ease-out 0.5"
+          >
+            {video.title}
+          </Text>
+        </Link>
         <Text fontSize="sm" color="gray.500">
           投稿者
         </Text>
         <Text fontSize="sm" color="gray.500">
-          <Text>
-            {video?.views && (
-              <Box as="span" mr={1} letterSpacing="0.04em">
-                {video.views}回視聴
-              </Box>
-            )}
-            {datetime && <Box as="span"> {datetime}</Box>}
-          </Text>
+          {video?.views && (
+            <Box as="span" mr={1} letterSpacing="0.04em">
+              {video.views}回視聴
+            </Box>
+          )}
+          {datetime && <Box as="span"> {datetime}</Box>}
         </Text>
       </Box>
     </Grid>

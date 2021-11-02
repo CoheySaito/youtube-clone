@@ -1,7 +1,7 @@
-import { NextPage } from 'next';
-import { useRouter } from 'next/dist/client/router';
-import React, { useEffect, useState } from 'react';
-import SidelessHomeLayout from '../../components/layouts/SidelessHomeLayout';
+import { NextPage } from "next";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import SidelessHomeLayout from "../../components/layouts/SidelessHomeLayout";
 import {
   Box,
   Grid,
@@ -13,11 +13,11 @@ import {
   Center,
   Spinner,
   Image,
-} from '@chakra-ui/react';
-import RelatedVideo from '../../components/RelatedVideo';
-import { useGetVideoByIdQuery } from '../../generated/graphql';
-import { firebaseStorage } from '../../utils/firebase/firebaseConfig';
-import { formatDate } from '../../utils/formatDate';
+} from "@chakra-ui/react";
+import RelatedVideo from "../../components/RelatedVideo";
+import { useGetVideoByIdQuery } from "../../generated/graphql";
+import { firebaseStorage } from "../../utils/firebase/firebaseConfig";
+import { formatDate } from "../../utils/formatDate";
 
 const Watch: NextPage = () => {
   const router = useRouter();
@@ -29,15 +29,15 @@ const Watch: NextPage = () => {
     },
   });
   const video = data?.videos_by_pk ?? {
-    __typename: 'videos',
-    created_at: '',
-    description: '',
+    __typename: "videos",
+    created_at: "",
+    description: "",
     duration: 0,
-    id: '',
-    thumbnail_url: '',
-    video_url: '',
-    title: '',
-    updated_at: '',
+    id: "",
+    thumbnail_url: "",
+    video_url: "",
+    title: "",
+    updated_at: "",
   };
   const { datetime } =
     video?.created_at && formatDate(new Date(video.created_at), new Date());
@@ -47,7 +47,7 @@ const Watch: NextPage = () => {
   useEffect(() => {
     const fetchFn = async () => {
       const res: string = await firebaseStorage
-        .ref(video?.video_url || 'videos/no_video.jpeg')
+        .ref(video?.video_url || "videos/no_video.jpeg")
         .getDownloadURL();
       setFetchedVideolUrl(res);
     };
