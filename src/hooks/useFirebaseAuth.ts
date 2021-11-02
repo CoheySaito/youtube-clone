@@ -68,7 +68,7 @@ export const useFirebaseAuth = () => {
       }
     }
     resetInput();
-  }, [email, password]);
+  }, [email, password, resetInput]);
 
   const createUserFn = useCallback(async () => {
     let varUser: firebase.User;
@@ -124,7 +124,7 @@ export const useFirebaseAuth = () => {
     }
     resetInput();
     return varUser;
-  }, [email, password]);
+  }, [email, password, resetInput]);
 
   return {
     email,
