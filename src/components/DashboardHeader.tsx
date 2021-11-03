@@ -18,16 +18,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { useColorModeValue } from '@chakra-ui/system';
 
 import { AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';
 import { BsFillCameraVideoFill } from 'react-icons/bs';
 import UploadModal from './UploadModal';
 import firebase from '../utils/firebase/firebaseConfig';
-import { useLogout } from '../hooks/useLogout';
-
-import { useRouter } from 'next/router';
+import ButtonWithAlertDialog from './ButtonWithAlertDialog';
 
 // eslint-disable-next-line react/display-name
 const DashboardHeaderL: React.VFC = React.memo(() => {
@@ -36,14 +34,18 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
   // Modal
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const currentUser = firebase.auth().currentUser;
+  //FirebaseUser
+  const [currentUser, setCurrentUser] = useState<firebase.User>(
+    firebase.auth().currentUser,
+  );
+
+  //ログアウト時userを確認用
+  const checkFirebaseUser = () => {
+    setCurrentUser(firebase.auth().currentUser);
+  };
 
   //Popover
   const initialFocusRef = React.useRef();
-
-  const { logout } = useLogout();
-
-  const router = useRouter();
 
   return (
     <Grid
@@ -119,18 +121,9 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
           <PopoverContent>
             <PopoverCloseButton />
             <PopoverBody display="flex" justifyContent="center" py={6}>
-              <Button
-                type="button"
-                colorScheme="red"
-                ref={initialFocusRef}
-                w="60%"
-                onClick={() => {
-                  logout();
-                  router.push('/trial');
-                }}
-              >
-                ログアウト
-              </Button>
+              <ButtonWithAlertDialog
+                {...{ initialFocusRef, checkFirebaseUser }}
+              />
             </PopoverBody>
           </PopoverContent>
         </Popover>
