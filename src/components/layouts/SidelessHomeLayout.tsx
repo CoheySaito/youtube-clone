@@ -3,7 +3,6 @@ import React, { ReactNode } from 'react';
 import Head from 'next/head';
 import { Grid, GridItem } from '@chakra-ui/layout';
 import DashboardHeader from '../DashboardHeader';
-import SideBar from '../SideBar';
 
 type SidelessHomeLayoutProps = {
   title?: string;

@@ -226,7 +226,7 @@ const News: NextPage = () => {
 
       <chakra.form w="full" mb={6} mt={2} onSubmit={submitHandler}>
         <VisuallyHidden>News</VisuallyHidden>
-        <Box display={{ base: 'block', lg: 'none' }}>
+        <Box display={{ base: 'block', md: 'none' }}>
           <Input
             size="lg"
             color="brand.900"

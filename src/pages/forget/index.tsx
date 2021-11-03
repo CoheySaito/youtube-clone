@@ -18,8 +18,7 @@ const index: NextPage = () => {
     <Center bg="#fafafa">
       <Grid
         rowGap={4}
-        maxW="560px"
-        w="42%"
+        w="560px"
         mx="auto"
         bg="white"
         border="1px solid rgba(0, 0, 0, 0.12);"
@@ -27,12 +26,14 @@ const index: NextPage = () => {
         py={12}
         borderRadius="md"
       >
-        <Image
-          src="/img/yt_logo_rgb_light.png"
-          w="80px"
-          alt="logo"
-          cursor="pointer"
-        />
+        <Link as={NextLink} href={'/'} passHref>
+          <Image
+            src="/img/yt_logo_rgb_light.png"
+            w="80px"
+            alt="logo"
+            cursor="pointer"
+          />
+        </Link>
         <Text as="h1" fontSize="3xl" mb={6}>
           パスワードの再発行
         </Text>

@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -14,13 +14,14 @@ import {
   Textarea,
   Alert,
   AlertIcon,
-} from "@chakra-ui/react";
+  Box,
+} from '@chakra-ui/react';
 
-import { useRouter } from "next/router";
-import { v4 as uuidv4 } from "uuid";
-import useVideoCrud from "../hooks/useVideoCrud";
-import uploadFirebaseStorage from "../utils/uploadFirebaseStorage";
-import VideoSelect from "./VideoSelect";
+import { useRouter } from 'next/router';
+import { v4 as uuidv4 } from 'uuid';
+import useVideoCrud from '../hooks/useVideoCrud';
+import uploadFirebaseStorage from '../utils/uploadFirebaseStorage';
+import VideoSelect from './VideoSelect';
 
 type UploadModalProps = {
   isOpen: boolean;
@@ -60,11 +61,11 @@ const UploadModal: React.VFC<UploadModalProps> = ({
     setUploadLoading(true);
 
     if (!selectedVideoFile || !thumbFile) {
-      seterrorMessage(new Error("ファイルを選択してください。"));
+      seterrorMessage(new Error('ファイルを選択してください。'));
       return;
     }
     if (!titleRef?.current.value) {
-      seterrorMessage(new Error("titleを入力してください。"));
+      seterrorMessage(new Error('titleを入力してください。'));
       return;
     }
     try {
@@ -74,7 +75,7 @@ const UploadModal: React.VFC<UploadModalProps> = ({
       const videoUploadTask = await uploadFirebaseStorage(
         videoId,
         selectedVideoFile,
-        "videos",
+        'videos',
       );
 
       //Firebaseにthumbnailアップロード
@@ -83,7 +84,7 @@ const UploadModal: React.VFC<UploadModalProps> = ({
       const thumbnailUploadTask = await uploadFirebaseStorage(
         thumbnailId,
         thumbFile,
-        "thumbnails",
+        'thumbnails',
       );
 
       //Hasuraにvideoデータをcreate
@@ -97,7 +98,7 @@ const UploadModal: React.VFC<UploadModalProps> = ({
         },
       });
       if (res?.data?.insert_videos_one) {
-        router.push("/");
+        router.push('/');
       }
     } catch (error) {
       alert(error?.message);
@@ -117,19 +118,21 @@ const UploadModal: React.VFC<UploadModalProps> = ({
         <ModalCloseButton />
         <ModalBody>
           <Grid
-            gridTemplateColumns="1fr 1fr"
+            gridTemplateColumns={{ base: '1fr', md: '1fr 1fr' }}
             justifyItems="center"
             alignItems="center"
             my={6}
             columnGap={6}
           >
-            <VideoSelect
-              {...{
-                selectedVideoFile,
-                setSelectedVideoFile,
-                setThumbFile,
-              }}
-            />
+            <Box py={{ base: 12, md: 0 }}>
+              <VideoSelect
+                {...{
+                  selectedVideoFile,
+                  setSelectedVideoFile,
+                  setThumbFile,
+                }}
+              />
+            </Box>
 
             <Grid as="form" rowGap={8} w="100%">
               <FormControl isRequired>
@@ -137,7 +140,7 @@ const UploadModal: React.VFC<UploadModalProps> = ({
                 <Input
                   ref={titleRef}
                   placeholder="Title..."
-                  _placeholder={{ color: "gray.500" }}
+                  _placeholder={{ color: 'gray.500' }}
                   type="text"
                 />
               </FormControl>
@@ -146,12 +149,12 @@ const UploadModal: React.VFC<UploadModalProps> = ({
                 <Textarea
                   ref={descRef}
                   placeholder="Discription..."
-                  _placeholder={{ color: "gray.500" }}
+                  _placeholder={{ color: 'gray.500' }}
                   mt={1}
                   rows={3}
                   shadow="sm"
                   focusBorderColor="brand.400"
-                  fontSize={{ sm: "sm" }}
+                  fontSize={{ sm: 'sm' }}
                 />
               </FormControl>
 
@@ -160,9 +163,9 @@ const UploadModal: React.VFC<UploadModalProps> = ({
                 minW="160px"
                 type="button"
                 colorScheme="blue"
-                bg={!selectedVideoFile || !thumbFile ? "white" : "blue.500"}
+                bg={!selectedVideoFile || !thumbFile ? 'white' : 'blue.500'}
                 fontSize="sm"
-                variant={!selectedVideoFile || !thumbFile ? "ghost" : "solid"}
+                variant={!selectedVideoFile || !thumbFile ? 'ghost' : 'solid'}
                 onClick={handleSubmit}
                 disabled={!selectedVideoFile || !thumbFile}
                 isLoading={uploadLoading}
