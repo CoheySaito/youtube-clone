@@ -1,13 +1,13 @@
 import { NextPage } from 'next';
 import React from 'react';
 import Display from '../../components/Display';
-import HomeLayout from '../../components/layouts/HomeLayout';
+import Layout from '../../components/layouts/Layout';
 
 const index: NextPage = () => {
   return (
-    <HomeLayout>
+    <Layout sidebar title="Trial">
       <Display />
-    </HomeLayout>
+    </Layout>
   );
 };
 export default index;

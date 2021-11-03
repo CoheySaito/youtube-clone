@@ -6,25 +6,19 @@ import {
   AlertDialogHeader,
   AlertDialogBody,
   AlertDialogFooter,
+  useDisclosure,
 } from '@chakra-ui/react';
 import React from 'react';
-
-import { useLogout } from '../hooks/useLogout';
+import LogoutAlertDialog from './LogoutAlertDialog';
 
 type ButtonWithAlertDialogProps = {
   initialFocusRef: React.MutableRefObject<undefined>;
-  checkFirebaseUser: () => void;
 };
 
 const ButtonWithAlertDialog: React.VFC<ButtonWithAlertDialogProps> = ({
   initialFocusRef,
-  checkFirebaseUser,
 }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const onClose = () => setIsOpen(false);
-  const cancelRef = React.useRef();
-
-  const { logout } = useLogout();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
@@ -33,44 +27,11 @@ const ButtonWithAlertDialog: React.VFC<ButtonWithAlertDialogProps> = ({
         colorScheme="red"
         ref={initialFocusRef}
         w="60%"
-        onClick={() => setIsOpen(true)}
+        onClick={onOpen}
       >
         ログアウト
       </Button>
-      <AlertDialog
-        isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              ログアウト確認
-            </AlertDialogHeader>
-
-            <AlertDialogBody>
-              ログアウトしてよろしいでしょうか。
-            </AlertDialogBody>
-
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                キャンセル
-              </Button>
-              <Button
-                colorScheme="red"
-                onClick={async () => {
-                  await logout();
-                  onClose();
-                  checkFirebaseUser();
-                }}
-                ml={3}
-              >
-                ログアウト
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+      <LogoutAlertDialog {...{ isOpen, onClose }} />
     </>
   );
 };
