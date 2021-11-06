@@ -48,7 +48,11 @@ const Display: React.VFC = () => {
 
   return (
     <Grid
-      gridTemplateColumns="repeat(auto-fit,minmax(200px,1fr))"
+      gridTemplateColumns={{
+        base: 'repeat(auto-fit,minmax(200px,1fr))',
+        md: 'repeat(2,1fr)',
+        lg: 'repeat(4,1fr)',
+      }}
       columnGap={6}
       rowGap={6}
     >
