@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { MdOutlineWhatshot } from 'react-icons/md';
 import { GrChannel } from 'react-icons/gr';
 import NextLink from 'next/link';
-import { CurrentUserContext } from './context/CurrentUserContext';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 import LogoutAlertDialog from './LogoutAlertDialog';
 import { AiFillHome, AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
 import { BsFillCameraVideoFill } from 'react-icons/bs';
@@ -13,8 +13,8 @@ import SideBarUploadItem from './SideBarUploadItem';
 const SideBar: React.VFC = React.memo(() => {
   const contents = [
     { title: 'ホーム', icon: <AiFillHome />, href: '/' },
-    { title: 'トレンド', icon: <MdOutlineWhatshot />, href: '' },
-    { title: '登録チャンネル', icon: <GrChannel />, href: '' },
+    { title: 'トレンド', icon: <MdOutlineWhatshot />, href: '/' },
+    { title: '登録チャンネル', icon: <GrChannel />, href: '/' },
   ] as const;
 
   const { currentUser } = useContext(CurrentUserContext);

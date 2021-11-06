@@ -3,7 +3,7 @@ import HomeLayout from './HomeLayout';
 import SidelessHomeLayout from './SidelessHomeLayout';
 
 import firebase from '../../utils/firebase/firebaseConfig';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 
 type LayoutProps = {
   sidebar?: boolean;

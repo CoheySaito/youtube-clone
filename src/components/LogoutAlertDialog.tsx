@@ -9,7 +9,7 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
 } from '@chakra-ui/react';
-import { CurrentUserContext } from './context/CurrentUserContext';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 import { useLogout } from '../hooks/useLogout';
 
 type LogoutAlertDialogProps = { isOpen: boolean; onClose: () => void };

@@ -18,6 +18,7 @@ import { useGetVideoByIdQuery } from '../../generated/graphql';
 import { firebaseStorage } from '../../utils/firebase/firebaseConfig';
 import { formatDate } from '../../utils/formatDate';
 import Layout from '../../components/layouts/Layout';
+import AppContextWrapper from '../../context/AppContextWrapper';
 
 const Watch: NextPage = () => {
   const router = useRouter();
@@ -60,17 +61,19 @@ const Watch: NextPage = () => {
 
   if (loading) {
     return (
-      <Layout sidebar={false} title="Watch">
-        <Center height="100%">
-          <Spinner
-            thickness="4px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="blue.500"
-            size="xl"
-          />
-        </Center>
-      </Layout>
+      <AppContextWrapper>
+        <Layout sidebar={false} title="Watch">
+          <Center height="100%">
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          </Center>
+        </Layout>
+      </AppContextWrapper>
     );
   }
 
@@ -79,86 +82,88 @@ const Watch: NextPage = () => {
   }
 
   return (
-    <Layout sidebar={false} title="Watch">
-      <Grid
-        gridTemplateColumns={{ base: '1fr', md: '4fr 2fr' }}
-        columnGap={6}
-        alignContent="start"
-        justifyContent="start"
-        py={6}
-      >
-        <GridItem gridColumn={{ base: '1/2', md: '1/2' }}>
-          <AspectRatio maxW="100%" ratio={16 / 9} mb={4}>
-            {video?.video_url ? (
-              <iframe
-                title={video.title}
-                src={fetchedVideoUrl}
-                allowFullScreen
-              />
-            ) : (
-              <Image src={fetchedVideoUrl} alt="no_video" objectFit="cover" />
-            )}
-          </AspectRatio>
-
-          <Grid>
-            <Text as="h1" mb={1} fontSize="lg">
-              {video?.title}
-            </Text>
-            <Text fontSize="sm" color="gray.500" mb={3}>
-              {video?.views && (
-                <Box as="span" mr={1} letterSpacing="0.04em">
-                  {video.views}回視聴
-                </Box>
-              )}
-              {datetime && <Box as="span"> {datetime}</Box>}
-            </Text>
-            <Divider borderColor="gray.300" border="0.6px" mb={3} />
-            <Grid
-              gridTemplateColumns="auto 1fr"
-              gridTemplateRows="auto auto"
-              rowGap={2}
-            >
-              <Avatar
-                size="md"
-                name="Dan Abrahmov"
-                src="https://bit.ly/dan-abramov"
-                mr={4}
-                gridColumn="1/2"
-                gridRow="1/2"
-              />
-              <Box
-                w="100%"
-                textAlign="left"
-                lineHeight="short"
-                gridColumn="2/3"
-                gridRow="1/2"
-              >
-                <Text>Dan Abrahmov</Text>
-                <Text fontSize="sm" color="gray.400">
-                  4 subscribers test1
-                </Text>
-              </Box>
-              <Text fontSize="sm" gridColumn="2/3" gridRow="2/3">
-                {video.description}
-              </Text>
-            </Grid>
-          </Grid>
-        </GridItem>
-
-        <GridItem
-          gridColumn={{ base: '1/2', md: '2/3' }}
-          pt={{ base: 10, md: 0 }}
+    <AppContextWrapper>
+      <Layout sidebar={false} title="Watch">
+        <Grid
+          gridTemplateColumns={{ base: '1fr', md: '4fr 2fr' }}
+          columnGap={6}
+          alignContent="start"
+          justifyContent="start"
+          py={6}
         >
-          <Divider
-            borderColor="gray.300"
-            border="0.6px"
-            mb={3}
-            display={{ base: 'block', md: 'none' }}
-          />
-          <RelatedVideo />
-        </GridItem>
-      </Grid>
-    </Layout>
+          <GridItem gridColumn={{ base: '1/2', md: '1/2' }}>
+            <AspectRatio maxW="100%" ratio={16 / 9} mb={4}>
+              {video?.video_url ? (
+                <iframe
+                  title={video.title}
+                  src={fetchedVideoUrl}
+                  allowFullScreen
+                />
+              ) : (
+                <Image src={fetchedVideoUrl} alt="no_video" objectFit="cover" />
+              )}
+            </AspectRatio>
+
+            <Grid>
+              <Text as="h1" mb={1} fontSize="lg">
+                {video?.title}
+              </Text>
+              <Text fontSize="sm" color="gray.500" mb={3}>
+                {video?.views && (
+                  <Box as="span" mr={1} letterSpacing="0.04em">
+                    {video.views}回視聴
+                  </Box>
+                )}
+                {datetime && <Box as="span"> {datetime}</Box>}
+              </Text>
+              <Divider borderColor="gray.300" border="0.6px" mb={3} />
+              <Grid
+                gridTemplateColumns="auto 1fr"
+                gridTemplateRows="auto auto"
+                rowGap={2}
+              >
+                <Avatar
+                  size="md"
+                  name="Dan Abrahmov"
+                  src="https://bit.ly/dan-abramov"
+                  mr={4}
+                  gridColumn="1/2"
+                  gridRow="1/2"
+                />
+                <Box
+                  w="100%"
+                  textAlign="left"
+                  lineHeight="short"
+                  gridColumn="2/3"
+                  gridRow="1/2"
+                >
+                  <Text>Dan Abrahmov</Text>
+                  <Text fontSize="sm" color="gray.400">
+                    4 subscribers test1
+                  </Text>
+                </Box>
+                <Text fontSize="sm" gridColumn="2/3" gridRow="2/3">
+                  {video.description}
+                </Text>
+              </Grid>
+            </Grid>
+          </GridItem>
+
+          <GridItem
+            gridColumn={{ base: '1/2', md: '2/3' }}
+            pt={{ base: 10, md: 0 }}
+          >
+            <Divider
+              borderColor="gray.300"
+              border="0.6px"
+              mb={3}
+              display={{ base: 'block', md: 'none' }}
+            />
+            <RelatedVideo />
+          </GridItem>
+        </Grid>
+      </Layout>
+    </AppContextWrapper>
   );
 };
 export default Watch;

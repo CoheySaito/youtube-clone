@@ -1,12 +1,32 @@
 import { Center, Grid, Spinner } from '@chakra-ui/react';
-import React from 'react';
-import { GetVideosQuery, useGetVideosQuery } from '../generated/graphql';
+import React, { useContext, useEffect } from 'react';
+import { SerchQueryContext } from '../context/SerchQueryContext';
+import { useGetVideosQuery } from '../generated/graphql';
 import Item from './Item';
 
 const Display: React.VFC = () => {
   const { data, loading, error } = useGetVideosQuery({
     fetchPolicy: 'cache-and-network',
   });
+
+  const { serchQuery, setSerchQuery } = useContext(SerchQueryContext);
+  const regex = new RegExp(serchQuery, 'i');
+
+  const videos = serchQuery
+    ? data?.videos.filter(
+        (video) => regex.test(video.title) || regex.test(video.description),
+      )
+    : data?.videos;
+
+  useEffect(() => {
+    const query = localStorage.getItem('query');
+    if (!serchQuery && query) {
+      setSerchQuery(query);
+    }
+    return () => {
+      localStorage.removeItem('query');
+    };
+  }, []);
 
   if (loading) {
     return (
@@ -32,7 +52,7 @@ const Display: React.VFC = () => {
       columnGap={6}
       rowGap={6}
     >
-      {data?.videos.map((video) => (
+      {videos?.map((video) => (
         <Item key={video.id} {...{ video }} />
       ))}
     </Grid>

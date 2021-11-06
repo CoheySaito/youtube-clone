@@ -1,5 +1,5 @@
 import React from 'react';
-import firebase from '../../utils/firebase/firebaseConfig';
+import firebase from '../utils/firebase/firebaseConfig';
 
 type CurrentUserContextType = {
   currentUser: firebase.User;
