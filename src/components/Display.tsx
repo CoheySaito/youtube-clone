@@ -2,7 +2,9 @@ import { Center, Grid, Spinner } from '@chakra-ui/react';
 import React, { useContext, useEffect } from 'react';
 import { SerchQueryContext } from '../context/SerchQueryContext';
 import { useGetVideosQuery } from '../generated/graphql';
+import usePagination from '../hooks/usePagination';
 import Item from './Item';
+import BasicPagination from './layouts/BasicPagination';
 
 const Display: React.VFC = () => {
   const { data, loading, error } = useGetVideosQuery({
@@ -17,6 +19,12 @@ const Display: React.VFC = () => {
         (video) => regex.test(video.title) || regex.test(video.description),
       )
     : data?.videos;
+
+  //Pagination
+  const { current, setCurrent, pageSize, currentVideos } = usePagination(
+    videos,
+    4,
+  );
 
   useEffect(() => {
     const query = localStorage.getItem('query');
@@ -47,15 +55,25 @@ const Display: React.VFC = () => {
   }
 
   return (
-    <Grid
-      gridTemplateColumns="repeat(auto-fit,minmax(200px,1fr))"
-      columnGap={6}
-      rowGap={6}
-    >
-      {videos?.map((video) => (
-        <Item key={video.id} {...{ video }} />
-      ))}
-    </Grid>
+    <>
+      <Grid
+        gridTemplateColumns={{
+          base: 'repeat(auto-fit,minmax(200px,1fr))',
+          md: 'repeat(2,1fr)',
+          lg: 'repeat(4,1fr)',
+        }}
+        columnGap={6}
+        rowGap={6}
+      >
+        {currentVideos?.map((video) => (
+          <Item key={video.id} {...{ video }} />
+        ))}
+      </Grid>
+      <BasicPagination
+        total={videos.length}
+        {...{ current, setCurrent, pageSize }}
+      />
+    </>
   );
 };
 export default Display;
