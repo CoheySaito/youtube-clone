@@ -1,5 +1,4 @@
 /* eslint-disable react/display-name */
-
 import React from 'react';
 import Pagination from '@choc-ui/paginator';
 import { Button, Icon } from '@chakra-ui/react';
@@ -52,9 +51,7 @@ const BasicPagination: React.VFC<PaginationProps> = ({
       itemRender={itemRender}
       paginationProps={{
         display: 'flex',
-        pos: 'absolute',
-        left: '50%',
-        transform: 'translateX(-50%)',
+        justifyContent: 'center',
       }}
       colorScheme="blue"
     />
