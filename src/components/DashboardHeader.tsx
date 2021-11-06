@@ -26,7 +26,7 @@ import UploadModal from './UploadModal';
 import ButtonWithAlertDialog from './ButtonWithAlertDialog';
 import BasicDrawer from './BasicDrawer';
 import SearchInput from './SearchInput';
-import { CurrentUserContext } from './context/CurrentUserContext';
+import { CurrentUserContext } from '../context/CurrentUserContext';
 
 // eslint-disable-next-line react/display-name
 const DashboardHeaderL: React.VFC = React.memo(() => {
