@@ -24,7 +24,7 @@ const SearchInput: React.VFC = React.memo(() => {
     } else {
       setSerchQuery('');
     }
-    router.push('/trial');
+    router.push('/');
   };
 
   useEffect(() => {

@@ -24,7 +24,7 @@ export const useUserChanged = () => {
           //path (string): cookie path, use / as the path if you want your cookie to be accessible on all pages
           //Cokieにセット
           cookie.set('token', token, { path: '/' });
-          router.push('/trial');
+          router.push('/');
         } else {
           const userRef = firebase
             .firestore()
@@ -40,7 +40,7 @@ export const useUserChanged = () => {
             const hassuraClames = idTokenResult.claims[HASURA_TOKEN_KEY];
             if (hassuraClames) {
               cookie.set('token', token, { path: '/' });
-              router.push('/trial');
+              router.push('/');
             }
           });
         }

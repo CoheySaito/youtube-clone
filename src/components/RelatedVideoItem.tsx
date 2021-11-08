@@ -5,7 +5,6 @@ import { Grid, AspectRatio, Box, Image, Text, Link } from '@chakra-ui/react';
 import { firebaseStorage } from '../utils/firebase/firebaseConfig';
 
 import NextLink from 'next/link';
-import { GrBluetooth } from 'react-icons/gr';
 
 type RelatedVideoItemProps = {
   video: {
