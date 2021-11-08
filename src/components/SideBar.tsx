@@ -3,11 +3,10 @@ import React, { useContext } from 'react';
 import { MdOutlineWhatshot } from 'react-icons/md';
 import { GrChannel } from 'react-icons/gr';
 import NextLink from 'next/link';
-import { CurrentUserContext } from '../context/CurrentUserContext';
 import LogoutAlertDialog from './LogoutAlertDialog';
 import { AiFillHome, AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai';
-import { BsFillCameraVideoFill } from 'react-icons/bs';
 import SideBarUploadItem from './SideBarUploadItem';
+import { LoginUserIdContext } from '../context/loginUserIdrContext';
 
 // eslint-disable-next-line react/display-name
 const SideBar: React.VFC = React.memo(() => {
@@ -17,7 +16,7 @@ const SideBar: React.VFC = React.memo(() => {
     { title: '登録チャンネル', icon: <GrChannel />, href: '/' },
   ] as const;
 
-  const { currentUser } = useContext(CurrentUserContext);
+  const { loginUserId } = useContext(LoginUserIdContext);
 
   //LogoutAlertDialog
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,9 +46,9 @@ const SideBar: React.VFC = React.memo(() => {
         </Link>
       ))}
 
-      {currentUser && <SideBarUploadItem />}
+      {loginUserId && <SideBarUploadItem />}
 
-      {currentUser ? (
+      {loginUserId ? (
         <Grid
           as="nav"
           gridAutoFlow="column"

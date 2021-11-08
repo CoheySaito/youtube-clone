@@ -46,7 +46,6 @@ const SignUp: NextPage = () => {
 
     // アカウントにトークンが設定されるまで待機
     await checkAuthToken(user.uid);
-
     try {
       await insert_users_one({
         variables: {

@@ -9,18 +9,22 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
 } from '@chakra-ui/react';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+import { LoginUserIdContext } from '../context/loginUserIdrContext';
 import { useLogout } from '../hooks/useLogout';
 
-type LogoutAlertDialogProps = { isOpen: boolean; onClose: () => void };
+type LogoutAlertDialogProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
 
 const LogoutAlertDialog: React.FC<LogoutAlertDialogProps> = ({
   isOpen,
   onClose,
 }) => {
   const { logout } = useLogout();
-  const { checkFirebaseUser } = useContext(CurrentUserContext);
   const cancelRef = React.useRef<HTMLButtonElement>();
+
+  const { resetLoginUserId } = useContext(LoginUserIdContext);
   return (
     <>
       <AlertDialog
@@ -45,7 +49,7 @@ const LogoutAlertDialog: React.FC<LogoutAlertDialogProps> = ({
                 onClick={async () => {
                   await logout();
                   onClose();
-                  checkFirebaseUser();
+                  resetLoginUserId();
                 }}
                 ml={3}
               >

@@ -3,7 +3,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
 
-!firebase.apps.length
+!firebase.apps?.length
   ? firebase.initializeApp({
       apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
       authDomain: process.env.NEXT_PUBLIC_FIREBASE_DOMAIN,

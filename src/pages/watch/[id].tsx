@@ -39,18 +39,38 @@ const Watch: NextPage = () => {
     video_url: '',
     title: '',
     updated_at: '',
+    views: 0,
+    user: {
+      __typename: 'users',
+      name: '',
+      number_of_subscribers: 0,
+      profile_photo_url: '',
+    },
   };
   const { datetime } =
     video?.created_at && formatDate(new Date(video.created_at), new Date());
 
   const [fetchedVideoUrl, setFetchedVideolUrl] = useState<string>();
+  const [fetchedAvatarlUrl, setFetchedAvatarlUrl] = useState<string>(null);
+
+  const [isMounted, setIsMounted] = useState(true);
 
   useEffect(() => {
     const fetchFn = async () => {
       const res: string = await firebaseStorage
         .ref(video?.video_url || 'videos/no_video.jpeg')
         .getDownloadURL();
-      setFetchedVideolUrl(res);
+
+      if (isMounted) {
+        setFetchedVideolUrl(res);
+      }
+
+      const avatarRes: string = await firebaseStorage
+        .ref(video?.user?.profile_photo_url || 'avatar/no_avatar.png')
+        .getDownloadURL();
+      if (isMounted) {
+        setFetchedAvatarlUrl(avatarRes);
+      }
     };
     try {
       fetchFn();
@@ -78,7 +98,7 @@ const Watch: NextPage = () => {
   }
 
   if (error) {
-    return <p>Error:{error?.message}</p>;
+    console.error(error?.message);
   }
 
   return (
@@ -124,8 +144,8 @@ const Watch: NextPage = () => {
               >
                 <Avatar
                   size="md"
-                  name="Dan Abrahmov"
-                  src="https://bit.ly/dan-abramov"
+                  name={video?.user?.name}
+                  src={fetchedAvatarlUrl}
                   mr={4}
                   gridColumn="1/2"
                   gridRow="1/2"
@@ -137,9 +157,9 @@ const Watch: NextPage = () => {
                   gridColumn="2/3"
                   gridRow="1/2"
                 >
-                  <Text>Dan Abrahmov</Text>
+                  <Text>{video?.user?.name}</Text>
                   <Text fontSize="sm" color="gray.400">
-                    4 subscribers test1
+                    {`${video?.user?.number_of_subscribers} subscribers`}
                   </Text>
                 </Box>
                 <Text fontSize="sm" gridColumn="2/3" gridRow="2/3">

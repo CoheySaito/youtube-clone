@@ -198,6 +198,7 @@ export type Mutation_RootUpdate_News_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_UsersArgs = {
+  _inc?: Maybe<Users_Inc_Input>;
   _set?: Maybe<Users_Set_Input>;
   where: Users_Bool_Exp;
 };
@@ -205,6 +206,7 @@ export type Mutation_RootUpdate_UsersArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Users_By_PkArgs = {
+  _inc?: Maybe<Users_Inc_Input>;
   _set?: Maybe<Users_Set_Input>;
   pk_columns: Users_Pk_Columns_Input;
 };
@@ -567,6 +569,7 @@ export type Users = {
   email?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   name: Scalars['String'];
+  number_of_subscribers?: Maybe<Scalars['Int']>;
   profile_photo_url?: Maybe<Scalars['String']>;
   updated_at: Scalars['timestamptz'];
   /** An array relationship */
@@ -605,9 +608,17 @@ export type Users_Aggregate = {
 /** aggregate fields of "users" */
 export type Users_Aggregate_Fields = {
   __typename?: 'users_aggregate_fields';
+  avg?: Maybe<Users_Avg_Fields>;
   count: Scalars['Int'];
   max?: Maybe<Users_Max_Fields>;
   min?: Maybe<Users_Min_Fields>;
+  stddev?: Maybe<Users_Stddev_Fields>;
+  stddev_pop?: Maybe<Users_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Users_Stddev_Samp_Fields>;
+  sum?: Maybe<Users_Sum_Fields>;
+  var_pop?: Maybe<Users_Var_Pop_Fields>;
+  var_samp?: Maybe<Users_Var_Samp_Fields>;
+  variance?: Maybe<Users_Variance_Fields>;
 };
 
 
@@ -615,6 +626,12 @@ export type Users_Aggregate_Fields = {
 export type Users_Aggregate_FieldsCountArgs = {
   columns?: Maybe<Array<Users_Select_Column>>;
   distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type Users_Avg_Fields = {
+  __typename?: 'users_avg_fields';
+  number_of_subscribers?: Maybe<Scalars['Float']>;
 };
 
 /** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
@@ -626,6 +643,7 @@ export type Users_Bool_Exp = {
   email?: Maybe<String_Comparison_Exp>;
   id?: Maybe<String_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
+  number_of_subscribers?: Maybe<Int_Comparison_Exp>;
   profile_photo_url?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   videos?: Maybe<Videos_Bool_Exp>;
@@ -637,12 +655,18 @@ export enum Users_Constraint {
   UsesPkey = 'uses_pkey'
 }
 
+/** input type for incrementing numeric columns in table "users" */
+export type Users_Inc_Input = {
+  number_of_subscribers?: Maybe<Scalars['Int']>;
+};
+
 /** input type for inserting data into table "users" */
 export type Users_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  number_of_subscribers?: Maybe<Scalars['Int']>;
   profile_photo_url?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   videos?: Maybe<Videos_Arr_Rel_Insert_Input>;
@@ -655,6 +679,7 @@ export type Users_Max_Fields = {
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  number_of_subscribers?: Maybe<Scalars['Int']>;
   profile_photo_url?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -666,6 +691,7 @@ export type Users_Min_Fields = {
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  number_of_subscribers?: Maybe<Scalars['Int']>;
   profile_photo_url?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -699,6 +725,7 @@ export type Users_Order_By = {
   email?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  number_of_subscribers?: Maybe<Order_By>;
   profile_photo_url?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
   videos_aggregate?: Maybe<Videos_Aggregate_Order_By>;
@@ -720,6 +747,8 @@ export enum Users_Select_Column {
   /** column name */
   Name = 'name',
   /** column name */
+  NumberOfSubscribers = 'number_of_subscribers',
+  /** column name */
   ProfilePhotoUrl = 'profile_photo_url',
   /** column name */
   UpdatedAt = 'updated_at'
@@ -731,8 +760,33 @@ export type Users_Set_Input = {
   email?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  number_of_subscribers?: Maybe<Scalars['Int']>;
   profile_photo_url?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Users_Stddev_Fields = {
+  __typename?: 'users_stddev_fields';
+  number_of_subscribers?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Users_Stddev_Pop_Fields = {
+  __typename?: 'users_stddev_pop_fields';
+  number_of_subscribers?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Users_Stddev_Samp_Fields = {
+  __typename?: 'users_stddev_samp_fields';
+  number_of_subscribers?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate sum on columns */
+export type Users_Sum_Fields = {
+  __typename?: 'users_sum_fields';
+  number_of_subscribers?: Maybe<Scalars['Int']>;
 };
 
 /** update columns of table "users" */
@@ -746,10 +800,30 @@ export enum Users_Update_Column {
   /** column name */
   Name = 'name',
   /** column name */
+  NumberOfSubscribers = 'number_of_subscribers',
+  /** column name */
   ProfilePhotoUrl = 'profile_photo_url',
   /** column name */
   UpdatedAt = 'updated_at'
 }
+
+/** aggregate var_pop on columns */
+export type Users_Var_Pop_Fields = {
+  __typename?: 'users_var_pop_fields';
+  number_of_subscribers?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type Users_Var_Samp_Fields = {
+  __typename?: 'users_var_samp_fields';
+  number_of_subscribers?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type Users_Variance_Fields = {
+  __typename?: 'users_variance_fields';
+  number_of_subscribers?: Maybe<Scalars['Float']>;
+};
 
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
@@ -1143,17 +1217,24 @@ export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetUsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: string, name: string, email?: string | null | undefined, profile_photo_url?: string | null | undefined, updated_at: string, created_at: string }> };
 
+export type GetUserByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetUserByIdQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: string, name: string }>, users_by_pk?: { __typename?: 'users', created_at: string, email?: string | null | undefined, id: string, name: string, profile_photo_url?: string | null | undefined } | null | undefined };
+
 export type GetVideosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetVideosQuery = { __typename?: 'query_root', videos: Array<{ __typename?: 'videos', created_at: string, description?: string | null | undefined, duration?: number | null | undefined, id: string, owner_id?: string | null | undefined, title: string, updated_at?: string | null | undefined, views?: number | null | undefined, video_url?: string | null | undefined, thumbnail_url?: string | null | undefined }> };
+export type GetVideosQuery = { __typename?: 'query_root', videos: Array<{ __typename?: 'videos', id: string, title: string, description?: string | null | undefined, created_at: string, thumbnail_url?: string | null | undefined, video_url?: string | null | undefined, views?: number | null | undefined, user?: { __typename?: 'users', name: string, profile_photo_url?: string | null | undefined } | null | undefined }> };
 
 export type GetVideoByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetVideoByIdQuery = { __typename?: 'query_root', videos_by_pk?: { __typename?: 'videos', created_at: string, description?: string | null | undefined, duration?: number | null | undefined, id: string, owner_id?: string | null | undefined, title: string, updated_at?: string | null | undefined, views?: number | null | undefined, video_url?: string | null | undefined, thumbnail_url?: string | null | undefined } | null | undefined };
+export type GetVideoByIdQuery = { __typename?: 'query_root', videos_by_pk?: { __typename?: 'videos', created_at: string, description?: string | null | undefined, id: string, thumbnail_url?: string | null | undefined, title: string, video_url?: string | null | undefined, views?: number | null | undefined, user?: { __typename?: 'users', name: string, number_of_subscribers?: number | null | undefined, profile_photo_url?: string | null | undefined } | null | undefined } | null | undefined };
 
 export type CreateVideoMutationVariables = Exact<{
   id: Scalars['String'];
@@ -1252,19 +1333,63 @@ export function useGetUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
 export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
 export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
+export const GetUserByIdDocument = gql`
+    query GetUserById($id: String!) {
+  users {
+    id
+    name
+  }
+  users_by_pk(id: $id) {
+    created_at
+    email
+    id
+    name
+    profile_photo_url
+  }
+}
+    `;
+
+/**
+ * __useGetUserByIdQuery__
+ *
+ * To run a query within a React component, call `useGetUserByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUserByIdQuery(baseOptions: Apollo.QueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, options);
+      }
+export function useGetUserByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, options);
+        }
+export type GetUserByIdQueryHookResult = ReturnType<typeof useGetUserByIdQuery>;
+export type GetUserByIdLazyQueryHookResult = ReturnType<typeof useGetUserByIdLazyQuery>;
+export type GetUserByIdQueryResult = Apollo.QueryResult<GetUserByIdQuery, GetUserByIdQueryVariables>;
 export const GetVideosDocument = gql`
     query GetVideos {
   videos(order_by: {created_at: desc}) {
-    created_at
-    description
-    duration
     id
-    owner_id
     title
-    updated_at
-    views
-    video_url
+    description
+    created_at
     thumbnail_url
+    video_url
+    views
+    user {
+      name
+      profile_photo_url
+    }
   }
 }
     `;
@@ -1300,14 +1425,16 @@ export const GetVideoByIdDocument = gql`
   videos_by_pk(id: $id) {
     created_at
     description
-    duration
     id
-    owner_id
-    title
-    updated_at
-    views
-    video_url
     thumbnail_url
+    title
+    video_url
+    views
+    user {
+      name
+      number_of_subscribers
+      profile_photo_url
+    }
   }
 }
     `;

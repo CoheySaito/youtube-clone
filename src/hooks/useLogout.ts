@@ -18,6 +18,7 @@ export const useLogout = () => {
     // HTTP＿Clientのcacheを削除
 
     cookie.remove('token');
+    localStorage.removeItem('loginUserId');
   };
 
   return { logout };

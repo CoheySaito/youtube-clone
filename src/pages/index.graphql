@@ -9,18 +9,33 @@ query GetUsers {
   }
 }
 
+query GetUserById($id: String!) {
+  users {
+    id
+    name
+  }
+  users_by_pk(id: $id) {
+    created_at
+    email
+    id
+    name
+    profile_photo_url
+  }
+}
+
 query GetVideos {
   videos(order_by: { created_at: desc }) {
-    created_at
-    description
-    duration
     id
-    owner_id
     title
-    updated_at
-    views
-    video_url
+    description
+    created_at
     thumbnail_url
+    video_url
+    views
+    user {
+      name
+      profile_photo_url
+    }
   }
 }
 
@@ -28,14 +43,16 @@ query GetVideoById($id: String!) {
   videos_by_pk(id: $id) {
     created_at
     description
-    duration
     id
-    owner_id
-    title
-    updated_at
-    views
-    video_url
     thumbnail_url
+    title
+    video_url
+    views
+    user {
+      name
+      number_of_subscribers
+      profile_photo_url
+    }
   }
 }
 

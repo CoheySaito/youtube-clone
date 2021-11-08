@@ -6,7 +6,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { SerchQueryContext } from '../context/SerchQueryContext';
+import { SerchQueryContext } from '../context/serchQueryContext';
 
 import { useRouter } from 'next/router';
 

@@ -1,10 +1,10 @@
 import { Box, Center, Grid, Spinner } from '@chakra-ui/react';
 import React, { useContext, useEffect } from 'react';
-import { SerchQueryContext } from '../context/SerchQueryContext';
 import { useGetVideosQuery } from '../generated/graphql';
 import usePagination from '../hooks/usePagination';
 import Item from './Item';
 import BasicPagination from './BasicPagination';
+import { SerchQueryContext } from '../context/serchQueryContext';
 
 const Display: React.VFC = () => {
   const { data, loading, error } = useGetVideosQuery({
@@ -51,7 +51,7 @@ const Display: React.VFC = () => {
   }
 
   if (error) {
-    return <p>Error:{error?.message}</p>;
+    console.error(error?.message);
   }
 
   return (
@@ -71,7 +71,7 @@ const Display: React.VFC = () => {
       </Grid>
       <Box mt={4}>
         <BasicPagination
-          total={videos.length}
+          total={videos?.length}
           {...{ current, setCurrent, pageSize }}
         />
       </Box>
