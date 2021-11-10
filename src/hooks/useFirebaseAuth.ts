@@ -21,7 +21,10 @@ export const useFirebaseAuth = () => {
 
   const loginFn = useCallback(async () => {
     try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
+      const { user } = await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password);
+      localStorage.setItem('loginUserId', user.uid);
     } catch (error) {
       switch (error.code) {
         case 'auth/cancelled-popup-request':
@@ -76,6 +79,7 @@ export const useFirebaseAuth = () => {
       const { user } = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password);
+      localStorage.setItem('loginUserId', user.uid);
       varUser = user;
     } catch (error) {
       switch (error.code) {

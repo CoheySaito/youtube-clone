@@ -12,39 +12,47 @@ import React, { useEffect, useState } from 'react';
 import { firebaseStorage } from '../utils/firebase/firebaseConfig';
 import { formatDate } from '../utils/formatDate';
 import NextLink from 'next/link';
+import { GetVideosQuery } from '../generated/graphql';
+import { ValueOf } from '../utils/valueOf';
 
-export type VideoType = {
-  __typename?: 'videos';
-  created_at: string;
-  description?: string;
-  duration?: number;
-  id: string;
-  owner_id?: string;
-  title: string;
-  updated_at?: string;
-  views?: number;
-  video_url?: string;
-  thumbnail_url?: string;
-};
+type VideosType = Pick<GetVideosQuery, 'videos'>;
+export type VideoType = ValueOf<VideosType>[number];
 
 type ItemProps = { video: VideoType };
 
 const Item: React.FC<ItemProps> = ({ video }) => {
   const { datetime } = formatDate(new Date(video.created_at), new Date());
   const [fetchedThumbnailUrl, setFetchedThumbnailUrl] = useState<string>(null);
+  const [fetchedAvatarlUrl, setFetchedAvatarlUrl] = useState<string>(null);
+
+  const [isMounted, setIsMounted] = useState(true);
 
   useEffect(() => {
     const fetchFn = async () => {
       const res: string = await firebaseStorage
         .ref(video?.thumbnail_url || 'thumbnails/no_image.jpeg')
         .getDownloadURL();
-      setFetchedThumbnailUrl(res);
+      if (isMounted) {
+        setFetchedThumbnailUrl(res);
+      }
+
+      const avatarRes: string = await firebaseStorage
+        .ref(video?.user?.profile_photo_url || 'avatar/no_avatar.png')
+        .getDownloadURL();
+      if (isMounted) {
+        setFetchedAvatarlUrl(avatarRes);
+      }
     };
+
     try {
       fetchFn();
     } catch (error) {
       console.error(error);
     }
+
+    return () => {
+      setIsMounted(false);
+    };
   });
 
   return (
@@ -79,8 +87,8 @@ const Item: React.FC<ItemProps> = ({ video }) => {
           gridColumn="span 1"
           gridRow="span 3"
           size="md"
-          name="Dan Abrahmov"
-          src="https://bit.ly/dan-abramov"
+          name={video?.user?.name}
+          src={fetchedAvatarlUrl}
           mr={4}
         />
         <Text
@@ -105,7 +113,7 @@ const Item: React.FC<ItemProps> = ({ video }) => {
           overflow="hidden"
           textOverflow="ellipsis"
         >
-          Dan Abrahmov
+          {video?.user?.name}
         </Text>
         <Text
           w="100%"

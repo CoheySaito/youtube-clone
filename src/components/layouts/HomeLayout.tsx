@@ -13,7 +13,7 @@ type HomeLayoutProps = {
 
 // eslint-disable-next-line react/display-name
 const HomeLayout: React.FC<HomeLayoutProps> = React.memo(
-  ({ title = 'YouTube', children }) => {
+  ({ title = 'YouTubeClone', children }) => {
     const isMobile = useBreakpointValue({ base: true, md: false });
 
     return (

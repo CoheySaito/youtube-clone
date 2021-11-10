@@ -6,7 +6,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { SerchQueryContext } from '../context/SerchQueryContext';
+import { SerchQueryContext } from '../context/serchQueryContext';
 
 import { useRouter } from 'next/router';
 
@@ -24,7 +24,7 @@ const SearchInput: React.VFC = React.memo(() => {
     } else {
       setSerchQuery('');
     }
-    router.push('/trial');
+    router.push('/');
   };
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const SearchInput: React.VFC = React.memo(() => {
 
   return (
     <InputGroup maxW="600px">
-      <Input type="tel" placeholder="Search..." fontSize="lg" ref={inputRef} />
+      <Input type="text" placeholder="Search..." fontSize="lg" ref={inputRef} />
       <InputRightElement w="80px" cursor="pointer">
         <IconButton
           aria-label="Serch"

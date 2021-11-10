@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Grid } from '@chakra-ui/layout';
 import NextLink from 'next/link';
 import {
@@ -17,7 +18,7 @@ import {
   useBreakpointValue,
   Collapse,
 } from '@chakra-ui/react';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useColorModeValue } from '@chakra-ui/system';
 
 import { AiOutlineMenu, AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
@@ -26,19 +27,67 @@ import UploadModal from './UploadModal';
 import ButtonWithAlertDialog from './ButtonWithAlertDialog';
 import BasicDrawer from './BasicDrawer';
 import SearchInput from './SearchInput';
-import { CurrentUserContext } from '../context/CurrentUserContext';
+
+import { useGetUserByIdLazyQuery } from '../generated/graphql';
+import { firebaseStorage } from '../utils/firebase/firebaseConfig';
+import { LoginUserIdContext } from '../context/loginUserIdrContext';
+import { UploadModalContext } from '../context/uploadModalContext';
 
 // eslint-disable-next-line react/display-name
 const DashboardHeaderL: React.VFC = React.memo(() => {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
-  const { currentUser, checkFirebaseUser } = useContext(CurrentUserContext);
+  const { loginUserId, checkLocalStorage } = useContext(LoginUserIdContext);
+
+  const [GetUserByIdQuery, { data, error }] = useGetUserByIdLazyQuery({
+    fetchPolicy: 'cache-and-network',
+  });
+
+  useEffect(() => {
+    checkLocalStorage();
+  }, []);
+
+  useEffect(() => {
+    if (loginUserId) {
+      GetUserByIdQuery({
+        variables: {
+          id: loginUserId,
+        },
+      });
+    }
+  }, [loginUserId]);
+
+  //FirebaseStorageからAvatarをfetch
+  const [fetchedAvatarlUrl, setFetchedAvatarlUrl] = useState<string>(null);
+  //途中でunMountした場合の処理
+  const [isMounted, setIsMounted] = useState(true);
+  useEffect(() => {
+    const fetchFn = async () => {
+      const avatarRes: string = await firebaseStorage
+        .ref(data?.users_by_pk?.profile_photo_url || 'avatar/no_avatar.png')
+        .getDownloadURL();
+
+      if (isMounted) {
+        setFetchedAvatarlUrl(avatarRes);
+      }
+    };
+
+    try {
+      fetchFn();
+    } catch (error) {
+      console.error(error);
+    }
+
+    return () => {
+      setIsMounted(false);
+    };
+  }, [data]);
 
   //Popover
   const initialFocusRef = React.useRef();
 
   // UploadModal
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useContext(UploadModalContext);
 
   //BasicDrawer
   const {
@@ -50,6 +99,10 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
 
   //SearchDrawwer
   const { isOpen: isOpenSearch, onToggle: onToggleSearch } = useDisclosure();
+
+  if (error) {
+    console.log(error?.message);
+  }
 
   return (
     <Grid
@@ -104,7 +157,7 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
           <SearchInput />
         )}
       </Center>
-      {currentUser && (
+      {loginUserId && (
         <Box display={{ base: 'none', md: 'block' }}>
           <Button
             variant="ghost"
@@ -119,7 +172,7 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
           <UploadModal {...{ isOpen, onOpen, onClose }} />
         </Box>
       )}
-      {currentUser ? (
+      {loginUserId ? (
         <Popover
           initialFocusRef={initialFocusRef}
           placement="bottom"
@@ -128,8 +181,8 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
           <PopoverTrigger>
             <Avatar
               size="sm"
-              name="Dan Abrahmov"
-              src="https://bit.ly/dan-abramov"
+              name={data?.users_by_pk?.name}
+              src={fetchedAvatarlUrl}
               cursor="pointer"
               display={{ base: 'none', md: 'block' }}
             />
@@ -137,9 +190,7 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
           <PopoverContent>
             <PopoverCloseButton />
             <PopoverBody display="flex" justifyContent="center" py={6}>
-              <ButtonWithAlertDialog
-                {...{ initialFocusRef, checkFirebaseUser }}
-              />
+              <ButtonWithAlertDialog {...{ initialFocusRef }} />
             </PopoverBody>
           </PopoverContent>
         </Popover>

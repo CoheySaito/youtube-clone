@@ -1,4 +1,10 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, {
+  ReactNode,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -22,6 +28,7 @@ import { v4 as uuidv4 } from 'uuid';
 import useVideoCrud from '../hooks/useVideoCrud';
 import uploadFirebaseStorage from '../utils/uploadFirebaseStorage';
 import VideoSelect from './VideoSelect';
+import { UploadModalContext } from '../context/uploadModalContext';
 
 type UploadModalProps = {
   isOpen: boolean;
@@ -53,8 +60,11 @@ const UploadModal: React.VFC<UploadModalProps> = ({
 
   //insert_videos_one createVideos
   const { insert_videos_one } = useVideoCrud();
-  // Firebase Storageにファイルをアップロードする処理
 
+  // UploadModal
+  const { onClose: UploadModalOnClose } = useContext(UploadModalContext);
+
+  // Firebase Storageにファイルをアップロードする処理
   const [uploadLoading, setUploadLoading] = useState(false);
   const handleSubmit = async () => {
     //loading true
@@ -98,7 +108,7 @@ const UploadModal: React.VFC<UploadModalProps> = ({
         },
       });
       if (res?.data?.insert_videos_one) {
-        router.push('/');
+        UploadModalOnClose();
       }
     } catch (error) {
       alert(error?.message);

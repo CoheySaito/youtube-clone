@@ -1,10 +1,10 @@
 import { Box, Center, Grid, Spinner } from '@chakra-ui/react';
 import React, { useContext, useEffect } from 'react';
-import { SerchQueryContext } from '../context/SerchQueryContext';
 import { useGetVideosQuery } from '../generated/graphql';
 import usePagination from '../hooks/usePagination';
 import Item from './Item';
 import BasicPagination from './BasicPagination';
+import { SerchQueryContext } from '../context/serchQueryContext';
 
 const Display: React.VFC = () => {
   const { data, loading, error } = useGetVideosQuery({
@@ -16,14 +16,17 @@ const Display: React.VFC = () => {
 
   const videos = serchQuery
     ? data?.videos.filter(
-        (video) => regex.test(video.title) || regex.test(video.description),
+        (video) =>
+          regex.test(video.title) ||
+          regex.test(video.description) ||
+          regex.test(video?.user.name),
       )
     : data?.videos;
 
   //Pagination
   const { current, setCurrent, pageSize, currentVideos } = usePagination(
     videos,
-    4,
+    8,
   );
 
   useEffect(() => {
@@ -51,7 +54,7 @@ const Display: React.VFC = () => {
   }
 
   if (error) {
-    return <p>Error:{error?.message}</p>;
+    console.error(error?.message);
   }
 
   return (
@@ -65,13 +68,16 @@ const Display: React.VFC = () => {
         columnGap={6}
         rowGap={6}
       >
-        {currentVideos?.map((video) => (
-          <Item key={video.id} {...{ video }} />
-        ))}
+        {currentVideos
+          //ランダムソート
+          ?.sort(() => Math.random() - 0.5)
+          .map((video) => (
+            <Item key={video.id} {...{ video }} />
+          ))}
       </Grid>
       <Box mt={4}>
         <BasicPagination
-          total={videos.length}
+          total={videos?.length}
           {...{ current, setCurrent, pageSize }}
         />
       </Box>
