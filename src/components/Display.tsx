@@ -16,14 +16,17 @@ const Display: React.VFC = () => {
 
   const videos = serchQuery
     ? data?.videos.filter(
-        (video) => regex.test(video.title) || regex.test(video.description),
+        (video) =>
+          regex.test(video.title) ||
+          regex.test(video.description) ||
+          regex.test(video?.user.name),
       )
     : data?.videos;
 
   //Pagination
   const { current, setCurrent, pageSize, currentVideos } = usePagination(
     videos,
-    4,
+    8,
   );
 
   useEffect(() => {
@@ -65,9 +68,12 @@ const Display: React.VFC = () => {
         columnGap={6}
         rowGap={6}
       >
-        {currentVideos?.map((video) => (
-          <Item key={video.id} {...{ video }} />
-        ))}
+        {currentVideos
+          //ランダムソート
+          ?.sort(() => Math.random() - 0.5)
+          .map((video) => (
+            <Item key={video.id} {...{ video }} />
+          ))}
       </Grid>
       <Box mt={4}>
         <BasicPagination

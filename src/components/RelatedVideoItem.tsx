@@ -5,21 +5,10 @@ import { Grid, AspectRatio, Box, Image, Text, Link } from '@chakra-ui/react';
 import { firebaseStorage } from '../utils/firebase/firebaseConfig';
 
 import NextLink from 'next/link';
+import { VideoType } from './Item';
 
 type RelatedVideoItemProps = {
-  video: {
-    __typename?: 'videos';
-    created_at: string;
-    description?: string;
-    duration?: number;
-    id: string;
-    owner_id?: string;
-    title: string;
-    updated_at?: string;
-    views?: number;
-    video_url?: string;
-    thumbnail_url?: string;
-  };
+  video: VideoType;
 };
 
 const RelatedVideoItem: React.FC<RelatedVideoItemProps> = ({ video }) => {
@@ -69,8 +58,8 @@ const RelatedVideoItem: React.FC<RelatedVideoItemProps> = ({ video }) => {
             {video.title}
           </Text>
         </Link>
-        <Text fontSize="sm" color="gray.500">
-          投稿者
+        <Text fontSize=".9rem" color="gray.500">
+          {video?.user?.name}
         </Text>
         <Text fontSize="sm" color="gray.500">
           {video?.views && (

@@ -15,8 +15,8 @@ import NextLink from 'next/link';
 import { GetVideosQuery } from '../generated/graphql';
 import { ValueOf } from '../utils/valueOf';
 
-type UsersType = Pick<GetVideosQuery, 'videos'>;
-export type VideoType = ValueOf<UsersType>[number];
+type VideosType = Pick<GetVideosQuery, 'videos'>;
+export type VideoType = ValueOf<VideosType>[number];
 
 type ItemProps = { video: VideoType };
 

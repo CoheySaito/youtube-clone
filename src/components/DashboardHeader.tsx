@@ -31,6 +31,7 @@ import SearchInput from './SearchInput';
 import { useGetUserByIdLazyQuery } from '../generated/graphql';
 import { firebaseStorage } from '../utils/firebase/firebaseConfig';
 import { LoginUserIdContext } from '../context/loginUserIdrContext';
+import { UploadModalContext } from '../context/uploadModalContext';
 
 // eslint-disable-next-line react/display-name
 const DashboardHeaderL: React.VFC = React.memo(() => {
@@ -38,7 +39,9 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
 
   const { loginUserId, checkLocalStorage } = useContext(LoginUserIdContext);
 
-  const [GetUserByIdQuery, { data, error }] = useGetUserByIdLazyQuery();
+  const [GetUserByIdQuery, { data, error }] = useGetUserByIdLazyQuery({
+    fetchPolicy: 'cache-and-network',
+  });
 
   useEffect(() => {
     checkLocalStorage();
@@ -84,7 +87,7 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
   const initialFocusRef = React.useRef();
 
   // UploadModal
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useContext(UploadModalContext);
 
   //BasicDrawer
   const {

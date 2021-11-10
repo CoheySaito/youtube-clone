@@ -18,6 +18,8 @@ import { useRouter } from 'next/router';
 import { checkAuthToken } from '../../utils/checkAuthToken';
 import Head from 'next/head';
 
+import Cookie from 'universal-cookie';
+
 const SignUp: NextPage = () => {
   const { email, password, emailChange, pwChange, createUserFn } =
     useFirebaseAuth();
@@ -47,6 +49,14 @@ const SignUp: NextPage = () => {
 
     // アカウントにトークンが設定されるまで待機
     await checkAuthToken(user.uid);
+
+    //token→cookie
+    const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims';
+    const cookie = new Cookie();
+
+    const token = await user.getIdToken();
+    cookie.set('token', token, { path: '/' });
+
     try {
       await insert_users_one({
         variables: {

@@ -1,9 +1,9 @@
-import { Grid, Center, Spinner } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React from "react";
-import { useGetVideosQuery } from "../generated/graphql";
+import { Grid, Center, Spinner } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { useGetVideosQuery } from '../generated/graphql';
 
-import RelatedVideoItem from "./RelatedVideoItem";
+import RelatedVideoItem from './RelatedVideoItem';
 
 type RelatedVideoProps = {
   title?: string;
@@ -14,7 +14,7 @@ const RelatedVideo: React.FC<RelatedVideoProps> = () => {
   const id = router.query.id as string;
 
   const { data, loading, error } = useGetVideosQuery({
-    fetchPolicy: "cache-and-network",
+    fetchPolicy: 'cache-and-network',
   });
 
   if (loading) {
@@ -38,6 +38,10 @@ const RelatedVideo: React.FC<RelatedVideoProps> = () => {
     <Grid rowGap={4}>
       {data.videos
         .filter((video) => video.id !== id)
+        //ランダムソート
+        .sort(() => Math.random() - 0.5)
+        // 最初から8つ目まで
+        .slice(0, 7)
         .map((video) => (
           <RelatedVideoItem {...{ video }} key={video.id} />
         ))}

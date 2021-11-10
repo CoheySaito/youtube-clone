@@ -1,6 +1,8 @@
+import { useDisclosure } from '@chakra-ui/hooks';
 import React, { ReactNode, useState } from 'react';
 import { LoginUserIdContext } from './loginUserIdrContext';
 import { SerchQueryContext } from './serchQueryContext';
+import { UploadModalContext } from './uploadModalContext';
 
 type AppContextProps = {
   children: ReactNode;
@@ -25,14 +27,21 @@ const AppContextWrapper: React.VFC<AppContextProps> = ({ children }) => {
     setLoginUserId(undefined);
   };
 
+  //UploadModalContext
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
-    <LoginUserIdContext.Provider
-      value={{ ...{ loginUserId, checkLocalStorage, resetLoginUserId } }}
-    >
-      <SerchQueryContext.Provider value={{ ...{ serchQuery, setSerchQuery } }}>
-        {children}
-      </SerchQueryContext.Provider>
-    </LoginUserIdContext.Provider>
+    <UploadModalContext.Provider value={{ ...{ isOpen, onOpen, onClose } }}>
+      <LoginUserIdContext.Provider
+        value={{ ...{ loginUserId, checkLocalStorage, resetLoginUserId } }}
+      >
+        <SerchQueryContext.Provider
+          value={{ ...{ serchQuery, setSerchQuery } }}
+        >
+          {children}
+        </SerchQueryContext.Provider>
+      </LoginUserIdContext.Provider>
+    </UploadModalContext.Provider>
   );
 };
 

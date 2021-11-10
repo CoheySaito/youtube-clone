@@ -34,7 +34,7 @@ const SearchInput: React.VFC = React.memo(() => {
 
   return (
     <InputGroup maxW="600px">
-      <Input type="tel" placeholder="Search..." fontSize="lg" ref={inputRef} />
+      <Input type="text" placeholder="Search..." fontSize="lg" ref={inputRef} />
       <InputRightElement w="80px" cursor="pointer">
         <IconButton
           aria-label="Serch"
