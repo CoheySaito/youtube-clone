@@ -14,27 +14,25 @@ type BasicDrawerProps = {
   onCloseDrawer: () => void;
 };
 
-const BasicDrawer: React.VFC<BasicDrawerProps> = ({
-  btnRef,
-  isOpenDrawer,
-  onOpenDrawer,
-  onCloseDrawer: onClose,
-}) => {
-  return (
-    <>
-      <Drawer
-        isOpen={isOpenDrawer}
-        placement="left"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay />
-        <DrawerContent px={7} py={6}>
-          <DrawerCloseButton />
-          <SideBar />
-        </DrawerContent>
-      </Drawer>
-    </>
-  );
-};
+// eslint-disable-next-line react/display-name
+const BasicDrawer: React.VFC<BasicDrawerProps> = React.memo(
+  ({ btnRef, isOpenDrawer, onOpenDrawer, onCloseDrawer: onClose }) => {
+    return (
+      <>
+        <Drawer
+          isOpen={isOpenDrawer}
+          placement="left"
+          onClose={onClose}
+          finalFocusRef={btnRef}
+        >
+          <DrawerOverlay />
+          <DrawerContent px={7} py={6}>
+            <DrawerCloseButton />
+            <SideBar />
+          </DrawerContent>
+        </Drawer>
+      </>
+    );
+  },
+);
 export default BasicDrawer;

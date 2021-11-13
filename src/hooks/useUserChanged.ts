@@ -18,6 +18,7 @@ export const useUserChanged = () => {
     const unSubUser = firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         const token = await user.getIdToken();
+        //getIdTokenResult:Tokenの内容をobjectで取得
         const idTokenResult = await user.getIdTokenResult();
         const hassuraClames = idTokenResult.claims[HASURA_TOKEN_KEY];
         if (hassuraClames) {
@@ -33,9 +34,8 @@ export const useUserChanged = () => {
           //hassuraClamesがない場合は、onSnapshotで待つ
           //onSnapshotで変更の度に、()内の関数が実行される。
           unSubMeta = userRef.onSnapshot(async () => {
-            ///* forceRefresh */ true
+            //* forceRefresh */ true
             const token = await user.getIdToken(true);
-            //getIdTokenResult:Tokenの内容をobjectで取得
             const idTokenResult = await user.getIdTokenResult();
             const hassuraClames = idTokenResult.claims[HASURA_TOKEN_KEY];
             if (hassuraClames) {

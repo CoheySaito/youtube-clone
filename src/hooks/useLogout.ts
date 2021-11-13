@@ -13,8 +13,6 @@ export const useLogout = () => {
     //サインアウト
     await firebase.auth().signOut();
 
-    // HTTP＿Clientのcacheを削除
-
     cookie.remove('token');
     localStorage.removeItem('loginUserId');
   };

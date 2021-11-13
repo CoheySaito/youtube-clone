@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
  * サムネイルを生成するカスタムHook
  *
  *@return {*} createdURLs
- *@return {*}createThumbnailsFC -サムネイル作成関数
+ *@return {*} createThumbnailsFC -サムネイル作成関数
  */
 
 const useCreateThumbnails = () => {

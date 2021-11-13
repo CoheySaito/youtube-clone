@@ -15,7 +15,7 @@ export const checkAuthToken = (userId: string): Promise<string> => {
         { includeMetadataChanges: true },
         async (doc) => {
           if (!doc.exists) return;
-          // トークンを取得
+          // トークンを取得  //* forceRefresh */ true
           const idToken = await firebase
             .auth()
             .currentUser?.getIdTokenResult(true);

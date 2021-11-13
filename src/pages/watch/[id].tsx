@@ -22,6 +22,7 @@ import AppContextWrapper from '../../context/AppContextWrapper';
 
 const Watch: NextPage = () => {
   const router = useRouter();
+  //pathパラメータ
   const id = router.query.id as string;
 
   const { data, loading, error } = useGetVideoByIdQuery({
@@ -29,6 +30,7 @@ const Watch: NextPage = () => {
       id,
     },
   });
+
   const video = data?.videos_by_pk ?? {
     __typename: 'videos',
     created_at: '',
@@ -53,14 +55,15 @@ const Watch: NextPage = () => {
   const [fetchedVideoUrl, setFetchedVideolUrl] = useState<string>();
   const [fetchedAvatarlUrl, setFetchedAvatarlUrl] = useState<string>(null);
 
+  //途中でunMountした場合の処理
   const [isMounted, setIsMounted] = useState(true);
 
   useEffect(() => {
+    setIsMounted(true);
     const fetchFn = async () => {
       const res: string = await firebaseStorage
         .ref(video?.video_url || 'videos/no_video.jpeg')
         .getDownloadURL();
-
       if (isMounted) {
         setFetchedVideolUrl(res);
       }
@@ -77,12 +80,15 @@ const Watch: NextPage = () => {
     } catch (error) {
       console.error(error);
     }
+    return () => {
+      setIsMounted(false);
+    };
   });
 
   if (loading) {
     return (
       <AppContextWrapper>
-        <Layout sidebar={false} title="Watch">
+        <Layout sidebar={false} title="YouTubeClone | Watch">
           <Center height="100%">
             <Spinner
               thickness="4px"

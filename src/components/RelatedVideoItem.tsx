@@ -17,18 +17,26 @@ const RelatedVideoItem: React.FC<RelatedVideoItemProps> = ({ video }) => {
 
   const [fetchedThumbnailUrl, setFetchedThumbnailUrl] = useState<string>();
 
+  //途中でunMountした場合の処理
+  const [isMounted, setIsMounted] = useState(true);
   useEffect(() => {
+    setIsMounted(true);
     const fetchFn = async () => {
       const res: string = await firebaseStorage
         .ref(video?.thumbnail_url || 'thumbnails/no_image.jpeg')
         .getDownloadURL();
-      setFetchedThumbnailUrl(res);
+      if (isMounted) {
+        setFetchedThumbnailUrl(res);
+      }
     };
     try {
       fetchFn();
     } catch (error) {
       console.error(error);
     }
+    return () => {
+      setIsMounted(false);
+    };
   });
   return (
     <Grid

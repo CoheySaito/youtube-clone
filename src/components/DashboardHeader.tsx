@@ -62,6 +62,7 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
   //途中でunMountした場合の処理
   const [isMounted, setIsMounted] = useState(true);
   useEffect(() => {
+    setIsMounted(true);
     const fetchFn = async () => {
       const avatarRes: string = await firebaseStorage
         .ref(data?.users_by_pk?.profile_photo_url || 'avatar/no_avatar.png')
@@ -97,11 +98,11 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
   } = useDisclosure();
   const btnRef = React.useRef<HTMLButtonElement>();
 
-  //SearchDrawwer
+  //SearchDrawwer For Mobile
   const { isOpen: isOpenSearch, onToggle: onToggleSearch } = useDisclosure();
 
   if (error) {
-    console.log(error?.message);
+    console.error(error?.message);
   }
 
   return (
@@ -121,7 +122,7 @@ const DashboardHeaderL: React.VFC = React.memo(() => {
         <IconButton
           aria-label="Open menu"
           fontSize="24px"
-          color={useColorModeValue('gray.800', 'inherit')}
+          color={'gray.800'}
           opacity="0.4"
           variant="ghost"
           icon={<AiOutlineMenu />}

@@ -1,4 +1,4 @@
-import { Box, Center, Grid, Spinner } from '@chakra-ui/react';
+import { Box, Center, Grid, Spinner, Text } from '@chakra-ui/react';
 import React, { useContext, useEffect } from 'react';
 import { useGetVideosQuery } from '../generated/graphql';
 import usePagination from '../hooks/usePagination';
@@ -11,9 +11,12 @@ const Display: React.VFC = () => {
     fetchPolicy: 'cache-and-network',
   });
 
+  //serchQuery
   const { serchQuery, setSerchQuery } = useContext(SerchQueryContext);
+  //iフラグ	ignoreCase	大文字・小文字を区別しない
   const regex = new RegExp(serchQuery, 'i');
 
+  //videoTitleとdescriptionとusernameで検索
   const videos = serchQuery
     ? data?.videos.filter(
         (video) =>
@@ -39,6 +42,13 @@ const Display: React.VFC = () => {
     };
   }, []);
 
+  //2ページ目以降だとpaginationが戻らないため
+  useEffect(() => {
+    if (current !== 1) {
+      setCurrent(1);
+    }
+  }, [serchQuery]);
+
   if (loading) {
     return (
       <Center height="100%">
@@ -57,6 +67,13 @@ const Display: React.VFC = () => {
     console.error(error?.message);
   }
 
+  if (serchQuery && videos.length == 0) {
+    return (
+      <Center h="50%">
+        <Text>{`「 ${serchQuery}」を含む動画はありません`}</Text>
+      </Center>
+    );
+  }
   return (
     <>
       <Grid

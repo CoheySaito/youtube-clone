@@ -32,8 +32,9 @@ const RelatedVideo: React.FC<RelatedVideoProps> = () => {
   }
 
   if (error) {
-    return <p>Error:{error?.message}</p>;
+    console.error(error?.message);
   }
+
   return (
     <Grid rowGap={4}>
       {data.videos
