@@ -28,13 +28,25 @@ const SearchInput: React.VFC = React.memo(() => {
   };
 
   useEffect(() => {
-    //render後にrefにアクセス
+    //render後にrefにアクセス setchQuery表示用
     inputRef.current.value = serchQuery;
   }, [serchQuery]);
 
   return (
     <InputGroup maxW="600px">
-      <Input type="text" placeholder="Search..." fontSize="lg" ref={inputRef} />
+      <Input
+        type="text"
+        placeholder="Search..."
+        fontSize="lg"
+        ref={inputRef}
+        //Enterキー押下時の処理
+        onKeyPress={(e) => {
+          if (e.key == 'Enter') {
+            e.preventDefault();
+            clickHandler();
+          }
+        }}
+      />
       <InputRightElement w="80px" cursor="pointer">
         <IconButton
           aria-label="Serch"

@@ -28,6 +28,7 @@ const Item: React.FC<ItemProps> = ({ video }) => {
   const [isMounted, setIsMounted] = useState(true);
 
   useEffect(() => {
+    setIsMounted(true);
     const fetchFn = async () => {
       const res: string = await firebaseStorage
         .ref(video?.thumbnail_url || 'thumbnails/no_image.jpeg')

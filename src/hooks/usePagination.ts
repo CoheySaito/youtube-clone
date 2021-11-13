@@ -22,7 +22,7 @@ type VideosType = {
  * @return {*}
  */
 const usePagination = (videos: VideosType, pageSize: number) => {
-  // Pagination
+  // 現在のページ
   const [current, setCurrent] = React.useState(1);
 
   //ページ開始のアイテム番号

@@ -3,7 +3,8 @@ import React from 'react';
 import { BsFillCameraVideoFill } from 'react-icons/bs';
 import UploadModal from './UploadModal';
 
-const SideBarUploadItem: React.VFC = () => {
+// eslint-disable-next-line react/display-name
+const SideBarUploadItem: React.VFC = React.memo(() => {
   // UploadModal
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -30,5 +31,5 @@ const SideBarUploadItem: React.VFC = () => {
       <UploadModal {...{ isOpen, onOpen, onClose }} />
     </Grid>
   );
-};
+});
 export default SideBarUploadItem;

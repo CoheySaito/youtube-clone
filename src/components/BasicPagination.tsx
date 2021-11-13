@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React from 'react';
+import React, { useEffect } from 'react';
 import Pagination from '@choc-ui/paginator';
 import { Button, Icon } from '@chakra-ui/react';
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
@@ -40,6 +40,12 @@ const BasicPagination: React.VFC<PaginationProps> = ({
       return Next;
     }
   };
+
+  //ページ遷移時ページ位置をトップに
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [current]);
+
   return (
     <Pagination
       current={current}

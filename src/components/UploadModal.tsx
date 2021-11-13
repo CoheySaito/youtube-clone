@@ -34,14 +34,12 @@ type UploadModalProps = {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  children?: ReactNode;
 };
 
 const UploadModal: React.VFC<UploadModalProps> = ({
   isOpen,
   onOpen,
   onClose,
-  children,
 }) => {
   const router = useRouter();
 
@@ -66,10 +64,8 @@ const UploadModal: React.VFC<UploadModalProps> = ({
 
   // Firebase Storageにファイルをアップロードする処理
   const [uploadLoading, setUploadLoading] = useState(false);
-  const handleSubmit = async () => {
-    //loading true
-    setUploadLoading(true);
 
+  const handleSubmit = async () => {
     if (!selectedVideoFile || !thumbFile) {
       seterrorMessage(new Error('ファイルを選択してください。'));
       return;
@@ -78,6 +74,10 @@ const UploadModal: React.VFC<UploadModalProps> = ({
       seterrorMessage(new Error('titleを入力してください。'));
       return;
     }
+
+    //loading true
+    setUploadLoading(true);
+
     try {
       //Firebaseにvideoアップロード
       const videoId = uuidv4();
@@ -113,7 +113,7 @@ const UploadModal: React.VFC<UploadModalProps> = ({
     } catch (error) {
       alert(error?.message);
     } finally {
-      //loading true
+      //loading false
       setUploadLoading(false);
     }
   };
@@ -146,20 +146,13 @@ const UploadModal: React.VFC<UploadModalProps> = ({
 
             <Grid as="form" rowGap={8} w="100%">
               <FormControl isRequired>
-                <FormLabel>タイトル</FormLabel>
-                <Input
-                  ref={titleRef}
-                  placeholder="Title..."
-                  _placeholder={{ color: 'gray.500' }}
-                  type="text"
-                />
+                <FormLabel>動画のタイトル</FormLabel>
+                <Input ref={titleRef} type="text" />
               </FormControl>
               <FormControl>
-                <FormLabel>説明</FormLabel>
+                <FormLabel>動画の説明</FormLabel>
                 <Textarea
                   ref={descRef}
-                  placeholder="Discription..."
-                  _placeholder={{ color: 'gray.500' }}
                   mt={1}
                   rows={3}
                   shadow="sm"
