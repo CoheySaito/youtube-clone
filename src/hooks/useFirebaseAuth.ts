@@ -1,30 +1,22 @@
 import firebase from '../utils/firebase/firebaseConfig';
-import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useRef, useState } from 'react';
 
 export const useFirebaseAuth = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  //カスタムフック内の関数はuseCallbackでメモ化
-  const emailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  }, []);
-
-  const pwChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  }, []);
-
-  const resetInput = useCallback(() => {
-    setEmail('');
-    setPassword('');
-  }, []);
+  // 入力input
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const loginFn = useCallback(async () => {
     try {
-      const { user } = await firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password);
-      localStorage.setItem('loginUserId', user.uid);
+      if (emailRef?.current.value && passwordRef?.current.value) {
+        const { user } = await firebase
+          .auth()
+          .signInWithEmailAndPassword(
+            emailRef.current.value,
+            passwordRef?.current.value,
+          );
+        localStorage.setItem('loginUserId', user.uid);
+      }
     } catch (error) {
       switch (error.code) {
         case 'auth/cancelled-popup-request':
@@ -70,17 +62,22 @@ export const useFirebaseAuth = () => {
           return;
       }
     }
-    resetInput();
-  }, [email, password, resetInput]);
+    // resetInput();
+  }, []);
 
   const createUserFn = useCallback(async () => {
     let varUser: firebase.User;
     try {
-      const { user } = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password);
-      localStorage.setItem('loginUserId', user.uid);
-      varUser = user;
+      if (emailRef?.current.value && passwordRef?.current.value) {
+        const { user } = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(
+            emailRef.current.value,
+            passwordRef?.current.value,
+          );
+        localStorage.setItem('loginUserId', user.uid);
+        varUser = user;
+      }
     } catch (error) {
       switch (error.code) {
         case 'auth/cancelled-popup-request':
@@ -126,15 +123,13 @@ export const useFirebaseAuth = () => {
           return;
       }
     }
-    resetInput();
+    // resetInput();
     return varUser;
-  }, [email, password, resetInput]);
+  }, []);
 
   return {
-    email,
-    password,
-    emailChange,
-    pwChange,
+    emailRef,
+    passwordRef,
     loginFn,
     createUserFn,
   };

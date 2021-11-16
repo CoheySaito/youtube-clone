@@ -10,14 +10,15 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { NextPage } from 'next';
-import React from 'react';
+import React, { useState } from 'react';
 import NextLink from 'next/link';
 import { useFirebaseAuth } from '../../hooks/useFirebaseAuth';
 import Head from 'next/head';
 
 const Login: NextPage = () => {
-  const { email, password, emailChange, pwChange, loginFn } = useFirebaseAuth();
+  const { emailRef, passwordRef, loginFn } = useFirebaseAuth();
 
+  const [loading, setLoading] = useState(false);
   return (
     <>
       <Head>
@@ -53,13 +54,12 @@ const Login: NextPage = () => {
                 placeholder="your-email@example.com"
                 _placeholder={{ color: 'gray.500' }}
                 type="email"
-                value={email}
-                onChange={emailChange}
+                ref={emailRef}
               />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>パスワード</FormLabel>
-              <Input type="password" value={password} onChange={pwChange} />
+              <Input type="password" ref={passwordRef} />
             </FormControl>
 
             <Button
@@ -73,7 +73,14 @@ const Login: NextPage = () => {
               }}
               boxShadow="md"
               fontSize="sm"
-              onClick={() => loginFn()}
+              onClick={async () => {
+                setLoading(true);
+                await loginFn();
+                setLoading(false);
+              }}
+              isLoading={loading}
+              loadingText="送信中"
+              spinnerPlacement="end"
             >
               ログイン
             </Button>

@@ -10,11 +10,32 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { NextPage } from 'next';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import NextLink from 'next/link';
 import Head from 'next/head';
+import firebase from '../../utils/firebase/firebaseConfig';
+
+import { useRouter } from 'next/router';
 
 const Forget: NextPage = () => {
+  // input
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
+  const clickHandler = async () => {
+    if (!emailRef?.current.value) {
+      alert('メールアドレスを入力してください。');
+      return;
+    }
+    setLoading(true);
+
+    await firebase.auth().sendPasswordResetEmail(emailRef.current.value);
+    setLoading(false);
+    router.push('/login');
+  };
   return (
     <>
       <Head>
@@ -46,17 +67,13 @@ const Forget: NextPage = () => {
           <Grid as="form" rowGap={6} mb="4">
             <FormControl id="email" isRequired>
               <FormLabel>メールアドレス</FormLabel>
-              <Input
-                placeholder="your-email@example.com"
-                _placeholder={{ color: 'gray.500' }}
-                type="email"
-              />
+              <Input type="email" ref={emailRef} />
             </FormControl>
 
             <Button
               w="20%"
               minW="160px"
-              type="submit"
+              type="button"
               bg={'blue.600'}
               color={'white'}
               _hover={{
@@ -64,6 +81,10 @@ const Forget: NextPage = () => {
               }}
               boxShadow="md"
               fontSize="sm"
+              onClick={clickHandler}
+              isLoading={loading}
+              loadingText="送信中"
+              spinnerPlacement="end"
             >
               再発行メールを送信
             </Button>

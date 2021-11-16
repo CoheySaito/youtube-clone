@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Grid } from '@chakra-ui/layout';
 import NextLink from 'next/link';
 import {
+  Grid,
   Button,
   IconButton,
   Link,
@@ -19,7 +19,6 @@ import {
   Collapse,
 } from '@chakra-ui/react';
 import React, { useContext, useEffect, useState } from 'react';
-import { useColorModeValue } from '@chakra-ui/system';
 
 import { AiOutlineMenu, AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 import { BsFillCameraVideoFill } from 'react-icons/bs';

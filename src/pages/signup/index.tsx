@@ -21,8 +21,7 @@ import Head from 'next/head';
 import Cookie from 'universal-cookie';
 
 const SignUp: NextPage = () => {
-  const { email, password, emailChange, pwChange, createUserFn } =
-    useFirebaseAuth();
+  const { emailRef, passwordRef, createUserFn } = useFirebaseAuth();
 
   //name
   const [name, setName] = useState('');
@@ -45,6 +44,8 @@ const SignUp: NextPage = () => {
 
     if (!user?.uid) {
       alert('ユーザーの登録に失敗しました。');
+      setSubmitLoading(false);
+      return;
     }
 
     // アカウントにトークンが設定されるまで待機
@@ -62,7 +63,7 @@ const SignUp: NextPage = () => {
         variables: {
           id: user.uid,
           name,
-          email,
+          email: emailRef.current.value,
         },
       });
     } catch (error) {
@@ -111,12 +112,12 @@ const SignUp: NextPage = () => {
             </FormControl>
             <FormControl id="email" isRequired>
               <FormLabel>メールアドレス</FormLabel>
-              <Input type="email" value={email} onChange={emailChange} />
+              <Input type="email" ref={emailRef} />
             </FormControl>
 
             <FormControl id="password" isRequired>
               <FormLabel>パスワード</FormLabel>
-              <Input type="password" value={password} onChange={pwChange} />
+              <Input type="password" ref={passwordRef} />
             </FormControl>
 
             <Button
