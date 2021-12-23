@@ -10,10 +10,6 @@ query GetUsers {
 }
 
 query GetUserById($id: String!) {
-  users {
-    id
-    name
-  }
   users_by_pk(id: $id) {
     created_at
     email

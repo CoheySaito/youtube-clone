@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import React from 'react';
-import Display from '../components/Display';
-import Layout from '../components/layouts/Layout';
+import Display from '../components/Display/Display';
+import Layout from '../components/Layout/Layout';
 import AppContextWrapper from '../context/AppContextWrapper';
 
 const Home: NextPage = () => {

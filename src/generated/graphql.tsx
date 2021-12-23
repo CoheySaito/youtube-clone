@@ -974,7 +974,7 @@ export type GetUserByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetUserByIdQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: string, name: string }>, users_by_pk?: { __typename?: 'users', created_at: string, email?: string | null | undefined, id: string, name: string, profile_photo_url?: string | null | undefined } | null | undefined };
+export type GetUserByIdQuery = { __typename?: 'query_root', users_by_pk?: { __typename?: 'users', created_at: string, email?: string | null | undefined, id: string, name: string, profile_photo_url?: string | null | undefined } | null | undefined };
 
 export type GetVideosQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1053,10 +1053,6 @@ export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery
 export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
 export const GetUserByIdDocument = gql`
     query GetUserById($id: String!) {
-  users {
-    id
-    name
-  }
   users_by_pk(id: $id) {
     created_at
     email
