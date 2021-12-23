@@ -1,5 +1,5 @@
 import { useDisclosure } from '@chakra-ui/hooks';
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useContext, useState } from 'react';
 import { LoginUserIdContext } from './loginUserIdrContext';
 import { SerchQueryContext } from './serchQueryContext';
 import { UploadModalContext } from './uploadModalContext';

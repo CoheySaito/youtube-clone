@@ -1,6 +1,6 @@
 import { Button, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
-import LogoutAlertDialog from './LogoutAlertDialog';
+import LogoutAlertDialog from './LogoutAlertDialog/LogoutAlertDialog';
 
 type ButtonWithAlertDialogProps = {
   initialFocusRef: React.MutableRefObject<undefined>;

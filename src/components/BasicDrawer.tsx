@@ -5,7 +5,7 @@ import {
   DrawerCloseButton,
 } from '@chakra-ui/react';
 import React from 'react';
-import SideBar from './SideBar';
+import SideBar from './SideBar/SideBar';
 
 type BasicDrawerProps = {
   btnRef: React.MutableRefObject<HTMLButtonElement>;
