@@ -134,6 +134,5 @@ describe('UploadModalテスト', () => {
       </MockedProvider>,
     );
     expect(screen.getByText(expectedError.message)).toBeInTheDocument();
-    screen.debug();
   });
 });
