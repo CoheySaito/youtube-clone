@@ -5,16 +5,16 @@ import '@testing-library/jest-dom/extend-expect';
 import { cleanup, screen } from '@testing-library/react';
 import React from 'react';
 import 'setimmediate';
-import WithChakraProvider from '../../__test__/util/withChakraProvider';
-import { VideoType } from '../Item/Item';
-import RelatedVideoItem from './RelatedVideoItem';
-import * as formatDateImport from '../../utils/formatDate/formatDate';
+import WithChakraProvider from '../../../__test__/util/withChakraProvider';
+import * as formatDateImport from '../../../utils/formatDate/formatDate';
 
-import useFetchFirebaseStorage from '../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage';
+import useFetchFirebaseStorage from '../../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage';
+import { VideoType } from '../../Item/ItemContainer';
+import RelatedVideoItemContainer from './RelatedVideoItemContainer';
 
 //mock
 //useFetchFirebaseStorage
-jest.mock('../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage');
+jest.mock('../../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage');
 
 describe('RelatedVideoItem', () => {
   afterEach(() => {
@@ -51,7 +51,7 @@ describe('RelatedVideoItem', () => {
     };
 
     //render
-    WithChakraProvider(<RelatedVideoItem video={propVideo} />);
+    WithChakraProvider(<RelatedVideoItemContainer video={propVideo} />);
     expect(screen.getByTestId('image')).toHaveAttribute(
       'src',
       expectedFetchedThumbnailUrl,

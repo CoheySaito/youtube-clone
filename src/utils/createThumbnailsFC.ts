@@ -51,7 +51,6 @@ export const createThumbnailsFC = (URLofVideo: string) => {
     // setCreatedURLs((prev) => [...prev, canvas.toDataURL('image/jpeg')]);
     createdURLs.push(canvas.toDataURL('image/jpeg'));
     video.currentTime += Math.ceil(video.duration / 3);
-    console.log(createdURLs);
   };
 
   return createdURLs;

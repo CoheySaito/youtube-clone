@@ -8,29 +8,19 @@ import {
   Image,
 } from '@chakra-ui/react';
 import React from 'react';
-import useVideoSelect from '../../hooks/useVideoSelect/useVideoSelect';
+import useVideoSelect from '../../../hooks/useVideoSelect/useVideoSelect';
 
-export type VideoSelectProps = {
-  selectedVideoFile: File;
-  setSelectedVideoFile: React.Dispatch<React.SetStateAction<File>>;
-  setThumbFile: React.Dispatch<React.SetStateAction<File>>;
-};
+export type VideoSelectProps = Partial<ReturnType<typeof useVideoSelect>>;
 
 const VideoSelect: React.FC<VideoSelectProps> = ({
-  selectedVideoFile,
-  setSelectedVideoFile,
-  setThumbFile,
+  videoURL = '',
+  createdURLs = undefined,
+  selectedThumbFn = () => undefined,
+  selectedThumbnailUrl = undefined,
+  inputRef = undefined,
+  changeHandler = () => undefined,
+  clickHandler = () => undefined,
 }) => {
-  const {
-    videoURL,
-    createdURLs,
-    selectedThumbFn,
-    selectedThumbnailUrl,
-    inputRef,
-    changeHandler,
-    clickHandler,
-  } = useVideoSelect({ selectedVideoFile, setSelectedVideoFile, setThumbFile });
-
   return (
     <>
       {videoURL ? (

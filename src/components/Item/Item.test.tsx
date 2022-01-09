@@ -7,9 +7,9 @@ import { screen } from '@testing-library/react';
 import React from 'react';
 import 'setimmediate';
 import WithChakraProvider from '../../__test__/util/withChakraProvider';
-import Item, { VideoType } from './Item';
 import * as formatDateImport from '../../utils/formatDate/formatDate';
 import useFetchFirebaseStorage from '../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage';
+import ItemContainer, { VideoType } from './ItemContainer';
 
 //mock
 jest.mock('../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage');
@@ -50,7 +50,7 @@ describe('Itemテスト', () => {
       },
     };
     //render
-    WithChakraProvider(<Item video={propVideo} />);
+    WithChakraProvider(<ItemContainer video={propVideo} />);
     expect(screen.getByText(expectedTitle)).toBeInTheDocument();
     expect(screen.getByText(`${expectedViews}回視聴`)).toBeInTheDocument();
     expect(screen.getByText(expectedUsername)).toBeInTheDocument();

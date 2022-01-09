@@ -9,7 +9,7 @@ import 'setimmediate';
 import WithChakraProvider from '../../__test__/util/withChakraProvider';
 
 import firebase from '../../utils/firebase/firebaseConfig';
-import Login from './Login';
+import LoginContainer from './LoginContainer';
 
 //mock
 jest.mock('../../utils/firebase/firebaseConfig');
@@ -20,7 +20,7 @@ describe('loginPageテスト', () => {
   });
 
   it('画面表示確認', async () => {
-    WithChakraProvider(<Login />);
+    WithChakraProvider(<LoginContainer />);
 
     expect(screen.getByText('アカウント作成はこちら')).toBeInTheDocument();
     expect(
@@ -32,7 +32,7 @@ describe('loginPageテスト', () => {
   });
 
   it('アカウント作成はこちら：signup画面へのリンクあり', async () => {
-    WithChakraProvider(<Login />);
+    WithChakraProvider(<LoginContainer />);
     expect(screen.getByTestId('fromLoginToSignup')).toHaveAttribute(
       'href',
       '/signup',
@@ -40,7 +40,7 @@ describe('loginPageテスト', () => {
   });
 
   it('パスワードを忘れた場合はこちら：forget画面へのリンクあり', async () => {
-    WithChakraProvider(<Login />);
+    WithChakraProvider(<LoginContainer />);
     expect(screen.getByTestId('fromLoginToForget')).toHaveAttribute(
       'href',
       '/forget',
@@ -49,7 +49,7 @@ describe('loginPageテスト', () => {
 
   describe('ログイン実行、ボタンを押下', () => {
     it('メールアドレス入力無し→画面変わらず', async () => {
-      WithChakraProvider(<Login />);
+      WithChakraProvider(<LoginContainer />);
       await act(async () => {
         userEvent.click(screen.getByRole('button'));
       });
@@ -69,7 +69,7 @@ describe('loginPageテスト', () => {
       //alert Mock
       window.alert = jest.fn();
 
-      WithChakraProvider(<Login />);
+      WithChakraProvider(<LoginContainer />);
 
       //メールアドレス入力
       await act(async () => {

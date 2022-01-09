@@ -11,7 +11,7 @@ import { useLoginUserIdContext } from '../../context/loginUserIdrContext';
 import { MockedProvider } from '@apollo/client/testing';
 import * as chakraUi from '@chakra-ui/react';
 import { useUploadModalContext } from '../../context/uploadModalContext';
-import SideBar from './SideBar';
+import SideBarContainer from './SideBarContainer';
 //mock
 jest.mock('../../context/loginUserIdrContext');
 const mockUseLoginUserIdContext = useLoginUserIdContext as jest.MockedFunction<
@@ -36,17 +36,17 @@ describe('SideBarテスト', () => {
       cleanup();
     });
     it('表示、リンク確認:ホーム', () => {
-      WithChakraProvider(<SideBar />);
+      WithChakraProvider(<SideBarContainer />);
       expect(screen.getByText('ホーム')).toBeInTheDocument();
       expect(screen.getByTestId('homeTest')).toHaveAttribute('href', '/');
     });
     it('表示、リンク確認:トレンド', () => {
-      WithChakraProvider(<SideBar />);
+      WithChakraProvider(<SideBarContainer />);
       expect(screen.getByText('トレンド')).toBeInTheDocument();
       expect(screen.getByTestId('trendTest')).toHaveAttribute('href', '/');
     });
     it('表示、リンク確認:登録チャンネル', () => {
-      WithChakraProvider(<SideBar />);
+      WithChakraProvider(<SideBarContainer />);
       expect(screen.getByText('登録チャンネル')).toBeInTheDocument();
       expect(screen.getByTestId('channelTest')).toHaveAttribute('href', '/');
     });
@@ -81,7 +81,7 @@ describe('SideBarテスト', () => {
 
       WithChakraProvider(
         <MockedProvider mocks={[]}>
-          <SideBar />
+          <SideBarContainer />
         </MockedProvider>,
       );
       expect(screen.getByTestId('logoutText')).toBeInTheDocument();
@@ -96,7 +96,7 @@ describe('SideBarテスト', () => {
 
       WithChakraProvider(
         <MockedProvider mocks={[]}>
-          <SideBar />
+          <SideBarContainer />
         </MockedProvider>,
       );
       expect(screen.getByText('ログイン')).toBeInTheDocument();

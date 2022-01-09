@@ -4,9 +4,9 @@
 import '@testing-library/jest-dom/extend-expect';
 import { cleanup, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import WithChakraProvider from '../../__test__/util/withChakraProvider';
-import HamburgerButton from './HamburgerButton';
+import WithChakraProvider from '../../../__test__/util/withChakraProvider';
 import * as chakraui from '@chakra-ui/react';
+import HamburgerButtonContainer from './HamburgerButtonContainer';
 
 describe('DashboardHeaderテスト', () => {
   afterEach(() => {
@@ -14,7 +14,7 @@ describe('DashboardHeaderテスト', () => {
   });
 
   it('ハンバーガーメニュー表示', () => {
-    WithChakraProvider(<HamburgerButton />);
+    WithChakraProvider(<HamburgerButtonContainer />);
     expect(screen.getByTestId('humburgerbutton')).toBeInTheDocument();
   });
   it('メニュークリック→onOpenDrawerがcall', () => {
@@ -29,7 +29,7 @@ describe('DashboardHeaderテスト', () => {
     });
 
     //render
-    WithChakraProvider(<HamburgerButton />);
+    WithChakraProvider(<HamburgerButtonContainer />);
     userEvent.click(screen.getByTestId('humburgerbutton'));
 
     expect(expectedOnOpenDrawer).toBeCalledTimes(1);

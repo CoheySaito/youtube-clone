@@ -12,19 +12,23 @@ import {
 import { useLoginUserIdContext } from '../../context/loginUserIdrContext';
 import { useLogout } from '../../hooks/useLogout/useLogout';
 
+type useLogoutReturnType = ReturnType<typeof useLogout>;
+type useLoginUserIdContextReturnType = ReturnType<typeof useLoginUserIdContext>;
+
 type LogoutAlertDialogProps = {
-  isOpen: boolean;
-  onClose: () => void;
-};
+  isOpen?: boolean;
+  onClose?: () => void;
+  cancelRef?: React.MutableRefObject<HTMLButtonElement>;
+} & Partial<useLogoutReturnType> &
+  Partial<useLoginUserIdContextReturnType>;
 
 const LogoutAlertDialog: React.FC<LogoutAlertDialogProps> = ({
-  isOpen,
-  onClose,
+  isOpen = false,
+  onClose = () => undefined,
+  cancelRef = undefined,
+  logout = () => undefined,
+  resetLoginUserId = () => undefined,
 }) => {
-  const { logout } = useLogout();
-  const cancelRef = React.useRef<HTMLButtonElement>();
-
-  const { resetLoginUserId } = useLoginUserIdContext();
   return (
     <>
       <AlertDialog

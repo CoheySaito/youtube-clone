@@ -13,9 +13,15 @@ import React from 'react';
 import NextLink from 'next/link';
 import useSignUp from '../../hooks/useSignUp/useSignUp';
 
-const SignUp: React.VFC = () => {
-  const { nameRef, emailRef, passwordRef, submitHandeler, submitLoading } =
-    useSignUp();
+type SignUpProps = Partial<ReturnType<typeof useSignUp>>;
+
+const SignUp: React.VFC<SignUpProps> = ({
+  nameRef,
+  emailRef,
+  passwordRef,
+  submitHandeler,
+  submitLoading,
+}) => {
   return (
     <Center bg="#fafafa">
       <Grid

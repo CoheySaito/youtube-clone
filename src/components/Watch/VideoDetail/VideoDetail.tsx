@@ -1,18 +1,17 @@
 import React from 'react';
 import { Box, Grid, Text, Avatar, GridItem, Divider } from '@chakra-ui/react';
-import { formatDate } from '../../utils/formatDate/formatDate';
-import { GetVideoByIdQuery } from '../../generated/graphql';
-import { ValueOf } from '../../utils/valueOf';
 
-export type VideosByPkType = ValueOf<Pick<GetVideoByIdQuery, 'videos_by_pk'>>;
-type VideoDetailProps = { video: VideosByPkType; fetchedAvatarlUrl: string };
+import { VideoDetailContainerProps } from './VideoDetailContainer';
+
+type VideoDetailProps = {
+  datetime?: string;
+} & Partial<VideoDetailContainerProps>;
 
 const VideoDetail: React.FC<VideoDetailProps> = ({
-  video,
-  fetchedAvatarlUrl,
+  video = undefined,
+  fetchedAvatarlUrl = '',
+  datetime = '',
 }) => {
-  const { datetime } =
-    video?.created_at && formatDate(new Date(video.created_at), new Date());
   return (
     <Grid>
       <Text as="h1" mb={1} fontSize="lg">

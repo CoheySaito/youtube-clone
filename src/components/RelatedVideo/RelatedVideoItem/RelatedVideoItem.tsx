@@ -1,22 +1,22 @@
 import React from 'react';
-import { formatDate } from '../../utils/formatDate/formatDate';
 import { Grid, AspectRatio, Box, Image, Text, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { VideoType } from '../Item/Item';
-import useFetchFirebaseStorage from '../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage';
+import { VideoType } from '../../Item/ItemContainer';
+
+import { formatDate } from '../../../utils/formatDate/formatDate';
+import useFetchFirebaseStorage from '../../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage';
 
 type RelatedVideoItemProps = {
-  video: VideoType;
+  video?: VideoType;
+  fetchedThumbnailUrl?: string;
+  datetime?: string;
 };
 
-const RelatedVideoItem: React.FC<RelatedVideoItemProps> = ({ video }) => {
-  const { datetime } =
-    video?.created_at && formatDate(new Date(video.created_at), new Date());
-
-  const fetchedThumbnailUrl = useFetchFirebaseStorage(
-    video?.thumbnail_url || 'thumbnails/no_image.jpeg',
-  );
-
+const RelatedVideoItem: React.FC<RelatedVideoItemProps> = ({
+  video = {},
+  fetchedThumbnailUrl = '',
+  datetime = '',
+}) => {
   return (
     <Grid
       key={video.id}

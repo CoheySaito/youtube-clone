@@ -1,40 +1,22 @@
 import React from 'react';
-import { Box, Grid, Text, Avatar, GridItem, Divider } from '@chakra-ui/react';
-import RelatedVideo from '../RelatedVideo/RelatedVideo';
-import { GetVideoByIdQuery } from '../../generated/graphql';
-import Video from './Video';
-import VideoDetail from './VideoDetail';
-import useFetchFirebaseStorage from '../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage';
+import { Grid, GridItem, Divider } from '@chakra-ui/react';
 
-type WatchProps = { data: GetVideoByIdQuery };
+import RelatedVideoContainer from '../RelatedVideo/RelatedVideoContainer';
+import { VideoByPkType } from './WatchContainer';
+import Video from './Video/Video';
+import VideoDetail from './VideoDetail/VideoDetail';
 
-const Watch: React.FC<WatchProps> = ({ data }) => {
-  const video = data?.videos_by_pk ?? {
-    __typename: 'videos',
-    created_at: '',
-    description: '',
-    duration: 0,
-    id: '',
-    thumbnail_url: '',
-    video_url: '',
-    title: '',
-    updated_at: '',
-    views: 0,
-    user: {
-      __typename: 'users',
-      name: '',
-      number_of_subscribers: 0,
-      profile_photo_url: '',
-    },
-  };
+type WatchProps = {
+  video: VideoByPkType;
+  fetchedVideoUrl: string;
+  fetchedAvatarlUrl: string;
+};
 
-  const fetchedVideoUrl = useFetchFirebaseStorage(
-    video?.video_url || 'videos/no_video.jpeg',
-  );
-  const fetchedAvatarlUrl = useFetchFirebaseStorage(
-    video?.user?.profile_photo_url || 'avatar/no_avatar.png',
-  );
-
+const Watch: React.FC<WatchProps> = ({
+  video = undefined,
+  fetchedVideoUrl = '',
+  fetchedAvatarlUrl = '',
+}) => {
   return (
     <Grid
       gridTemplateColumns={{ base: '1fr', md: '4fr 2fr' }}
@@ -64,7 +46,7 @@ const Watch: React.FC<WatchProps> = ({ data }) => {
           mb={3}
           display={{ base: 'block', md: 'none' }}
         />
-        <RelatedVideo />
+        <RelatedVideoContainer />
       </GridItem>
     </Grid>
   );

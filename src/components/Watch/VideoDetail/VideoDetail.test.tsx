@@ -2,13 +2,12 @@
  * @jest-environment jsdom
  */
 import '@testing-library/jest-dom/extend-expect';
-import { act, cleanup, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { cleanup, screen } from '@testing-library/react';
 import React from 'react';
 import 'setimmediate';
-import WithChakraProvider from '../../__test__/util/withChakraProvider';
-import VideoDetail, { VideosByPkType } from './VideoDetail';
-import * as formatDateImport from '../../utils/formatDate/formatDate';
+import WithChakraProvider from '../../../__test__/util/withChakraProvider';
+import * as formatDateImport from '../../../utils/formatDate/formatDate';
+import VideoDetailContainer, { VideosByPkType } from './VideoDetailContainer';
 
 describe('VideoDetailテスト', () => {
   afterEach(() => {
@@ -28,7 +27,9 @@ describe('VideoDetailテスト', () => {
     const expectedNumberOfSubscribers = 111;
     const expectedDescription = 'expectedDescription';
 
-    const propVideo: VideosByPkType = {
+    type NewType = VideosByPkType;
+
+    const propVideo: NewType = {
       id: '',
       title: expectedVideoTitle,
       created_at: ' createdAt',
@@ -42,7 +43,7 @@ describe('VideoDetailテスト', () => {
     const expectedFetchedAvatarlUrl = 'expectedFetchedAvatarlUrl';
 
     WithChakraProvider(
-      <VideoDetail
+      <VideoDetailContainer
         video={propVideo}
         fetchedAvatarlUrl={expectedFetchedAvatarlUrl}
       />,

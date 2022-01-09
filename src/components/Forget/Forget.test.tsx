@@ -11,7 +11,7 @@ import WithChakraProvider from '../../__test__/util/withChakraProvider';
 
 import { useRouter } from 'next/router';
 import firebase from '../../utils/firebase/firebaseConfig';
-import Forget from './Forget';
+import ForgetContainer from './ForgetContainer';
 
 //mock
 jest.mock('next/router');
@@ -23,14 +23,14 @@ describe('forgetPageテスト', () => {
     cleanup();
   });
   it('画面表示確認', async () => {
-    WithChakraProvider(<Forget />);
+    WithChakraProvider(<ForgetContainer />);
 
     expect(screen.getByText('パスワードの再発行')).toBeInTheDocument();
     expect(screen.getByText('ログインはこちら')).toBeInTheDocument();
   });
 
   it('ログインはこちら：ログイン画面へのリンクあり', () => {
-    WithChakraProvider(<Forget />);
+    WithChakraProvider(<ForgetContainer />);
     expect(screen.getByTestId('fromForgetToLogin')).toHaveAttribute(
       'href',
       '/login',
@@ -38,13 +38,13 @@ describe('forgetPageテスト', () => {
   });
 
   it('YouTubeロゴ：メイン画面へのリンクあり', () => {
-    WithChakraProvider(<Forget />);
+    WithChakraProvider(<ForgetContainer />);
     expect(screen.getByTestId('fromForgetToMain')).toHaveAttribute('href', '/');
   });
 
   describe('メールアドレス再発行、ボタンを押下', () => {
     it('メールアドレス入力無しでボタンを押下、アラームが出てエラーとなる', async () => {
-      WithChakraProvider(<Forget />);
+      WithChakraProvider(<ForgetContainer />);
       //alert Mock
       window.alert = jest.fn();
       //エラーメッセージ
@@ -71,7 +71,7 @@ describe('forgetPageテスト', () => {
       // const mockForebaseAuth = jest.spyOn(firebase, 'auth');
       // mockForebaseAuth.mockReturnValue({ sendPasswordResetEmail: jest.fn() });
 
-      WithChakraProvider(<Forget />);
+      WithChakraProvider(<ForgetContainer />);
 
       //メールアドレス入力
       await act(async () => {

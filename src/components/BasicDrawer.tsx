@@ -5,7 +5,7 @@ import {
   DrawerCloseButton,
 } from '@chakra-ui/react';
 import React from 'react';
-import SideBar from './SideBar/SideBar';
+import SideBarContainer from './SideBar/SideBarContainer';
 
 type BasicDrawerProps = {
   btnRef: React.MutableRefObject<HTMLButtonElement>;
@@ -28,7 +28,7 @@ const BasicDrawer: React.VFC<BasicDrawerProps> = React.memo(
           <DrawerOverlay />
           <DrawerContent px={7} py={6}>
             <DrawerCloseButton />
-            <SideBar />
+            <SideBarContainer />
           </DrawerContent>
         </Drawer>
       </>
