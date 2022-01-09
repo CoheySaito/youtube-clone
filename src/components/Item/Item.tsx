@@ -9,27 +9,22 @@ import {
 } from '@chakra-ui/react';
 
 import React from 'react';
-import { formatDate } from '../../utils/formatDate/formatDate';
 import NextLink from 'next/link';
-import { GetVideosQuery } from '../../generated/graphql';
-import { ValueOf } from '../../utils/valueOf';
-import useFetchFirebaseStorage from '../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage';
+import { VideoType } from './ItemContainer';
 
-//type
-type VideosType = Pick<GetVideosQuery, 'videos'>;
-export type VideoType = ValueOf<VideosType>[number];
-export type ItemProps = { video: VideoType };
+export type ItemProps = {
+  video?: VideoType;
+  fetchedThumbnailUrl?: string;
+  fetchedAvatarlUrl?: string;
+  datetime?: string;
+};
 
-const Item: React.FC<ItemProps> = ({ video }) => {
-  const fetchedThumbnailUrl = useFetchFirebaseStorage(
-    video?.thumbnail_url || 'thumbnails/no_image.jpeg',
-  );
-  const fetchedAvatarlUrl = useFetchFirebaseStorage(
-    video?.user?.profile_photo_url || 'avatar/no_avatar.png',
-  );
-
-  const { datetime } = formatDate(new Date(video.created_at), new Date());
-
+const Item: React.FC<ItemProps> = ({
+  video = undefined,
+  fetchedThumbnailUrl = '',
+  fetchedAvatarlUrl = '',
+  datetime = '',
+}) => {
   return (
     <Link as={NextLink} href={`/watch/${video.id}`} passHref>
       <Grid

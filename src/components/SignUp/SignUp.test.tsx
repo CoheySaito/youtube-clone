@@ -10,7 +10,7 @@ import 'setimmediate';
 import WithChakraProvider from '../../__test__/util/withChakraProvider';
 import firebase from '../../utils/firebase/firebaseConfig';
 import { useRouter } from 'next/router';
-import SignUp from './SignUp';
+import SignUpContainer from './SignUpContainer';
 
 //mock
 jest.mock('../../utils/firebase/firebaseConfig');
@@ -24,7 +24,7 @@ describe('loginPageテスト', () => {
     //render
     WithChakraProvider(
       <MockedProvider mocks={[]}>
-        <SignUp />
+        <SignUpContainer />
       </MockedProvider>,
     );
 
@@ -38,7 +38,7 @@ describe('loginPageテスト', () => {
   it('ログインはこちら：login画面へのリンクあり', async () => {
     WithChakraProvider(
       <MockedProvider mocks={[]}>
-        <SignUp />
+        <SignUpContainer />
       </MockedProvider>,
     );
     expect(screen.getByTestId('fromSignupToLogin')).toHaveAttribute(
@@ -52,7 +52,7 @@ describe('loginPageテスト', () => {
       window.alert = jest.fn();
       WithChakraProvider(
         <MockedProvider mocks={[]}>
-          <SignUp />
+          <SignUpContainer />
         </MockedProvider>,
       );
       await act(async () => {
@@ -79,7 +79,7 @@ describe('loginPageテスト', () => {
       //render
       WithChakraProvider(
         <MockedProvider mocks={[]}>
-          <SignUp />
+          <SignUpContainer />
         </MockedProvider>,
       );
 

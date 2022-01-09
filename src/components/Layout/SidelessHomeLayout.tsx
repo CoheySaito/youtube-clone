@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import Head from 'next/head';
 import { Grid, GridItem } from '@chakra-ui/layout';
-import DashboardHeader from '../DashboardHeader/DashboardHeader';
+import DashboardHeaderContainer from '../DashboardHeader/DashboardHeaderContainer';
 
 type SidelessHomeLayoutProps = {
   title?: string;
@@ -20,7 +20,7 @@ const SidelessHomeLayout: React.FC<SidelessHomeLayoutProps> = React.memo(
 
         <Grid templateColumns="1fr" templateRows="auto 1fr" minHeight="100vh">
           <GridItem as="div" colSpan={1} rowSpan={1} px={8}>
-            <DashboardHeader />
+            <DashboardHeaderContainer />
           </GridItem>
           <GridItem as="div" colSpan={1} rowSpan={1} bgColor="#fafafa" px={8}>
             {children}

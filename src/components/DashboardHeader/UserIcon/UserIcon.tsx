@@ -10,20 +10,24 @@ import {
   PopoverTrigger,
   Avatar,
 } from '@chakra-ui/react';
-import ButtonWithAlertDialog from '../ButtonWithAlertDialog';
-import { GetUserByIdQuery } from '../../generated/graphql';
-import useUserIcon from '../../hooks/useUserIcon/useUserIcon';
+import { GetUserByIdQuery } from '../../../generated/graphql';
+import ButtonWithAlertDialogContainer from '../../ButtonWithAlertDialog/ButtonWithAlertDialogContainer';
 
-type UserIconProps = { loginUserId: string; data: GetUserByIdQuery };
+type UserIconProps = {
+  loginUserId: string;
+  data: GetUserByIdQuery;
+  fetchedAvatarlUrl: string;
+  initialFocusRef: React.MutableRefObject<undefined>;
+};
 
 // eslint-disable-next-line react/display-name
 const UserIcon: React.VFC<UserIconProps> = React.memo(
-  ({ loginUserId, data }) => {
-    const { fetchedAvatarlUrl } = useUserIcon(data);
-
-    //Popover
-    const initialFocusRef = React.useRef();
-
+  ({
+    loginUserId = false,
+    data = undefined,
+    fetchedAvatarlUrl = '',
+    initialFocusRef = undefined,
+  }) => {
     return (
       <>
         {loginUserId ? (
@@ -45,7 +49,7 @@ const UserIcon: React.VFC<UserIconProps> = React.memo(
             <PopoverContent>
               <PopoverCloseButton />
               <PopoverBody display="flex" justifyContent="center" py={6}>
-                <ButtonWithAlertDialog {...{ initialFocusRef }} />
+                <ButtonWithAlertDialogContainer {...{ initialFocusRef }} />
               </PopoverBody>
             </PopoverContent>
           </Popover>

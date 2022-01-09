@@ -2,21 +2,20 @@ import { Grid, Center, Spinner } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useGetVideosQuery } from '../../generated/graphql';
+import RelatedVideoItemContainer from './RelatedVideoItem/RelatedVideoItemContainer';
 
-import RelatedVideoItem from './RelatedVideoItem';
+//type
+type useGetVideosQueryReturnType = ReturnType<typeof useGetVideosQuery>;
+type useRouterReturnType = ReturnType<typeof useRouter>;
+export type RelatedVideoProps = Partial<useGetVideosQueryReturnType> &
+  Partial<useRouterReturnType> & { id?: string };
 
-type RelatedVideoProps = {
-  title?: string;
-};
-
-const RelatedVideo: React.FC<RelatedVideoProps> = () => {
-  const router = useRouter();
-  const id = router.query.id as string;
-
-  const { data, loading, error } = useGetVideosQuery({
-    fetchPolicy: 'cache-and-network',
-  });
-
+const RelatedVideo: React.FC<RelatedVideoProps> = ({
+  loading = false,
+  error = undefined,
+  data = undefined,
+  id = '',
+}) => {
   if (loading) {
     return (
       <Center height="100%">
@@ -26,6 +25,7 @@ const RelatedVideo: React.FC<RelatedVideoProps> = () => {
           emptyColor="gray.200"
           color="blue.500"
           size="xl"
+          data-testid="spinner"
         />
       </Center>
     );
@@ -44,7 +44,7 @@ const RelatedVideo: React.FC<RelatedVideoProps> = () => {
         // 最初から8つ目まで
         .slice(0, 7)
         .map((video) => (
-          <RelatedVideoItem {...{ video }} key={video.id} />
+          <RelatedVideoItemContainer {...{ video }} key={video.id} />
         ))}
     </Grid>
   );

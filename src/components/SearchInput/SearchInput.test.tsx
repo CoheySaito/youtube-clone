@@ -9,7 +9,7 @@ import 'setimmediate';
 import WithChakraProvider from '../../__test__/util/withChakraProvider';
 
 import useSearchInput from '../../hooks/useSearchInput/useSearchInput';
-import SearchInput from './SearchInput';
+import SearchInputContainer from './SearchInputContainer';
 
 //mock
 jest.mock('../../hooks/useSearchInput/useSearchInput');
@@ -26,7 +26,7 @@ describe('SearchInputテスト', () => {
       clickHandler: ecpectedClickHandler,
     });
     //reder
-    WithChakraProvider(<SearchInput />);
+    WithChakraProvider(<SearchInputContainer />);
 
     userEvent.click(screen.getByTestId('IconButton'));
     expect(ecpectedClickHandler).toBeCalledTimes(1);

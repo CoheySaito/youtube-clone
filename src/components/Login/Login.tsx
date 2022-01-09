@@ -15,11 +15,19 @@ import {
 
 import NextLink from 'next/link';
 
-const Login: React.VFC = () => {
-  const { emailRef, passwordRef, loginFn } = useFirebaseAuth();
+type useFirebaseAuthReturnType = ReturnType<typeof useFirebaseAuth>;
 
-  const [loading, setLoading] = useState(false);
-
+type LogiProps = Partial<useFirebaseAuthReturnType> & {
+  loading?: boolean;
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const Login: React.VFC<LogiProps> = ({
+  emailRef = undefined,
+  passwordRef = undefined,
+  loginFn = () => undefined,
+  loading = false,
+  setLoading = undefined,
+}) => {
   return (
     <Center bg="#fafafa">
       <Grid

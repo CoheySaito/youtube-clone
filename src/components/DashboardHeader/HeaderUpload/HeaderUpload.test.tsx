@@ -4,12 +4,12 @@
 import '@testing-library/jest-dom/extend-expect';
 import { cleanup, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import WithChakraProvider from '../../__test__/util/withChakraProvider';
-import HeaderUpload from './HeaderUpload';
-import * as uploadModalContext from '../../context/uploadModalContext';
+import WithChakraProvider from '../../../__test__/util/withChakraProvider';
+import * as uploadModalContext from '../../../context/uploadModalContext';
 import { MockedProvider } from '@apollo/client/testing';
+import HeaderUploadContainer from './HeaderUploadContainer';
 
-describe('HeaderUploadテスト', () => {
+describe('HeaderUploadContainerテスト', () => {
   afterEach(() => {
     cleanup();
   });
@@ -29,7 +29,7 @@ describe('HeaderUploadテスト', () => {
     const loginUserId = 'testid';
     WithChakraProvider(
       <MockedProvider mocks={[]}>
-        <HeaderUpload {...{ loginUserId }} />
+        <HeaderUploadContainer {...{ loginUserId }} />
       </MockedProvider>,
     );
 
@@ -56,7 +56,7 @@ it('Uploadボタン押下→onOpenがcall', () => {
   const loginUserId = 'testid';
   WithChakraProvider(
     <MockedProvider mocks={[]}>
-      <HeaderUpload {...{ loginUserId }} />
+      <HeaderUploadContainer {...{ loginUserId }} />
     </MockedProvider>,
   );
 

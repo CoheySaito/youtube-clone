@@ -1,16 +1,18 @@
 import { Button, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
-import LogoutAlertDialog from './LogoutAlertDialog/LogoutAlertDialog';
+import LogoutAlertDialogContainer from '../LogoutAlertDialog/LogoutAlertDialogContainer';
 
+type useDisclosureReturnType = ReturnType<typeof useDisclosure>;
 type ButtonWithAlertDialogProps = {
-  initialFocusRef: React.MutableRefObject<undefined>;
-};
+  initialFocusRef?: React.MutableRefObject<undefined>;
+} & Partial<useDisclosureReturnType>;
 
 const ButtonWithAlertDialog: React.VFC<ButtonWithAlertDialogProps> = ({
   initialFocusRef,
+  isOpen,
+  onOpen,
+  onClose,
 }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   return (
     <>
       <Button
@@ -22,7 +24,7 @@ const ButtonWithAlertDialog: React.VFC<ButtonWithAlertDialogProps> = ({
       >
         ログアウト
       </Button>
-      <LogoutAlertDialog {...{ isOpen, onClose }} />
+      <LogoutAlertDialogContainer {...{ isOpen, onClose }} />
     </>
   );
 };

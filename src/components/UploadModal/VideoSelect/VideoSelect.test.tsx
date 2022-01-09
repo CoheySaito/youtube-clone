@@ -2,16 +2,16 @@
  * @jest-environment jsdom
  */
 import '@testing-library/jest-dom/extend-expect';
-import { act, cleanup, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import WithChakraProvider from '../../__test__/util/withChakraProvider';
-import VideoSelect from './VideoSelect';
-import useVideoSelect from '../../hooks/useVideoSelect/useVideoSelect';
+import WithChakraProvider from '../../../__test__/util/withChakraProvider';
+import useVideoSelect from '../../../hooks/useVideoSelect/useVideoSelect';
+import VideoSelectContainer from './VideoSelectContainer';
 
 // mock
 //useVideoSelect
-jest.mock('../../hooks/useVideoSelect/useVideoSelect');
+jest.mock('../../../hooks/useVideoSelect/useVideoSelect');
 const mockeduseVideoSelect = useVideoSelect as jest.MockedFunction<
   typeof useVideoSelect
 >;
@@ -38,7 +38,7 @@ describe('VideoSelectテスト', () => {
       setSelectedVideoFile: jest.fn(),
       setThumbFile: jest.fn(),
     };
-    WithChakraProvider(<VideoSelect {...props} />);
+    WithChakraProvider(<VideoSelectContainer {...props} />);
     userEvent.click(screen.getByRole('button', { name: 'ファイルを選択' }));
     expect(expectedClickHandler).toBeCalledTimes(1);
   });
@@ -63,7 +63,7 @@ describe('VideoSelectテスト', () => {
       setSelectedVideoFile: jest.fn(),
       setThumbFile: jest.fn(),
     };
-    WithChakraProvider(<VideoSelect {...prpps} />);
+    WithChakraProvider(<VideoSelectContainer {...prpps} />);
     expect(
       screen.getByText('サムネイルを選択してください。'),
     ).toBeInTheDocument();
@@ -88,7 +88,7 @@ describe('VideoSelectテスト', () => {
       setSelectedVideoFile: jest.fn(),
       setThumbFile: jest.fn(),
     };
-    WithChakraProvider(<VideoSelect {...prpps} />);
+    WithChakraProvider(<VideoSelectContainer {...prpps} />);
     expect(screen.queryByText('サムネイルを選択してください。')).toBeNull();
   });
 });

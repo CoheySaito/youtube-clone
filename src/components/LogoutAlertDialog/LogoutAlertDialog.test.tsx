@@ -9,7 +9,7 @@ import 'setimmediate';
 import WithChakraProvider from '../../__test__/util/withChakraProvider';
 import * as LoginUserIdrContext from '../../context/loginUserIdrContext';
 import * as Logout from '../../hooks/useLogout/useLogout';
-import LogoutAlertDialog from './LogoutAlertDialog';
+import LogoutAlertDialogContainer from './LogoutAlertDialogContainer';
 
 describe('LogoutAlertDialogテスト', () => {
   afterEach(() => {
@@ -28,7 +28,7 @@ describe('LogoutAlertDialogテスト', () => {
     });
 
     const props = { isOpen: true, onClose: () => {} };
-    WithChakraProvider(<LogoutAlertDialog {...props} />);
+    WithChakraProvider(<LogoutAlertDialogContainer {...props} />);
     expect(screen.getByText('ログアウト確認')).toBeInTheDocument();
   });
   it('キャンセルボタン押下→onCloseがcall', () => {
@@ -47,7 +47,7 @@ describe('LogoutAlertDialogテスト', () => {
     //render
     const expectedOnclose = jest.fn();
     const props = { isOpen: true, onClose: expectedOnclose };
-    WithChakraProvider(<LogoutAlertDialog {...props} />);
+    WithChakraProvider(<LogoutAlertDialogContainer {...props} />);
 
     //WHEN
     act(() => {
@@ -80,7 +80,7 @@ describe('LogoutAlertDialogテスト', () => {
     //render
     const expectedOnclose = jest.fn();
     const props = { isOpen: true, onClose: expectedOnclose };
-    WithChakraProvider(<LogoutAlertDialog {...props} />);
+    WithChakraProvider(<LogoutAlertDialogContainer {...props} />);
 
     //WHEN
     act(() => {

@@ -14,8 +14,13 @@ import {
 import NextLink from 'next/link';
 import useForget from '../../hooks/useForget/useForget';
 
-const Forget: React.VFC = () => {
-  const { emailRef, loading, clickHandler } = useForget();
+type ForgetType = Partial<ReturnType<typeof useForget>>;
+
+const Forget: React.VFC<ForgetType> = ({
+  emailRef = undefined,
+  loading = false,
+  clickHandler = () => undefined,
+}) => {
   return (
     <Center bg="#fafafa">
       <Grid

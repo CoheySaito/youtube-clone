@@ -7,8 +7,8 @@ import { act, cleanup, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import WithChakraProvider from '../../__test__/util/withChakraProvider';
-import UploadModal from './UploadModal';
 import useUploadModal from '../../hooks/useUploadModal/useUploadModal';
+import UploadModalContainer from './UploadModalContainer';
 
 //mock
 //useUploadModal
@@ -17,12 +17,12 @@ const mockedUseUploadModal = useUploadModal as jest.MockedFunction<
   typeof useUploadModal
 >;
 
-//VideoSelect
-jest.mock('./VideoSelect', () => {
+//VideoSelectContainer
+jest.mock('./VideoSelect/VideoSelectContainer', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div>VideoSelect</div>;
+      return <div>VideoSelectContainer</div>;
     },
   };
 });
@@ -55,7 +55,7 @@ describe('UploadModalテスト', () => {
     //render
     WithChakraProvider(
       <MockedProvider mocks={[]}>
-        <UploadModal {...props} />
+        <UploadModalContainer {...props} />
       </MockedProvider>,
     );
 
@@ -94,7 +94,7 @@ describe('UploadModalテスト', () => {
     //render
     WithChakraProvider(
       <MockedProvider mocks={[]}>
-        <UploadModal {...props} />
+        <UploadModalContainer {...props} />
       </MockedProvider>,
     );
 
@@ -130,7 +130,7 @@ describe('UploadModalテスト', () => {
     //render
     WithChakraProvider(
       <MockedProvider mocks={[]}>
-        <UploadModal {...props} />
+        <UploadModalContainer {...props} />
       </MockedProvider>,
     );
     expect(screen.getByText(expectedError.message)).toBeInTheDocument();

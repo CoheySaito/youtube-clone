@@ -1,16 +1,23 @@
 import React from 'react';
 import { Button, Box } from '@chakra-ui/react';
 import { BsFillCameraVideoFill } from 'react-icons/bs';
-import UploadModal from '../UploadModal/UploadModal';
-import { useUploadModalContext } from '../../context/uploadModalContext';
+import UploadModalContainer from '../../UploadModal/UploadModalContainer';
 
-type HeaderUploadProps = { loginUserId: string };
+type HeaderUploadProps = {
+  loginUserId: string;
+  isOpen?: boolean;
+  onOpen?: () => void;
+  onClose?: () => void;
+};
 
 // eslint-disable-next-line react/display-name
 const HeaderUpload: React.FC<HeaderUploadProps> = React.memo(
-  ({ loginUserId }) => {
-    // UploadModal
-    const { isOpen, onOpen, onClose } = useUploadModalContext();
+  ({
+    loginUserId = undefined,
+    isOpen = false,
+    onOpen = () => undefined,
+    onClose = () => undefined,
+  }) => {
     return (
       <>
         {loginUserId && (
@@ -26,7 +33,7 @@ const HeaderUpload: React.FC<HeaderUploadProps> = React.memo(
             >
               Upload
             </Button>
-            <UploadModal {...{ isOpen, onOpen, onClose }} />
+            <UploadModalContainer {...{ isOpen, onOpen, onClose }} />
           </Box>
         )}
       </>

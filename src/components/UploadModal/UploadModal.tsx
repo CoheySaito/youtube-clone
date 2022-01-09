@@ -18,26 +18,29 @@ import {
 } from '@chakra-ui/react';
 
 import useUploadModal from '../../hooks/useUploadModal/useUploadModal';
-import VideoSelect from './VideoSelect';
+import VideoSelectContainer from './VideoSelect/VideoSelectContainer';
+
+//type
+type useUploadModalReturnType = ReturnType<typeof useUploadModal>;
 
 type UploadModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-};
+  isOpen?: boolean;
+  onClose?: () => void;
+} & Partial<useUploadModalReturnType>;
 
-const UploadModal: React.VFC<UploadModalProps> = ({ isOpen, onClose }) => {
-  const {
-    selectedVideoFile,
-    setSelectedVideoFile,
-    setThumbFile,
-    titleRef,
-    descRef,
-    thumbFile,
-    handleSubmit,
-    uploadLoading,
-    errorMessage,
-  } = useUploadModal();
-
+const UploadModal: React.VFC<UploadModalProps> = ({
+  isOpen = false,
+  onClose = () => undefined,
+  selectedVideoFile = undefined,
+  setSelectedVideoFile = undefined,
+  setThumbFile = undefined,
+  titleRef = undefined,
+  descRef = undefined,
+  thumbFile = undefined,
+  handleSubmit = () => undefined,
+  uploadLoading = false,
+  errorMessage = undefined,
+}) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="4xl">
       <ModalOverlay />
@@ -55,7 +58,7 @@ const UploadModal: React.VFC<UploadModalProps> = ({ isOpen, onClose }) => {
             columnGap={6}
           >
             <Box py={{ base: 12, md: 0 }}>
-              <VideoSelect
+              <VideoSelectContainer
                 {...{
                   selectedVideoFile,
                   setSelectedVideoFile,
