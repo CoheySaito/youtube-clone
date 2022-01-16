@@ -8,10 +8,11 @@ type ButtonWithAlertDialogContainerProps = {
 
 const ButtonWithAlertDialogContainer: React.VFC<ButtonWithAlertDialogContainerProps> =
   ({ initialFocusRef }) => {
+    const label = 'ログアウト';
     const { isOpen, onOpen, onClose } = useDisclosure();
     return (
       <ButtonWithAlertDialog
-        {...{ initialFocusRef, isOpen, onOpen, onClose }}
+        {...{ label, initialFocusRef, isOpen, onOpen, onClose }}
       />
     );
   };

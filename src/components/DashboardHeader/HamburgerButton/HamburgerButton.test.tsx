@@ -5,8 +5,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { cleanup, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import WithChakraProvider from '../../../__test__/util/withChakraProvider';
-import * as chakraui from '@chakra-ui/react';
-import HamburgerButtonContainer from './HamburgerButtonContainer';
+import HamburgerButton from './HamburgerButton';
 
 describe('DashboardHeaderテスト', () => {
   afterEach(() => {
@@ -14,22 +13,14 @@ describe('DashboardHeaderテスト', () => {
   });
 
   it('ハンバーガーメニュー表示', () => {
-    WithChakraProvider(<HamburgerButtonContainer />);
+    WithChakraProvider(<HamburgerButton />);
     expect(screen.getByTestId('humburgerbutton')).toBeInTheDocument();
   });
   it('メニュークリック→onOpenDrawerがcall', () => {
-    //mock
     const expectedOnOpenDrawer = jest.fn();
-
-    const useDisclosureSpy = jest.spyOn(chakraui, 'useDisclosure');
-    (useDisclosureSpy as jest.MockedFunction<any>).mockReturnValue({
-      isOpen: false,
-      onOpen: expectedOnOpenDrawer,
-      onClose: jest.fn(),
-    });
-
+    const props = { onOpenDrawer: expectedOnOpenDrawer };
     //render
-    WithChakraProvider(<HamburgerButtonContainer />);
+    WithChakraProvider(<HamburgerButton {...props} />);
     userEvent.click(screen.getByTestId('humburgerbutton'));
 
     expect(expectedOnOpenDrawer).toBeCalledTimes(1);

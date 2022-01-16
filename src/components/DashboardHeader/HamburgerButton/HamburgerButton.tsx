@@ -7,7 +7,7 @@ type HamburgerButtonProps = {
   isOpenDrawer?: boolean;
   onOpenDrawer?: () => void;
   onCloseDrawer?: () => void;
-  btnRef: React.MutableRefObject<HTMLButtonElement>;
+  btnRef?: React.MutableRefObject<HTMLButtonElement>;
 };
 
 // eslint-disable-next-line react/display-name
