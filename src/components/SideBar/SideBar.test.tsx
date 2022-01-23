@@ -61,17 +61,17 @@ describe('SideBarテスト', () => {
         resetLoginUserId: null,
       });
 
-      const useDisclosureSpy = jest.spyOn(chakraUi, 'useDisclosure');
+      // const useDisclosureSpy = jest.spyOn(chakraUi, 'useDisclosure');
 
-      useDisclosureSpy.mockReturnValue({
-        isOpen: true,
-        onOpen: jest.fn(),
-        onClose: jest.fn(),
-        onToggle: jest.fn(),
-        isControlled: false,
-        getButtonProps: jest.fn(),
-        getDisclosureProps: jest.fn(),
-      });
+      // useDisclosureSpy.mockReturnValue({
+      //   isOpen: true,
+      //   onOpen: jest.fn(),
+      //   onClose: jest.fn(),
+      //   onToggle: jest.fn(),
+      //   isControlled: false,
+      //   getButtonProps: jest.fn(),
+      //   getDisclosureProps: jest.fn(),
+      // });
 
       mockUseUploadModalContext.mockReturnValue({
         isOpen: true,

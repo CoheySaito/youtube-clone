@@ -3,15 +3,17 @@ import React from 'react';
 import LogoutAlertDialogContainer from '../LogoutAlertDialog/LogoutAlertDialogContainer';
 
 type useDisclosureReturnType = ReturnType<typeof useDisclosure>;
-type ButtonWithAlertDialogProps = {
+export type ButtonWithAlertDialogProps = {
+  label?: string;
   initialFocusRef?: React.MutableRefObject<undefined>;
 } & Partial<useDisclosureReturnType>;
 
 const ButtonWithAlertDialog: React.VFC<ButtonWithAlertDialogProps> = ({
-  initialFocusRef,
-  isOpen,
-  onOpen,
-  onClose,
+  label = 'ログアウト',
+  initialFocusRef = undefined,
+  isOpen = false,
+  onOpen = () => undefined,
+  onClose = () => undefined,
 }) => {
   return (
     <>
@@ -21,8 +23,9 @@ const ButtonWithAlertDialog: React.VFC<ButtonWithAlertDialogProps> = ({
         ref={initialFocusRef}
         w="60%"
         onClick={onOpen}
+        data-testid="logoutButton"
       >
-        ログアウト
+        {label}
       </Button>
       <LogoutAlertDialogContainer {...{ isOpen, onClose }} />
     </>

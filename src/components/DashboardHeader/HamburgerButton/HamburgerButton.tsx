@@ -1,13 +1,13 @@
 import React from 'react';
 import { IconButton } from '@chakra-ui/react';
 import { AiOutlineMenu } from 'react-icons/ai';
-import BasicDrawer from '../../BasicDrawer';
+import BasicDrawer from '../../BasicDrawer/BasicDrawer';
 
 type HamburgerButtonProps = {
   isOpenDrawer?: boolean;
   onOpenDrawer?: () => void;
   onCloseDrawer?: () => void;
-  btnRef: React.MutableRefObject<HTMLButtonElement>;
+  btnRef?: React.MutableRefObject<HTMLButtonElement>;
 };
 
 // eslint-disable-next-line react/display-name

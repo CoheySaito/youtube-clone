@@ -18,7 +18,7 @@ jest.mock('../Item/ItemContainer', () => {
 });
 
 //BasicPagination
-jest.mock('../BasicPagination', () => {
+jest.mock('../BasicPagination/BasicPagination', () => {
   return {
     __esModule: true,
     default: () => {

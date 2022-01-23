@@ -9,7 +9,6 @@ const DashboardHeaderContainer: React.VFC = () => {
   //SearchDrawwer For Mobile
   const { isOpen, onToggle } = useDisclosure();
 
-  console.log(loginUserId);
   return <DashboardHeaderL {...{ loginUserId, data, isOpen, onToggle }} />;
 };
 export default DashboardHeaderContainer;

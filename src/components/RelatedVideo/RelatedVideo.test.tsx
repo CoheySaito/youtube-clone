@@ -24,7 +24,6 @@ describe('RelatedVideoテスト', () => {
   it('loading:true → spinner表示', () => {
     const props: RelatedVideoProps = { loading: true };
     WithChakraProvider(<RelatedVideo {...props} />);
-    screen.debug();
     expect(screen.getByTestId('spinner')).toBeInTheDocument();
   });
 
@@ -39,7 +38,6 @@ describe('RelatedVideoテスト', () => {
       id: 'id1',
     };
     WithChakraProvider(<RelatedVideo {...props} />);
-    screen.debug();
     expect(screen.getAllByTestId('relatedVideoItemContainer')).toHaveLength(1);
   });
 });
