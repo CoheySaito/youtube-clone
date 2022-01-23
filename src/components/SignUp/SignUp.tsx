@@ -16,11 +16,11 @@ import useSignUp from '../../hooks/useSignUp/useSignUp';
 type SignUpProps = Partial<ReturnType<typeof useSignUp>>;
 
 const SignUp: React.VFC<SignUpProps> = ({
-  nameRef,
-  emailRef,
-  passwordRef,
-  submitHandeler,
-  submitLoading,
+  nameRef = undefined,
+  emailRef = undefined,
+  passwordRef = undefined,
+  submitHandeler = () => undefined,
+  submitLoading = false,
 }) => {
   return (
     <Center bg="#fafafa">

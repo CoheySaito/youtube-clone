@@ -1,17 +1,18 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import ButtonWithAlertDialog from './ButtonWithAlertDialog';
-import { LoginUserIdContext } from '../../context/loginUserIdrContext';
+
 import { action } from '@storybook/addon-actions';
+import HamburgerButton from './HamburgerButton';
+import { LoginUserIdContext } from '../../../context/loginUserIdrContext';
 
 //LoginUserIdContext
 const loginUserId = undefined;
 const checkLocalStorage = () => undefined;
 const resetLoginUserId = () => undefined;
+
 export default {
-  title: 'ButtonWithAlertDialog/ButtonWithAlertDialog',
-  component: ButtonWithAlertDialog,
-  argTypes: { onOpen: { action: 'clicked' } },
+  title: 'DashboardHeader/HamburgerButton',
+  component: HamburgerButton,
   decorators: [
     (Story) => (
       <LoginUserIdContext.Provider
@@ -21,15 +22,14 @@ export default {
       </LoginUserIdContext.Provider>
     ),
   ],
-} as ComponentMeta<typeof ButtonWithAlertDialog>;
+} as ComponentMeta<typeof HamburgerButton>;
 
-const Template: ComponentStory<typeof ButtonWithAlertDialog> = (args) => (
-  <ButtonWithAlertDialog {...args} />
+const Template: ComponentStory<typeof HamburgerButton> = (args) => (
+  <HamburgerButton {...args} />
 );
 
 export const Primary = Template.bind({});
 Primary.args = {
-  label: 'ログアウト',
-  isOpen: false,
-  onOpen: action('clicked'),
+  isOpenDrawer: false,
+  onOpenDrawer: action('clicked'),
 };

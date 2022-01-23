@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import LogoutAlertDialog from './LogoutAlertDialog';
 
 export default {
-  title: 'LogoutAlertDialog',
+  title: 'LogoutAlertDialog/LogoutAlertDialog',
   component: LogoutAlertDialog,
   argTypes: { onClose: { action: 'clicked' } },
 } as ComponentMeta<typeof LogoutAlertDialog>;

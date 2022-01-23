@@ -83,6 +83,10 @@
     },
     "setupFiles": [
       "dotenv/config"
+    ],
+    "coveragePathIgnorePatterns": [
+      "./src/generated/*",
+      "./src/util/*"
     ]
   }
 }

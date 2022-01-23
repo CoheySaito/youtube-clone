@@ -3,9 +3,6 @@ import { Grid, AspectRatio, Box, Image, Text, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { VideoType } from '../../Item/ItemContainer';
 
-import { formatDate } from '../../../utils/formatDate/formatDate';
-import useFetchFirebaseStorage from '../../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage';
-
 type RelatedVideoItemProps = {
   video?: VideoType;
   fetchedThumbnailUrl?: string;
