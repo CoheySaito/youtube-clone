@@ -1,6 +1,6 @@
 import { Box, Center, Grid, Spinner, Text } from '@chakra-ui/react';
 import React from 'react';
-import BasicPagination from '../BasicPagination/BasicPagination';
+import BasicPagination from '../BasicPagination';
 import useDisplay from '../../hooks/useDisplay/useDisplay';
 import ItemContainer from '../Item/ItemContainer';
 

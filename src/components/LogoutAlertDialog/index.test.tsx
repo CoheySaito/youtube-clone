@@ -9,7 +9,7 @@ import 'setimmediate';
 import WithChakraProvider from '../../__test__/util/withChakraProvider';
 import * as LoginUserIdrContext from '../../context/loginUserIdrContext';
 import * as Logout from '../../hooks/useLogout/useLogout';
-import LogoutAlertDialogContainer from './LogoutAlertDialogContainer';
+import LogoutAlertDialogContainer from '.';
 
 describe('LogoutAlertDialogテスト', () => {
   afterEach(() => {

@@ -11,7 +11,7 @@ import {
   Avatar,
 } from '@chakra-ui/react';
 import { GetUserByIdQuery } from '../../../generated/graphql';
-import ButtonWithAlertDialogContainer from '../../ButtonWithAlertDialog/ButtonWithAlertDialogContainer';
+import ButtonWithAlertDialogContainer from '../../ButtonWithAlertDialog';
 
 type UserIconProps = {
   loginUserId: string;

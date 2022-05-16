@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event';
 import WithChakraProvider from '../../../__test__/util/withChakraProvider';
 import * as uploadModalContext from '../../../context/uploadModalContext';
 import { MockedProvider } from '@apollo/client/testing';
-import HeaderUploadContainer from './HeaderUploadContainer';
+import HeaderUploadContainer from '.';
 
 describe('HeaderUploadContainerテスト', () => {
   afterEach(() => {

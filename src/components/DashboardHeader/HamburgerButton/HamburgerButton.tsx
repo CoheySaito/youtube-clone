@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconButton } from '@chakra-ui/react';
 import { AiOutlineMenu } from 'react-icons/ai';
-import BasicDrawer from '../../BasicDrawer/BasicDrawer';
+import BasicDrawer from '../../BasicDrawer';
 
 type HamburgerButtonProps = {
   isOpenDrawer?: boolean;

@@ -9,7 +9,7 @@ import 'setimmediate';
 import WithChakraProvider from '../../__test__/util/withChakraProvider';
 
 import firebase from '../../utils/firebase/firebaseConfig';
-import LoginContainer from './LoginContainer';
+import LoginContainer from '.';
 
 //mock
 jest.mock('../../utils/firebase/firebaseConfig');

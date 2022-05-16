@@ -4,8 +4,8 @@ import { Grid, Link, Image, Center, Box, Collapse } from '@chakra-ui/react';
 import React from 'react';
 
 import { GetUserByIdQuery } from '../../generated/graphql';
-import HamburgerButtonContainer from './HamburgerButton/HamburgerButtonContainer';
-import HeaderUploadContainer from './HeaderUpload/HeaderUploadContainer';
+import HamburgerButtonContainer from './HamburgerButton';
+import HeaderUploadContainer from './HeaderUpload';
 import SearchContainer from './Search/SearchContainer';
 import UserIconContainer from './UserIcon/UserIconContainer';
 import SearchInputContainer from '../SearchInput/SearchInputContainer';

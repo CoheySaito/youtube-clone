@@ -2,7 +2,7 @@ import { useDisclosure, Grid, Link, Text } from '@chakra-ui/react';
 import React from 'react';
 import { AiOutlineLogout, AiOutlineLogin } from 'react-icons/ai';
 import NextLink from 'next/link';
-import LogoutAlertDialogContainer from '../LogoutAlertDialog/LogoutAlertDialogContainer';
+import LogoutAlertDialogContainer from '../LogoutAlertDialog';
 import SideBarUploadItemContainer from './SideBarUploadItem/SideBarUploadItemContainer';
 
 //type

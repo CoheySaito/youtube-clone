@@ -2,7 +2,6 @@ import React from 'react';
 import Watch from './Watch';
 import { GetVideoByIdQuery } from '../../generated/graphql';
 import useFetchFirebaseStorage from '../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage';
-import { VideoType } from '../Item/ItemContainer';
 import { ValueOf } from '../../utils/valueOf';
 
 type WatchContainerProps = { data: GetVideoByIdQuery };

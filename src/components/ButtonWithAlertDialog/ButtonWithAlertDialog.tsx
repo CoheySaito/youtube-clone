@@ -1,6 +1,6 @@
 import { Button, useDisclosure } from '@chakra-ui/react';
 import React from 'react';
-import LogoutAlertDialogContainer from '../LogoutAlertDialog/LogoutAlertDialogContainer';
+import LogoutAlertDialogContainer from '../LogoutAlertDialog';
 
 type useDisclosureReturnType = ReturnType<typeof useDisclosure>;
 export type ButtonWithAlertDialogProps = {

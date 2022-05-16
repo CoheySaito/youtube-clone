@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { Center, Spinner } from '@chakra-ui/react';
 import { useGetVideoByIdQuery } from '../../generated/graphql';
-import Layout from '../../components/Layout/Layout';
+import Layout from '../../components/Layout';
 import AppContextWrapper from '../../context/AppContextWrapper';
 import WatchContainer from '../../components/Watch/WatchContainer';
 

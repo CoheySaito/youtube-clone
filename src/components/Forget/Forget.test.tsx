@@ -11,7 +11,7 @@ import WithChakraProvider from '../../__test__/util/withChakraProvider';
 
 import { useRouter } from 'next/router';
 import firebase from '../../utils/firebase/firebaseConfig';
-import ForgetContainer from './ForgetContainer';
+import ForgetContainer from '.';
 
 //mock
 jest.mock('next/router');

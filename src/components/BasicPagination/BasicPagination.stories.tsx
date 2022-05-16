@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import BasicPagination from './BasicPagination';
+import BasicPagination from '.';
 
 export default {
   title: 'BasicPagination/BasicPagination',

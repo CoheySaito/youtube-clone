@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import Head from 'next/head';
 import { Grid, GridItem } from '@chakra-ui/layout';
-import DashboardHeaderContainer from '../DashboardHeader/DashboardHeaderContainer';
+import DashboardHeaderContainer from '../DashboardHeader';
 
 type SidelessHomeLayoutProps = {
   title?: string;
