@@ -3,13 +3,13 @@ import { Grid, AspectRatio, Box, Image, Text, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { VideoType } from '../../Item';
 
-type RelatedVideoItemProps = {
+type Props = {
   video?: VideoType;
   fetchedThumbnailUrl?: string;
   datetime?: string;
 };
 
-const RelatedVideoItem: React.FC<RelatedVideoItemProps> = ({
+const RelatedVideoItemPresenter: React.VFC<Props> = ({
   video = {},
   fetchedThumbnailUrl = '',
   datetime = '',
@@ -58,4 +58,4 @@ const RelatedVideoItem: React.FC<RelatedVideoItemProps> = ({
     </Grid>
   );
 };
-export default RelatedVideoItem;
+export default RelatedVideoItemPresenter;

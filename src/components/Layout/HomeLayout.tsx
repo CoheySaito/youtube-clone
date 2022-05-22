@@ -3,8 +3,8 @@ import React, { ReactNode } from 'react';
 import Head from 'next/head';
 import { Grid, GridItem } from '@chakra-ui/layout';
 import { useBreakpointValue } from '@chakra-ui/react';
-import SideBar from '../SideBar';
 import DashboardHeader from '../DashboardHeader';
+import SideBar from '../SideBar';
 
 type Props = {
   title?: string;

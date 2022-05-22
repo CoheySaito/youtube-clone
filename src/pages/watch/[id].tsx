@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { Center, Spinner } from '@chakra-ui/react';
 import { useGetVideoByIdQuery } from '../../generated/graphql';
-import Layout from '../../components/Layout';
 import AppContextWrapper from '../../context/AppContextWrapper';
-import WatchContainer from '../../components/Watch/WatchContainer';
+import Watch from '../../components/Watch';
+import Layout from '../../components/Layout';
 
 const WatchPage: NextPage = () => {
   const router = useRouter();
@@ -43,7 +43,7 @@ const WatchPage: NextPage = () => {
   return (
     <AppContextWrapper>
       <Layout sidebar={false} title="YouTubeClone | Watch">
-        <WatchContainer {...{ data }} />
+        <Watch {...{ data }} />
       </Layout>
     </AppContextWrapper>
   );

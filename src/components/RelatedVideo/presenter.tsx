@@ -2,15 +2,15 @@ import { Grid, Center, Spinner } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useGetVideosQuery } from '../../generated/graphql';
-import RelatedVideoItemContainer from './RelatedVideoItem/RelatedVideoItemContainer';
+import RelatedVideoItem from './RelatedVideoItem';
 
 //type
 type useGetVideosQueryReturnType = ReturnType<typeof useGetVideosQuery>;
 type useRouterReturnType = ReturnType<typeof useRouter>;
-export type RelatedVideoProps = Partial<useGetVideosQueryReturnType> &
+export type Props = Partial<useGetVideosQueryReturnType> &
   Partial<useRouterReturnType> & { id?: string };
 
-const RelatedVideo: React.FC<RelatedVideoProps> = ({
+const RelatedVideoPresenter: React.FC<Props> = ({
   loading = false,
   error = undefined,
   data = undefined,
@@ -44,9 +44,9 @@ const RelatedVideo: React.FC<RelatedVideoProps> = ({
         // 最初から8つ目まで
         .slice(0, 7)
         .map((video) => (
-          <RelatedVideoItemContainer {...{ video }} key={video.id} />
+          <RelatedVideoItem {...{ video }} key={video.id} />
         ))}
     </Grid>
   );
 };
-export default RelatedVideo;
+export default RelatedVideoPresenter;

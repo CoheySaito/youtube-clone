@@ -1,13 +1,13 @@
 import React from 'react';
 import { Box, Grid, Text, Avatar, GridItem, Divider } from '@chakra-ui/react';
 
-import { VideoDetailContainerProps } from './VideoDetailContainer';
+import { Props as VideoDetailContainerProps } from './index';
 
-type VideoDetailProps = {
+type Props = {
   datetime?: string;
 } & Partial<VideoDetailContainerProps>;
 
-const VideoDetail: React.FC<VideoDetailProps> = ({
+const VideoDetailPresenter: React.FC<Props> = ({
   video = undefined,
   fetchedAvatarlUrl = '',
   datetime = '',
@@ -59,4 +59,4 @@ const VideoDetail: React.FC<VideoDetailProps> = ({
     </Grid>
   );
 };
-export default VideoDetail;
+export default VideoDetailPresenter;

@@ -10,7 +10,7 @@ import * as formatDateImport from '../../../utils/formatDate/formatDate';
 
 import useFetchFirebaseStorage from '../../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage';
 import { VideoType } from '../../Item';
-import RelatedVideoItemContainer from './RelatedVideoItemContainer';
+import RelatedVideoItemContainer from './index';
 
 //mock
 //useFetchFirebaseStorage

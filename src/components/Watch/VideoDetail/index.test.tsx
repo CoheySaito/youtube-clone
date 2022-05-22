@@ -7,7 +7,7 @@ import React from 'react';
 import 'setimmediate';
 import WithChakraProvider from '../../../__test__/util/withChakraProvider';
 import * as formatDateImport from '../../../utils/formatDate/formatDate';
-import VideoDetailContainer, { VideosByPkType } from './VideoDetailContainer';
+import VideoDetail, { VideosByPkType } from './index';
 
 describe('VideoDetailテスト', () => {
   afterEach(() => {
@@ -43,7 +43,7 @@ describe('VideoDetailテスト', () => {
     const expectedFetchedAvatarlUrl = 'expectedFetchedAvatarlUrl';
 
     WithChakraProvider(
-      <VideoDetailContainer
+      <VideoDetail
         video={propVideo}
         fetchedAvatarlUrl={expectedFetchedAvatarlUrl}
       />,

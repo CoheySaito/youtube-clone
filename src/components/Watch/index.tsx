@@ -1,13 +1,13 @@
 import React from 'react';
-import Watch from './Watch';
 import { GetVideoByIdQuery } from '../../generated/graphql';
 import useFetchFirebaseStorage from '../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage';
 import { ValueOf } from '../../utils/valueOf';
+import WatchPresenter from './presenter';
 
-type WatchContainerProps = { data: GetVideoByIdQuery };
+type Props = { data: GetVideoByIdQuery };
 export type VideoByPkType = ValueOf<Pick<GetVideoByIdQuery, 'videos_by_pk'>>;
 
-const WatchContainer: React.FC<WatchContainerProps> = ({ data }) => {
+const WatchContainer: React.FC<Props> = ({ data }) => {
   const video: VideoByPkType = data?.videos_by_pk ?? {
     __typename: 'videos',
     created_at: '',
@@ -32,7 +32,7 @@ const WatchContainer: React.FC<WatchContainerProps> = ({ data }) => {
     video?.user?.profile_photo_url || 'avatar/no_avatar.png',
   );
   return (
-    <Watch
+    <WatchPresenter
       {...{
         video,
         fetchedVideoUrl,
