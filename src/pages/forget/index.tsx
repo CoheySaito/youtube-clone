@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import React from 'react';
 import Head from 'next/head';
-import ForgetContainer from '../../components/Forget/ForgetContainer';
+import Forget from '../../components/Forget';
 
 const ForgetPage: NextPage = () => {
   return (
@@ -9,7 +9,7 @@ const ForgetPage: NextPage = () => {
       <Head>
         <title>YouTubeClone | Forget</title>
       </Head>
-      <ForgetContainer />
+      <Forget />
     </>
   );
 };

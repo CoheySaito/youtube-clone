@@ -2,8 +2,7 @@ import { NextPage } from 'next';
 import React from 'react';
 
 import Head from 'next/head';
-
-import SignUpContainer from '../../components/SignUp/SignUpContainer';
+import SignUp from '../../components/SignUp';
 
 const SignUpPage: NextPage = () => {
   return (
@@ -11,7 +10,7 @@ const SignUpPage: NextPage = () => {
       <Head>
         <title>YouTubeClone | SignUp</title>
       </Head>
-      <SignUpContainer />
+      <SignUp />
     </>
   );
 };

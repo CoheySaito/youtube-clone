@@ -1,5 +1,5 @@
 import React from 'react';
-import { VideoType } from '../../Item/ItemContainer';
+import { VideoType } from '../../Item';
 import RelatedVideoItem from './RelatedVideoItem';
 import { formatDate } from '../../../utils/formatDate/formatDate';
 import useFetchFirebaseStorage from '../../../hooks/useFetchFirebaseStorage/useFetchFirebaseStorage';

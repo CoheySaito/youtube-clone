@@ -6,7 +6,7 @@ import { act, cleanup, screen } from '@testing-library/react';
 import React from 'react';
 import 'setimmediate';
 import WithChakraProvider from '../../../__test__/util/withChakraProvider';
-import { VideoType } from '../../Item/ItemContainer';
+import { VideoType } from '../../Item';
 
 import Video from './Video';
 

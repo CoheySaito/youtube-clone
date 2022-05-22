@@ -10,6 +10,7 @@ const useDisplay = (pageSizeProp: number) => {
 
   //serchQuery
   const { serchQuery, setSerchQuery } = useSerchQueryContext();
+
   //iフラグ	ignoreCase	大文字・小文字を区別しない
   const regex = new RegExp(serchQuery, 'i');
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import RelatedVideoItem from './RelatedVideoItem';
-import { VideoType } from '../../Item/ItemContainer';
+import { VideoType } from '../../Item';
 
 export default {
   title: 'RelatedVideo/RelatedVideoItem',
