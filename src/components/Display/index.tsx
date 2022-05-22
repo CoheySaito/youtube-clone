@@ -1,6 +1,6 @@
 import React from 'react';
 import useDisplay from '../../hooks/useDisplay/useDisplay';
-import Display from './Display';
+import DisplayPresenter from './presenter';
 
 const DisplayContainer: React.VFC = () => {
   const pageSizeProp: number = Number(process.env.NEXT_PUBLIC_PAGESIZE);
@@ -16,7 +16,7 @@ const DisplayContainer: React.VFC = () => {
   } = useDisplay(pageSizeProp);
 
   return (
-    <Display
+    <DisplayPresenter
       {...{
         loading,
         error,

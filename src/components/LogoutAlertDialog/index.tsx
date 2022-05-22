@@ -1,23 +1,21 @@
 import React from 'react';
 import { useLoginUserIdContext } from '../../context/loginUserIdrContext';
 import { useLogout } from '../../hooks/useLogout/useLogout';
-import LogoutAlertDialog from './LogoutAlertDialog';
+import LogoutAlertDialogPresenter from './presenter';
 
-type LogoutAlertDialogContainerProps = {
+type Props = {
   isOpen: boolean;
   onClose: () => void;
 };
 
-const LogoutAlertDialogContainer: React.VFC<
-  LogoutAlertDialogContainerProps
-> = ({ isOpen, onClose }) => {
+const LogoutAlertDialogContainer: React.VFC<Props> = ({ isOpen, onClose }) => {
   const { logout } = useLogout();
   const cancelRef = React.useRef<HTMLButtonElement>();
 
   const { resetLoginUserId } = useLoginUserIdContext();
 
   return (
-    <LogoutAlertDialog
+    <LogoutAlertDialogPresenter
       {...{
         isOpen,
         onClose,

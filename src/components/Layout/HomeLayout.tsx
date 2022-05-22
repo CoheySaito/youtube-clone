@@ -3,16 +3,16 @@ import React, { ReactNode } from 'react';
 import Head from 'next/head';
 import { Grid, GridItem } from '@chakra-ui/layout';
 import { useBreakpointValue } from '@chakra-ui/react';
-import DashboardHeaderContainer from '../DashboardHeader';
-import SideBarContainer from '../SideBar/SideBarContainer';
+import SideBar from '../SideBar';
+import DashboardHeader from '../DashboardHeader';
 
-type HomeLayoutProps = {
+type Props = {
   title?: string;
   children: ReactNode;
 };
 
 // eslint-disable-next-line react/display-name
-const HomeLayout: React.FC<HomeLayoutProps> = React.memo(
+const HomeLayout: React.FC<Props> = React.memo(
   ({ title = 'YouTubeClone', children }) => {
     const isMobile = useBreakpointValue({ base: true, md: false });
 
@@ -26,12 +26,12 @@ const HomeLayout: React.FC<HomeLayoutProps> = React.memo(
           templateRows="auto 1fr"
           minHeight="100vh"
         >
-          <GridItem as="div" colSpan={{ base: 1, md: 3 }} rowSpan={1} px={8}>
-            <DashboardHeaderContainer />
+          <GridItem as="div" colSpan={{ base: 1, md: 2 }} rowSpan={1} px={8}>
+            <DashboardHeader />
           </GridItem>
           {!isMobile && (
             <GridItem as="div" colSpan={1} rowSpan={1} px={8}>
-              <SideBarContainer />
+              <SideBar />
             </GridItem>
           )}
           <GridItem as="div" colSpan={1} rowSpan={1} bgColor="#fafafa" px={8}>

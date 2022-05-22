@@ -4,55 +4,45 @@
 import '@testing-library/jest-dom/extend-expect';
 import { screen } from '@testing-library/react';
 import WithChakraProvider from '../../__test__/util/withChakraProvider';
-import DashboardHeader, { DashboardHeaderProps } from './DashboardHeader';
+import DashboardHeader, { Props } from './presenter';
 
 //mock
-//SearchInputContainer
-jest.mock('../SearchInput/SearchInputContainer', () => {
+//SearchInput
+jest.mock('../SearchInput', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div>SearchInputContainer</div>;
+      return <div>SearchInput</div>;
     },
   };
 });
 
-//HeaderUploadContainer
-jest.mock('./HeaderUpload/HeaderUploadContainer', () => {
+//HeaderUpload
+jest.mock('./HeaderUpload', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div>HeaderUploadContainer</div>;
+      return <div>HeaderUpload</div>;
     },
   };
 });
 
-//HamburgerButtonContainer
-jest.mock('./HamburgerButton/HamburgerButtonContainer', () => {
+//HamburgerButton
+jest.mock('./HamburgerButton', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div>HamburgerButtonContainer</div>;
+      return <div>HamburgerButton</div>;
     },
   };
 });
 
-//HeaderUploadContainer
-jest.mock('./HeaderUpload/HeaderUploadContainer', () => {
+//UserIcon
+jest.mock('./UserIcon', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div>HeaderUploadContainer</div>;
-    },
-  };
-});
-
-//UserIconContainer
-jest.mock('./UserIcon/UserIconContainer', () => {
-  return {
-    __esModule: true,
-    default: () => {
-      return <div>UserIconContainer</div>;
+      return <div>UserIcon</div>;
     },
   };
 });
@@ -74,7 +64,7 @@ describe('DashboardHeaderテスト', () => {
     });
   });
   it('youtubeLogoの表示、リンク確認', () => {
-    const props: DashboardHeaderProps = {};
+    const props: Props = {};
     WithChakraProvider(<DashboardHeader {...props} />);
     expect(screen.getByTestId('youtubeLogo')).toBeInTheDocument();
     expect(screen.getByTestId('youtubeLogo')).toHaveAttribute('href', '/');

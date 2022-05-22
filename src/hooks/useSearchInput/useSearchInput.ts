@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useSerchQueryContext } from '../../context/serchQueryContext';
 import { useRouter } from 'next/router';
 
@@ -7,7 +7,7 @@ const useSearchInput = () => {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>();
 
-  const clickHandler = () => {
+  const clickHandler = useCallback(() => {
     if (inputRef?.current?.value) {
       setSerchQuery(inputRef.current.value);
       localStorage.setItem('query', inputRef.current.value);
@@ -15,7 +15,7 @@ const useSearchInput = () => {
       setSerchQuery('');
     }
     router.push('/');
-  };
+  }, [router]);
 
   useEffect(() => {
     //render後にrefにアクセス setrchQuery表示用

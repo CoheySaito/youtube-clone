@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDisclosure } from '@chakra-ui/react';
-import HamburgerButton from './HamburgerButton';
+import HamburgerButtonPresenter from './presenter';
 
 const HamburgerButtonContainer: React.VFC = () => {
   //BasicDrawer
@@ -12,7 +12,7 @@ const HamburgerButtonContainer: React.VFC = () => {
   const btnRef = React.useRef<HTMLButtonElement>();
 
   return (
-    <HamburgerButton
+    <HamburgerButtonPresenter
       {...{ isOpenDrawer, onOpenDrawer, onCloseDrawer, btnRef }}
     />
   );

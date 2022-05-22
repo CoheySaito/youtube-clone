@@ -1,6 +1,6 @@
 import React from 'react';
-import HeaderUpload from './HeaderUpload';
 import { useUploadModalContext } from '../../../context/uploadModalContext';
+import HeaderUploadPresenter from './presenter';
 
 type HeaderUploadContainerProps = { loginUserId: string };
 
@@ -9,6 +9,8 @@ const HeaderUploadContainer: React.FC<HeaderUploadContainerProps> = ({
 }) => {
   // UploadModal
   const { isOpen, onOpen, onClose } = useUploadModalContext();
-  return <HeaderUpload {...{ loginUserId, isOpen, onOpen, onClose }} />;
+  return (
+    <HeaderUploadPresenter {...{ loginUserId, isOpen, onOpen, onClose }} />
+  );
 };
 export default HeaderUploadContainer;

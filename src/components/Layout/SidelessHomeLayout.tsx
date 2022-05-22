@@ -2,15 +2,15 @@ import React, { ReactNode } from 'react';
 
 import Head from 'next/head';
 import { Grid, GridItem } from '@chakra-ui/layout';
-import DashboardHeaderContainer from '../DashboardHeader';
+import DashboardHeader from '../DashboardHeader';
 
-type SidelessHomeLayoutProps = {
+type Props = {
   title?: string;
   children: ReactNode;
 };
 
 // eslint-disable-next-line react/display-name
-const SidelessHomeLayout: React.FC<SidelessHomeLayoutProps> = React.memo(
+const SidelessHomeLayout: React.FC<Props> = React.memo(
   ({ title = 'YouTube', children }) => {
     return (
       <>
@@ -20,7 +20,7 @@ const SidelessHomeLayout: React.FC<SidelessHomeLayoutProps> = React.memo(
 
         <Grid templateColumns="1fr" templateRows="auto 1fr" minHeight="100vh">
           <GridItem as="div" colSpan={1} rowSpan={1} px={8}>
-            <DashboardHeaderContainer />
+            <DashboardHeader />
           </GridItem>
           <GridItem as="div" colSpan={1} rowSpan={1} bgColor="#fafafa" px={8}>
             {children}

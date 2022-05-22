@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, AspectRatio, Box, Image, Text, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { VideoType } from '../../Item/ItemContainer';
+import { VideoType } from '../../Item';
 
 type RelatedVideoItemProps = {
   video?: VideoType;

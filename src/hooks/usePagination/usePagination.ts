@@ -1,5 +1,5 @@
 import React from 'react';
-import { VideoType } from '../../components/Item/Item';
+import { VideoType } from '../../components/Item';
 
 /**
  * Pagination用Hooks

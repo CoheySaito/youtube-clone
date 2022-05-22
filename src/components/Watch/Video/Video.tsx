@@ -1,6 +1,6 @@
 import React from 'react';
 import { AspectRatio, Image } from '@chakra-ui/react';
-import { VideoType } from '../../Item/ItemContainer';
+import { VideoType } from '../../Item';
 
 type VideoProps = { video: VideoType; fetchedVideoUrl: string };
 

@@ -5,13 +5,10 @@ import '@testing-library/jest-dom/extend-expect';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import WithChakraProvider from '../../__test__/util/withChakraProvider';
-import ButtonWithAlertDialog, {
-  ButtonWithAlertDialogProps,
-} from './ButtonWithAlertDialog';
+import ButtonWithAlertDialog, { Props } from './presenter';
 
 //mock
-//LogoutAlertDialogContainer
-jest.mock('../LogoutAlertDialog/LogoutAlertDialogContainer', () => {
+jest.mock('../LogoutAlertDialog', () => {
   return {
     __esModule: true,
     default: () => {
@@ -23,7 +20,7 @@ jest.mock('../LogoutAlertDialog/LogoutAlertDialogContainer', () => {
 describe('ButtonWithAlertDialogテスト', () => {
   it('ログアウトボタン表示', () => {
     const expectedLabel = 'expectedLabel';
-    const props: ButtonWithAlertDialogProps = { label: expectedLabel };
+    const props: Props = { label: expectedLabel };
     WithChakraProvider(<ButtonWithAlertDialog {...props} />);
     expect(screen.getByTestId('logoutButton')).toBeInTheDocument();
     expect(screen.getByText(expectedLabel)).toBeInTheDocument();
@@ -32,7 +29,7 @@ describe('ButtonWithAlertDialogテスト', () => {
   it('ボタンクリック→onOpen呼び出し', () => {
     const expectedOnOpen = jest.fn();
     const expectedOnClose = jest.fn();
-    const props: ButtonWithAlertDialogProps = {
+    const props: Props = {
       onOpen: expectedOnOpen,
       onClose: expectedOnClose,
     };

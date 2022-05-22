@@ -2,13 +2,13 @@ import React, { ReactNode, useState } from 'react';
 import HomeLayout from './HomeLayout';
 import SidelessHomeLayout from './SidelessHomeLayout';
 
-type LayoutProps = {
+type Props = {
   sidebar?: boolean;
   title?: string;
   children: ReactNode;
 };
 
-const Layout: React.VFC<LayoutProps> = ({ sidebar, title, children }) => {
+const Layout: React.VFC<Props> = ({ sidebar, title, children }) => {
   return (
     <>
       {sidebar ? (

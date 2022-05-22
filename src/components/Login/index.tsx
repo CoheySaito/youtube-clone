@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 
 import useFirebaseAuth from '../../hooks/useFirebaseAuth/useFirebaseAuth';
-import Login from './Login';
+import LoginPresenter from './presenter';
+
 const LoginContainer: React.VFC = () => {
   const { emailRef, passwordRef, loginFn } = useFirebaseAuth();
   const [loading, setLoading] = useState(false);
 
   return (
-    <Login
+    <LoginPresenter
       {...{
         emailRef,
         passwordRef,
