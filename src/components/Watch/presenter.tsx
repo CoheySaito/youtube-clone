@@ -1,18 +1,18 @@
 import React from 'react';
 import { Grid, GridItem, Divider } from '@chakra-ui/react';
 
-import RelatedVideoContainer from '../RelatedVideo/RelatedVideoContainer';
-import { VideoByPkType } from './WatchContainer';
-import Video from './Video/Video';
-import VideoDetail from './VideoDetail/VideoDetail';
+import RelatedVideo from '../RelatedVideo';
+import { VideoByPkType } from './index';
+import Video from './Video';
+import VideoDetail from './VideoDetail/presenter';
 
-type WatchProps = {
+type Props = {
   video: VideoByPkType;
   fetchedVideoUrl: string;
   fetchedAvatarlUrl: string;
 };
 
-const Watch: React.FC<WatchProps> = ({
+const WatchPresenter: React.FC<Props> = ({
   video = undefined,
   fetchedVideoUrl = '',
   fetchedAvatarlUrl = '',
@@ -46,9 +46,9 @@ const Watch: React.FC<WatchProps> = ({
           mb={3}
           display={{ base: 'block', md: 'none' }}
         />
-        <RelatedVideoContainer />
+        <RelatedVideo />
       </GridItem>
     </Grid>
   );
 };
-export default Watch;
+export default WatchPresenter;

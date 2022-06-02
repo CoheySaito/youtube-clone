@@ -1,14 +1,14 @@
 import React from 'react';
 import useUploadModal from '../../../hooks/useUploadModal/useUploadModal';
-import VideoSelect from './VideoSelect';
 import useVideoSelect from '../../../hooks/useVideoSelect/useVideoSelect';
+import VideoSelectPresenter from './presenter';
 
-type VideoSelectContainerProps = Pick<
+type Props = Pick<
   ReturnType<typeof useUploadModal>,
   'selectedVideoFile' | 'setSelectedVideoFile' | 'setThumbFile'
 >;
 
-const VideoSelectContainer: React.FC<VideoSelectContainerProps> = ({
+const VideoSelectContainer: React.FC<Props> = ({
   selectedVideoFile,
   setSelectedVideoFile,
   setThumbFile,
@@ -24,7 +24,7 @@ const VideoSelectContainer: React.FC<VideoSelectContainerProps> = ({
   } = useVideoSelect({ selectedVideoFile, setSelectedVideoFile, setThumbFile });
 
   return (
-    <VideoSelect
+    <VideoSelectPresenter
       {...{
         videoURL,
         createdURLs,

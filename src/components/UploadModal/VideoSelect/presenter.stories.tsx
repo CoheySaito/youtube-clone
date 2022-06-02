@@ -1,15 +1,15 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import VideoSelect from './VideoSelect';
+import VideoSelectPresenter from './presenter';
 
 export default {
-  title: 'UploadModal/VideoSelect',
-  component: VideoSelect,
-} as ComponentMeta<typeof VideoSelect>;
+  title: 'UploadModal/VideoSelectPresenter',
+  component: VideoSelectPresenter,
+} as ComponentMeta<typeof VideoSelectPresenter>;
 
-const Template: ComponentStory<typeof VideoSelect> = (args) => (
-  <VideoSelect {...args} />
+const Template: ComponentStory<typeof VideoSelectPresenter> = (args) => (
+  <VideoSelectPresenter {...args} />
 );
 
 export const Primary = Template.bind({});

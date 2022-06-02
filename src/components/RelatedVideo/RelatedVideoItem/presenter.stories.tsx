@@ -1,16 +1,16 @@
 import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import RelatedVideoItem from './RelatedVideoItem';
+import RelatedVideoItemPresenter from './presenter';
 import { VideoType } from '../../Item';
 
 export default {
-  title: 'RelatedVideo/RelatedVideoItem',
-  component: RelatedVideoItem,
-} as ComponentMeta<typeof RelatedVideoItem>;
+  title: 'RelatedVideo/RelatedVideoItemPresenter',
+  component: RelatedVideoItemPresenter,
+} as ComponentMeta<typeof RelatedVideoItemPresenter>;
 
-const Template: ComponentStory<typeof RelatedVideoItem> = (args) => (
-  <RelatedVideoItem {...args} />
+const Template: ComponentStory<typeof RelatedVideoItemPresenter> = (args) => (
+  <RelatedVideoItemPresenter {...args} />
 );
 
 export const Primary = Template.bind({});

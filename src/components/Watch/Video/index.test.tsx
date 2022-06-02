@@ -8,7 +8,7 @@ import 'setimmediate';
 import WithChakraProvider from '../../../__test__/util/withChakraProvider';
 import { VideoType } from '../../Item';
 
-import Video from './Video';
+import Video from './index';
 
 describe('forgetPageテスト', () => {
   afterEach(() => {

@@ -4,11 +4,11 @@ import { LoginUserIdContext } from './loginUserIdrContext';
 import { SerchQueryContext } from './serchQueryContext';
 import { UploadModalContext } from './uploadModalContext';
 
-type AppContextProps = {
+type Props = {
   children: ReactNode;
 };
 
-const AppContextWrapper: React.VFC<AppContextProps> = ({ children }) => {
+const AppContextWrapper: React.VFC<Props> = ({ children }) => {
   const [serchQuery, setSerchQuery] = useState('');
 
   //LoginUserIdContext

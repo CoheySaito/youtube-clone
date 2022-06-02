@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event';
 
 import WithChakraProvider from '../../../__test__/util/withChakraProvider';
 import useVideoSelect from '../../../hooks/useVideoSelect/useVideoSelect';
-import VideoSelectContainer from './VideoSelectContainer';
+import VideoSelectContainer from '.';
 
 // mock
 //useVideoSelect

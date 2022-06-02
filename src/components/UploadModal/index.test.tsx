@@ -17,12 +17,12 @@ const mockedUseUploadModal = useUploadModal as jest.MockedFunction<
   typeof useUploadModal
 >;
 
-//VideoSelectContainer
-jest.mock('./VideoSelect/VideoSelectContainer', () => {
+//VideoSelect
+jest.mock('./VideoSelect', () => {
   return {
     __esModule: true,
     default: () => {
-      return <div>VideoSelectContainer</div>;
+      return <div>VideoSelect</div>;
     },
   };
 });

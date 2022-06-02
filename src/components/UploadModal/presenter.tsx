@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react';
 
 import useUploadModal from '../../hooks/useUploadModal/useUploadModal';
-import VideoSelectContainer from './VideoSelect/VideoSelectContainer';
+import VideoSelect from './VideoSelect';
 
 //type
 type UploadModalPresenterReturnType = ReturnType<typeof useUploadModal>;
@@ -58,7 +58,7 @@ const UploadModalPresenter: React.VFC<Props> = ({
             columnGap={6}
           >
             <Box py={{ base: 12, md: 0 }}>
-              <VideoSelectContainer
+              <VideoSelect
                 {...{
                   selectedVideoFile,
                   setSelectedVideoFile,

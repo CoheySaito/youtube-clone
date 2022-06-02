@@ -11,31 +11,27 @@ type Props = {
 };
 
 // eslint-disable-next-line react/display-name
-const HamburgerButtonPresenter: React.VFC<Props> = React.memo(
-  ({
-    isOpenDrawer = false,
-    onOpenDrawer = () => undefined,
-    onCloseDrawer = () => undefined,
-    btnRef = undefined,
-  }) => {
-    return (
-      <>
-        <IconButton
-          aria-label="Open menu"
-          fontSize="24px"
-          color={'gray.800'}
-          opacity="0.4"
-          variant="ghost"
-          icon={<AiOutlineMenu />}
-          ref={btnRef}
-          onClick={onOpenDrawer}
-          data-testid="humburgerbutton"
-        />
-        <BasicDrawer
-          {...{ btnRef, isOpenDrawer, onOpenDrawer, onCloseDrawer }}
-        />
-      </>
-    );
-  },
-);
-export default HamburgerButtonPresenter;
+const HamburgerButtonPresenter: React.VFC<Props> = ({
+  isOpenDrawer = false,
+  onOpenDrawer = () => undefined,
+  onCloseDrawer = () => undefined,
+  btnRef = undefined,
+}) => {
+  return (
+    <>
+      <IconButton
+        aria-label="Open menu"
+        fontSize="24px"
+        color={'gray.800'}
+        opacity="0.4"
+        variant="ghost"
+        icon={<AiOutlineMenu />}
+        ref={btnRef}
+        onClick={onOpenDrawer}
+        data-testid="humburgerbutton"
+      />
+      <BasicDrawer {...{ btnRef, isOpenDrawer, onOpenDrawer, onCloseDrawer }} />
+    </>
+  );
+};
+export default React.memo(HamburgerButtonPresenter);

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useRouter } from 'next/router';
 import { useGetVideosQuery } from '../../generated/graphql';
-import RelatedVideo from './RelatedVideo';
+import RelatedVideoPresenter from './presenter';
 
 const RelatedVideoContainer: React.VFC = () => {
   const router = useRouter();
@@ -12,6 +12,6 @@ const RelatedVideoContainer: React.VFC = () => {
     fetchPolicy: 'cache-and-network',
   });
 
-  return <RelatedVideo {...{ loading, error, data, id }} />;
+  return <RelatedVideoPresenter {...{ loading, error, data, id }} />;
 };
 export default RelatedVideoContainer;

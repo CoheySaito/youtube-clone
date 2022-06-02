@@ -10,9 +10,9 @@ import {
 import React from 'react';
 import useVideoSelect from '../../../hooks/useVideoSelect/useVideoSelect';
 
-export type VideoSelectProps = Partial<ReturnType<typeof useVideoSelect>>;
+export type Props = Partial<ReturnType<typeof useVideoSelect>>;
 
-const VideoSelect: React.FC<VideoSelectProps> = ({
+const VideoSelectPresenter: React.FC<Props> = ({
   videoURL = '',
   createdURLs = undefined,
   selectedThumbFn = () => undefined,
@@ -61,4 +61,4 @@ const VideoSelect: React.FC<VideoSelectProps> = ({
     </>
   );
 };
-export default VideoSelect;
+export default VideoSelectPresenter;
